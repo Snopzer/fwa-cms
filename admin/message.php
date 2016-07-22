@@ -1,0 +1,239 @@
+<?php
+session_start();
+include_once('includes/config.php');
+if (!isset($_SESSION['id'])) {
+
+    header('location:index.php');
+}
+?>   
+<?php include_once('includes/header.php'); ?>
+<?php include_once('includes/menu.php'); ?>
+<?php if (!isset($_GET['action'])) { ?>
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div class="content-main">	
+            <div class="banner">
+                <h2>
+                    <a href="home.php">Home</a>
+                    <i class="fa fa-angle-right"></i>
+                    <span>Message</span>
+                </h2>
+            </div>
+            <div class="grid-system">
+                <div class="horz-grid">
+                    <div class="grid-system">
+
+                        <div class="horz-grid">
+                            <div class="bs-example">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td><h1 id="h1.-bootstrap-heading"> Message - [<?php
+                                                    $select = mysql_query("SELECT * FROM r_message order by id_message desc")or die(mysql_error());
+                                                    $count = mysql_num_rows($select);
+                                                    echo "$count";
+                                                    ?>]</h1></td>
+                                            <td class="type-info text-right">
+                                                <a href="message.php?action=add"><span class="btn btn-success">Add New</span></a> 
+                                                <a><span class="btn btn-primary">Edit</span></a>
+                                                <a><span class="btn btn-danger">Delete</span></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <table class="table"> 
+                                <form action="search.php?type=search" method="post">
+                                    <tr class="table-row">
+                                        <td class="table-img">&nbsp;</td>
+                                        <td class="march"><h6><input class="form-control" type="text" name="department" id="department" placeholder="Search Name"></h6></td>
+                                        <td class="march"><h6><input class="btn btn-default" type="submit"  name="search" value="Search"></h6></td>                                
+                                    </tr>
+                                </form>
+                                <tr class="table-row">
+                                    <td class="table-img">
+                                        <input type="checkbox" id="selectall" onClick="selectAll(this)" >
+                                    </td>
+                                    <td class="table-text"><h6>Name</h6></td>
+                                    <td class="table-text"><h6>Subject</h6></td>
+                                    <td class="table-text"><h6>Email</h6></td>
+                                    <!--<td class="table-text"><h6>Message</h6></td>-->
+                                </tr>
+                                <?php
+                                $page = false;
+                                if (array_key_exists('page', $_GET)) {
+                                    $page = $_GET['page'];
+                                }
+                                //  $page = $_GET["page"];
+                                if ($page == "" || $page == 1) {
+                                    $page1 = 0;
+                                } else {
+                                    $page1 = ($page * 5) - 5;
+                                }
+                                $select = mysql_query("SELECT * FROM r_message order by id_message desc limit $page1,5")or die(mysql_error());
+                                if ($select) {
+                                    while ($row = mysql_fetch_assoc($select)) {
+                                        ?>
+                                        <tr class="table-row">
+                                            <td class="table-img"><input type="checkbox" name="colors[]"></td>
+                                            <td class="march"><h6><?php echo $row["name"] ?></h6></td>
+                                            <td class="march"><h6><?php echo $row["subject"] ?></h6></td>
+                                            <td class="march"><h6><?php echo $row["email"] ?></h6></td>
+                                            <!--<td class="march"><h6><?php echo $row["message"] ?></h6></td>-->
+                                            <td><a href="message.php?id=<?php echo $row["id_message"] ?>&action=edit&page=<?php echo "$page"?>"><span class="label label-primary">Edit</span><a/>
+                                                    <a href="message-controller.php?id=<?php echo $row["id_message"] ?>&action=delete&page=<?php echo "$page"?>""><span class="label label-info">Delete</span></a>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </table>
+                            <?php
+                            $res1 = mysql_query("SELECT * FROM r_message");
+                            $count = mysql_num_rows($res1);
+                            $a = $count / 5;
+                            $a = ceil($a);
+							 if ($count > 5) {
+                            ?>
+                            <div class="horz-grid text-center">
+                                <ul class="pagination pagination-lg">
+                                    
+                                    <?php for ($b = 1; $b <= $a; $b++) { ?>
+                                        <?php if ($b == $page) { ?>
+                                            <li class="active"><a href="message.php?page=<?php echo $b; ?>"><?php echo $b . " "; ?></a></li>    
+                                        <?php } else { ?>
+                                            <li><a href="message.php?page=<?php echo $b; ?>"><?php echo $b . " "; ?></a></li>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </ul>
+                            </div>
+							 <?php }?>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    <?php }// show all users ends here?>
+    <?php
+    if (isset($_GET['action'])) {
+        ?>
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="content-main">
+                <div class="banner">
+                    <h2>
+                        <a href="home.php">Home</a>
+                        <i class="fa fa-angle-right"></i>
+                        <span><a href="message.php">Message</a></span>
+                        <i class="fa fa-angle-right"></i>
+                        <span><?php echo ($_GET['action'] == 'edit') ? 'Edit message' : 'Add message'; ?></span>
+                    </h2>
+                </div>
+                <div class="grid-system">
+                    <div class="horz-grid">
+                        <div class="grid-hor">
+                            <h4 id="grid-example-basic">Message Details:</h4>
+
+                        </div>
+                        <?php
+                        if ($_GET['action'] == "edit") {
+                            $id = $_GET['id'];
+                            $page = $_GET['page'];
+                            $query = mysql_query("select * from r_message where id_message=$id")or die(mysql_error());
+                            $result = mysql_fetch_assoc($query);
+                            ?>
+                            <form class="form-horizontal" action="message-controller.php" method="post">
+                                <input type="hidden" name="action" value="edit"/>
+                                <input type="hidden" name="id" value="<?php echo $result["id_message"] ?>">
+                                <input type="hidden" name="page" value='<?php echo "$page"?>'>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label hor-form">Name</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" value="<?php echo $result["name"] ?>" id="name" name="name" placeholder="name">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label hor-form">Subject</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" value="<?php echo $result["subject"] ?>" id="subject" name="subject" placeholder="subject">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label hor-form">Email</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" value="<?php echo $result["email"] ?>" id="email" name="email" placeholder="phone">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label hor-form">Message</label>
+                                    <div class="col-sm-8">
+										<textarea id="message" name="message" class="form-control" rows="6"><?php echo $result["message"] ?></textarea>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8 col-sm-offset-2">
+                                        <input type="submit" value="Save" class="btn-primary btn">
+                                    </div>
+                                </div></div>
+
+                        </form>
+                        <?php
+                    } elseif ($_GET['action'] == "add") {
+                        ?>
+                        <form class="form-horizontal" action="message-controller.php" method="post">
+                            <input type="hidden" name="action" value="add"/>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label hor-form">Name</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                                </div>
+                            </div>							
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label hor-form">Subject</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="subject" name="subject" placeholder="subject">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label hor-form">Email</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"  id="email" name="email" placeholder="email">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label hor-form">Message</label>
+                                <div class="col-sm-8">
+									<textarea id="message" name="message"  class="form-control" rows="6"></textarea>
+                                </div>
+                            </div>
+                            <!--<div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label hor-form">Date Created</label>
+                                    <div class="col-sm-8">
+                                            <input type="text" class="form-control" value="" id="date_created" name="date_created" placeholder="Date created">
+                                    </div>
+                            </div>-->
+                            <div class="row">
+                                <div class="col-sm-8 col-sm-offset-2">
+                                    <input type="submit" value="Save" class="btn-primary btn">
+                                    <!--<button class="btn btn-default" type="reset">Reset</button>-->
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }// end of add
+    }// end of action set edit/add
+    ?>
+    <script language="JavaScript">
+        function selectAll(source) {
+            checkboxes = document.getElementsByName('colors[]');
+            for (var i in checkboxes)
+                checkboxes[i].checked = source.checked;
+        }
+    </script>
+<?php include_once('includes/footer.php'); ?>	
