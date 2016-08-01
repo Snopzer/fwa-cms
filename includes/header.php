@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
 <html>	
     <head>		
-        <title><?php echo $metaArray['title']?></title>		
+        <title><?php echo $metaArray['title'];?></title>		
         <meta name="viewport" content="width=device-width, initial-scale=1">		
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />		
-        <meta name="keywords" content="<?php echo $metaArray['meta-keywords']?>" />		
-        <meta name="description" content="<?php echo $metaArray['meta-description']?>" />		
+        <meta name="keywords" content="<?php echo $metaArray['meta-keywords'];?>" />		
+        <meta name="description" content="<?php echo $metaArray['meta-description'];?>" />		
         <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />		
         <link href="css/style.css" rel='stylesheet' type='text/css' />			
         <script src="js/jquery-1.11.1.min.js"></script>		
@@ -19,15 +19,7 @@
             <div class="container">				
                 <div class="logo">					
                     <a href="index.php"><h1>Techdefeat.com</h1></a>					
-					</div><?/*?>						
-						<div class="search">						
-						<form>						
-                        <input type="text" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {						
-						this.value = 'Search';						
-						}">						
-                        <input type="submit" value="">						
-						</form>						
-					</div><?*/?>					
+					</div>				
 					<div class="social">						
 						<ul>							
 							<li><a href="https://www.facebook.com/techdefeat1/" target="_blank" class="facebook"> </a></li>							

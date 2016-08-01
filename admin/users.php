@@ -5,7 +5,8 @@
 		
 		header('location:index.php');
 	}
-	$userQuery = mysql_query("SELECT u.*, ur.role as adminrole FROM r_user u,r_user_role ur where u.id_user_role=ur.id_user_role order by id_user desc")or die(mysql_error());
+	
+	$userQuery = mysql_query("SELECT u.*, ur.role as adminrole FROM r_user u LEFT JOIN r_user_role ur ON u.id_user_role=ur.id_user_role order by id_user desc")or die(mysql_error());
 	$userCount = mysql_num_rows($userQuery);
 	$pages = $userCount / 5;
 	$pages = ceil($pages);
@@ -21,7 +22,7 @@
 		$page1 = ($page * 5) - 5;
 	}
 	//select ur.role as role , ur.*,u.* from r_user_role ur,r_user u where u.id_user_role = ur.id_user_role
-	$userList = mysql_query("SELECT u.*, ur.role as adminrole FROM r_user u,r_user_role ur where u.id_user_role=ur.id_user_role order by id_user desc limit $page1,5")or die(mysql_error());
+	$userList = mysql_query("SELECT u.*, ur.role as adminrole FROM r_user u LEFT JOIN r_user_role ur ON u.id_user_role=ur.id_user_role order by id_user desc limit $page1,5")or die(mysql_error());
 ?>  
 <?php include_once('includes/header.php'); ?>
 <?php include_once('includes/menu.php'); ?>
@@ -39,10 +40,10 @@
                 <div class="horz-grid">
                     <div class="grid-system">
 						<?php if(isset($_GET['message']) && $_GET['message']!=''){ ?>
-						<div class="alert alert-<?php echo $_GET['response']?> fade in">
-							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							<?php echo $_GET['message'];?>
-						</div>
+							<div class="alert alert-<?php echo $_GET['response']?> fade in">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<?php echo $_GET['message'];?>
+							</div>
 						<?php } ?>
                         <div class="horz-grid">
                             <div class="bs-example">
@@ -76,7 +77,7 @@
 										if (mysql_num_rows($userList) > 0) {
 											while ($user = mysql_fetch_assoc($userList)) {
 											?>
-												<tr class="table-row <?php echo ($user["status"]==1)?'warning':'danger'; ?>">
+											<tr class="table-row <?php echo ($user["status"]==1)?'warning':'danger'; ?>">
                                                 <td class="table-img"><input type="checkbox" name="selectcheck" value="<?= $user["id_user"] ?>"/></td>
                                                 <td class="march"><h6><?php echo $user["name"] ?></h6></td>
                                                 <td class="march"><h6><?php echo $user["email"] ?></h6></td>
@@ -154,7 +155,7 @@
 									$id = $_GET['id'];
 								}
 								$page = $_GET['page'];
-								$query = mysql_query("select * from r_user ru, r_seo_url seo where ru.id_user=seo.id_user and ru.id_user=$id")or die(mysql_error());
+								$query = mysql_query("SELECT * FROM r_user u LEFT JOIN r_seo_url seo ON u.id_user=seo.id_user order by u.id_user desc")or die(mysql_error());
 								$result = mysql_fetch_assoc($query);
 							?>
                             <form class="form-horizontal" action="users-controller.php" method="post">
@@ -474,5 +475,5 @@
 				}
 			}
 		}
-</script>
-     <?php include_once('includes/footer.php'); ?>	
+	</script>
+<?php include_once('includes/footer.php'); ?>	

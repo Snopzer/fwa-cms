@@ -11,16 +11,6 @@
 	</div>
     <div class=" border-bottom">
         <div class="full-left">
-            <!--<section class="full-top">
-                <button id="toggle"><i class="fa fa-arrows-alt"></i></button>
-			</section>
-            <section class="full-top">
-                <form class=" navbar-left-right" action="search.php?type=search" method="POST">
-					<input type="text" name="search" id="search" onblur="if (this.value == '') {this.value = 'Search...';}" onfocus="this.value = '';" value="Search...">
-					<input type="submit" class="fa fa-search" value="">
-				</form>
-			</section>-->
-			
             <div class="clearfix"> </div>
 		</div>
 		
@@ -38,9 +28,6 @@
                     <a href="#" class="dropdown-toggle dropdown-at" data-toggle="dropdown"><span class=" name-caret"><?= $_SESSION['name'] ?><i class="caret"></i></span><img src="../images/user/<?= $_SESSION['image'] ?>" style="width:100px; height: 61px;"></a>
                     <ul class="dropdown-menu " role="menu">
                         <li><a href="profile.php"><i class="fa fa-user"></i>Edit Profile</a></li>
-                        <!--<li><a href="inbox.php"><i class="fa fa-envelope"></i>Inbox</a></li>
-							<li><a href="calendar.php"><i class="fa fa-calendar"></i>Calender</a></li>
-						<li><a href="inbox.php"><i class="fa fa-clipboard"></i>Tasks</a></li>-->
                         <li><a href="controller.php?type=logout"><i class="fa fa-sign-in"></i>Logout</a></li>    
 					</ul>
 				</li>
@@ -66,12 +53,29 @@
 							<li><a href="comments.php" 	class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> 		<span class="nav-label">Comments</span> </a></li>
 						</ul>
 					</li>
-								
-                    <li><a href="pages.php" 	class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i>	<span class="nav-label">Pages</span> </a></li>
-                    <li><a href="country.php" 	class=" hvr-bounce-to-right"><i class="fa fa-inbox nav_icon"></i> 		<span class="nav-label">Countries</span> </a></li>
-                    <li><a href="site.php" class=" hvr-bounce-to-right"><i class="fa fa-cog nav_icon"></i> 	<span class="nav-label">Site details</span> </a></li>
-					<li><a href="message.php" 	class=" hvr-bounce-to-right"><i class="fa fa-inbox nav_icon"></i> 		<span class="nav-label">Message</span> </a></li>
+					
+					
+					<li class="">
+                        <a class=" hvr-bounce-to-right" href="#"><i class="fa fa-file-text-o nav_icon"></i> <span class="nav-label">CMS</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+                          <li><a href="pages.php" 	class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i>	<span class="nav-label">Pages</span> </a></li>
+                    <li><a href="message.php" 	class=" hvr-bounce-to-right"><i class="fa fa-inbox nav_icon"></i> 		<span class="nav-label">Message</span> </a></li>
                     <li><a href="gallery.php" 	class=" hvr-bounce-to-right"><i class="fa fa-picture-o nav_icon"></i> 	<span class="nav-label">Gallery</span> </a></li>
+						</ul>
+					</li>
+								
+                    
+                    
+					
+					
+					<li class="">
+                        <a class=" hvr-bounce-to-right" href="#"><i class="fa fa-cog nav_icon"></i> <span class="nav-label">Settings</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+							<li><a href="country.php" 	class=" hvr-bounce-to-right"><i class="fa fa-inbox nav_icon"></i> 		<span class="nav-label">Countries</span> </a></li>
+                            <li><a href="site.php" class=" hvr-bounce-to-right"><i class="fa fa-cog nav_icon"></i> 	<span class="nav-label">Site details</span> </a></li>
+					
+						</ul>
+					</li>
 				</ul>
 			</div>
 		</div>

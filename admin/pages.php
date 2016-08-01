@@ -27,7 +27,7 @@
 							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 							<?php echo $_GET['message'];?>
 						</div>
-						<? } ?>
+						<?php } ?>
 						<div class="horz-grid">
 							<div class="bs-example">
 								<table class="table">

@@ -62,6 +62,13 @@
 		fclose( $sock );
 	}*/
 	
+	function getSiteAlexaRank($url){			
+		$xml = simplexml_load_file("http://data.alexa.com/data?cli=10&url=jaancari.com");			
+		if(isset($xml->SD)):			
+		return $xml->SD->REACH->attributes();			
+		endif;			
+	}
+	
 
 
 ?>

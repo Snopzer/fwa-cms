@@ -27,26 +27,26 @@
         <div class="col-md-9 technology-left">
             <div class="tech-no">
                 <?php	while ($result = mysql_fetch_assoc($select)) {	?>
-						<div class="tc-ch">		
-							<?php if(!empty($result['image'])){?>
-								<div class="tch-img">
-									<a href="/<?php echo $result['seo_url']?>"><img src="images/post/<?php echo $result['image'] ?>" class="img-responsive" alt=""/></a>
-								</div>
-								<a class="blog blue"><?php echo $result['name']; ?></a>
-							<?php } ?>
-							<h3> <a href="/<?php echo $result['seo_url']?>"><?php echo $result['title'] ?></a></h3>
-							<p><?php echo $result['description']; ?></p>
-							<div class="blog-poast-info">
-								<ul>
-									<li><i class="glyphicon glyphicon-user"> </i><a class="admin" href="#"><?php echo $result['user']; ?> </a></li>
-									<li><i class="glyphicon glyphicon-calendar"> </i><?php echo $result['date_updated']; ?></li>
-									<li><i class="glyphicon glyphicon-comment"> </i><a class="p-blog"><?php echo $result['name']; ?></a></li>
-									<li><i class="glyphicon glyphicon-heart"> </i><a class="admin"><?php echo $result['favourites']; ?> favourites </a></li>
-									<li><i class="glyphicon glyphicon-eye-open"> </i><?php echo $result['views']; ?> views</li>
-								</ul>
+					<div class="tc-ch">		
+						<?php if(!empty($result['image'])){?>
+							<div class="tch-img">
+								<a href="/<?php echo $result['seo_url']?>"><img src="images/post/<?php echo $result['image'] ?>" class="img-responsive" alt=""/></a>
 							</div>
+							<a class="blog blue"><?php echo $result['name']; ?></a>
+						<?php } ?>
+						<h3> <a href="/<?php echo $result['seo_url']?>"><?php echo $result['title'] ?></a></h3>
+						<p><?php echo $result['description']; ?></p>
+						<div class="blog-poast-info">
+							<ul>
+								<li><i class="glyphicon glyphicon-user"> </i><a class="admin" href="#"><?php echo $result['user']; ?> </a></li>
+								<li><i class="glyphicon glyphicon-calendar"> </i><?php echo $result['date_updated']; ?></li>
+								<li><i class="glyphicon glyphicon-comment"> </i><a class="p-blog"><?php echo $result['name']; ?></a></li>
+								<li><i class="glyphicon glyphicon-heart"> </i><a class="admin"><?php echo $result['favourites']; ?> favourites </a></li>
+								<li><i class="glyphicon glyphicon-eye-open"> </i><?php echo $result['views']; ?> views</li>
+							</ul>
 						</div>
-                    <?php	}	?>
+					</div>
+				<?php	}	?>
 			</div>
 		</div>
         <div class="col-md-3 technology-right">
