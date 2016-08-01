@@ -1,5 +1,10 @@
 <?php
-	session_start();
+session_start();
+if (!isset($_SESSION['id'])) {
+  header('location:index.php');
+}
+?>
+<?php
 	include_once('includes/config.php');
 	include_once('includes/header.php');
 include 'includes/menu.php'; ?>
@@ -138,7 +143,7 @@ include 'includes/menu.php'; ?>
 				
 				]);
 				
-				var options = {'title':'Post Views','width':1100,'height':480};
+				var options = {'title':'Post Views'/*,'width':1100,'height':480*/};
 				
 				
 				var chart = new google.visualization.PieChart(document.getElementById('postviews_chart'));
@@ -161,7 +166,7 @@ include 'includes/menu.php'; ?>
 					title: 'Posts Time Line',
 					curveType: 'function',
 					legend: { position: 'bottom' },
-					'width':1400,'height':280
+					/*'width':1400,'height':280*/
 				};
 				
 				var chart1 = new google.visualization.LineChart(document.getElementById('posthistory_chart'));

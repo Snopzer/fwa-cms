@@ -1,6 +1,7 @@
 <?php
 	session_start();
 	include_once('includes/config.php');
+	
 	if (!isset($_SESSION['id'])) {
 		
 		
@@ -29,6 +30,7 @@
 ?>  
 <?php include_once('includes/header.php'); ?>
 <?php include_once('includes/menu.php'); ?>
+<script src="js/ckeditor/ckeditor.js"></script>
 <?php if(!isset($_GET['action'])){?>
 	<div id="page-wrapper" class="gray-bg dashbard-1">
 		<div class="content-main">	
@@ -42,7 +44,12 @@
 			<div class="grid-system">
 				<div class="horz-grid">
 					<div class="grid-system">
-						
+						<?php if(isset($_GET['message']) && $_GET['message']!=''){ ?>
+						<div class="alert alert-<?php echo $_GET['response']?> fade in">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<?php echo $_GET['message'];?>
+						</div>
+						<?php } ?>
 						<div class="horz-grid">
 							<div class="bs-example">
 								<table class="table">
@@ -51,24 +58,24 @@
 											<td><h1 id="h1.-bootstrap-heading"> Sites - [<?php echo $siteCount;?>]</h1></td>
 											<td class="type-info text-right">
 												<a href="site.php?action=add"><span class="btn btn-success">Add New</span></a> 
-												<a><span class="btn btn-primary">Edit</span></a>
-												<a><span class="btn btn-danger">Delete</span></a>
+												<a href="javascript:fnDetails();"><span class="btn btn-primary">Edit</span></a>
+												<a href="javascript:fnDelete();"><span class="btn btn-danger">Delete</span></a>
 											</td>
 										</tr>
 									</tbody>
 								</table>
 							</div>
 							<table class="table"> 
-								<form action="search.php?type=search" method="post">
+								<form name="frmMain" action="search.php?type=search" method="post">
 									<tr class="table-row">
 										<td class="table-img">&nbsp;</td>
 										<td class="march"><h6><input class="form-control" type="text" name="department" id="department"></h6></td>
 										<td class="march"><h6><input class="btn btn-default" type="submit"  name="search" value="Search"></h6></td>                                
 									</tr>
-								</form>
+								
 								<tr class="table-row">
 									<td class="table-img">
-										<input type="checkbox" id="selectall" onClick="selectAll(this)" >
+										<input type="checkbox" name="checkall" onClick="Checkall()"/>
 									</td>
 									<td class="table-text"><h6>Site Name</h6></td>
                                 <td class="table-text"><h6>Owner Email</h6></td>
@@ -77,17 +84,23 @@
 								</tr>
 								<?php	while ($site = mysql_fetch_assoc($selectSiteList)) {	?>
 									<tr class="table-row">
-										<td class="table-img"><input type="checkbox" name="colors[]"></td>
+										<td class="table-img"><input type="checkbox" name="selectcheck" value="<?= $site["id"] ?>"></td>
 										 <td class="march"><h6><?php echo $site["site_name"] ?></h6></td>
 										<td class="march"><h6><?php echo $site["owner_email"] ?></h6></td>
                                         <td class="march"><h6><?php echo $site["email_from"] ?></h6></td>
                                         <td class="march"><h6><?php echo $site["phone"] ?></h6></td>
 										<td><a href="site.php?id=<?php echo  $site["id"] ?>&action=edit&page=<?php echo  "$page"?>"><span class="label label-primary">Edit</span><a/>
-										<a href="site-controller.php?id=<?php echo  $site["id"] ?>&action=delete&page=<?php echo  "$page"?>""><span class="label label-info">Delete</span></a>
+										<a href="site-controller.php?chkdelids=<?php echo  $site["id"] ?>&action=delete&page=<?php echo  "$page"?>""><span class="label label-info">Delete</span></a>
 										</td>
 									</tr>
 									<?php	}	?>
 							</table>
+							<input name="uid" type="hidden" value="<?php echo $_REQUEST["uid"]; ?>">
+                            <input type="hidden" name="action"/>
+                            <input type="hidden" name="id"/>
+                            <input type="hidden" name="chkdelids"/>
+                            <input type="hidden" name="page" value="<?php echo "$page"; ?>"/>
+							</form>
 							<?php	if ($siteCount > 5) {	?>
 								<div class="horz-grid text-center">
 									<ul class="pagination pagination-lg">
@@ -187,14 +200,14 @@
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label ">Meta keywords</label>
 								<div class="col-sm-8">
-									<textarea  name="meta_keywords" class="form-control"><?php echo  $result["meta_keywords"] ?></textarea> 
+									<textarea  name="meta_keywords" id="meta_keywords" class="form-control"><?php echo  $result["meta_keywords"] ?></textarea> 
 								</div>
 							</div>
 							
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label ">Meta Description</label>
 								<div class="col-sm-8">
-									<textarea  name="meta_description" class="form-control"><?php echo  $result["meta_description"] ?></textarea> 
+									<textarea  name="meta_description" id="meta_description" class="form-control"><?php echo  $result["meta_description"] ?></textarea> 
 								</div>
 							</div>
 							<div class="form-group">
@@ -279,14 +292,14 @@
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label ">Meta keywords</label>
 								<div class="col-sm-8">
-									<textarea  name="meta_keywords" class="form-control"></textarea> 
+									<textarea  name="meta_keywords" id="meta_keywords" class="form-control"></textarea> 
 								</div>
 							</div>
 							
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label ">Meta Description</label>
 								<div class="col-sm-8">
-									<textarea  name="meta_description" class="form-control"></textarea> 
+									<textarea  name="meta_description" id="meta_description" class="form-control"></textarea> 
 								</div>
 							</div>
 							<div class="form-group">
@@ -328,6 +341,14 @@
 	?>
 	
 	<script language="JavaScript">
+	
+	/* editor script */
+		//var editor=CKEDITOR.replace('meta_description');
+		//var editor=CKEDITOR.replace('meta_keywords');
+		/* editor script */
+		//var img= '121212121212';
+		//var img = '<img src="https://si0.twimg.com/a/1339639284/images/three_circles/twitter-bird-white-on-blue.png" />';
+		
 		$('#prev_image_name').mouseover(function() {	$('#prev_image').show();	});
 		$('#prev_image_name').mouseout(function() {	$('#prev_image').hide();	});
 		
@@ -338,3 +359,103 @@
 		}
 	</script>
 <?php include_once('includes/footer.php'); ?>	
+<script language="JavaScript">
+        function fnDetails()
+        {
+            var obj = document.frmMain.elements;
+            flag = 0;
+            for (var i = 0; i < obj.length; i++)
+            {
+                if (obj[i].name == "selectcheck" && obj[i].checked)
+                {
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag == 0)
+            {
+                alert("Please make a selection from a list to Edit");
+            } else if (flag == 1)
+            {
+                var checkedvals = "";
+                for (var i = 0; i < obj.length; i++) {
+                    if (obj[i].checked == true) {
+                        checkedvals = checkedvals + "," + obj[i].value;
+                    }
+                }
+                var checkvals = checkedvals.substr(1);
+                var arrval = checkvals.split(",");
+                if (arrval.length > 1)
+                {
+                    alert("Select Only One checkbox to edit");
+                } else
+                {
+                    window.location.href = "site.php?action=edit&page=<? echo "$page"?>&id=" + arrval[0];
+                }
+            }
+        }
+    </script>
+ 	
+
+    <script language="JavaScript">
+        function Checkall()
+        {
+            if (document.frmMain.checkall.checked == true)
+            {
+                var obj = document.frmMain.elements;
+                for (var i = 0; i < obj.length; i++)
+                {
+                    if ((obj[i].name == "selectcheck") && (obj[i].checked == false))
+                    {
+                        obj[i].checked = true;
+                    }
+                }
+            } else if (document.frmMain.checkall.checked == false)
+            {
+                var obj = document.frmMain.elements;
+                for (var i = 0; i < obj.length; i++)
+                {
+                    if ((obj[i].name == "selectcheck") && (obj[i].checked == true))
+                    {
+                        obj[i].checked = false;
+                    }
+                }
+            }
+        }
+        function fnDelete()
+        {
+            var obj = document.frmMain.elements;
+            flag = 0;
+            for (var i = 0; i < obj.length; i++)
+            {
+                if (obj[i].name == "selectcheck" && obj[i].checked) {
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag == 0) {
+                alert("Select Checkbox to Delete");
+            } else if (flag == 1) {
+                var i, len, chkdelids, sep;
+                chkdelids = "";
+                sep = "";
+                for (var i = 0; i < document.frmMain.length; i++) {
+                    if (document.frmMain.elements[i].name == "selectcheck")
+                    {
+                        if (document.frmMain.elements[i].checked == true) {
+                            //alert(document.frmFinal.elements[i].value)
+                            chkdelids = chkdelids + sep + document.frmMain.elements[i].value;
+                            sep = ",";
+                        }
+                    }
+                }
+                ConfirmStatus = confirm("Do you want to DELETE selected User Role.?")
+                if (ConfirmStatus == true) {
+                    document.frmMain.chkdelids.value = chkdelids
+                    document.frmMain.action.value = "delete"
+                    document.frmMain.action = "site-controller.php";
+                    document.frmMain.submit()
+                }
+            }
+        }
+    </script>	

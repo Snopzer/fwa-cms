@@ -15,9 +15,11 @@
 		
 		$addMessage = mysql_query("INSERT INTO r_message (name,subject,email,message,date_created) VALUES ('" . $name . "','" . $subject . "','" . $email . "','" . $message . "','" . $date_created . "')") or die(mysql_error());
 		if ($addMessage) {
-			header('location:message.php');
+			$message = "<strong>Success!</strong> Message Added Successfully.";
+			header('location:message.php?response=success&message='.$message);
 			} else {
-			echo "Error Deatails Not Stored";
+				$message = "<strong>Success!</strong> Message Not Added .Please check Carefully..";
+			header('location:message.php?response=warning');
 		}
 	}else if($_POST['action']=='edit'){
 		$id = $_POST['id'];
@@ -32,19 +34,30 @@
 		
 		$page=$_POST['page'];
 		$editMessage = mysql_query("update r_message SET name='".$name."',subject='".$subject."',email='".$email."',message='".$message."' where id_message='".$id."' ");
-		if ($editMessage) {
-			header("location:message.php?page=$page");
+		if ($editMessage) 
+		{
+			$message = "<strong>Success!</strong> Message Modified Successfully.";
+			header('location:message.php?response=success&message='.$message);
 			} else {
-			header("location:message-controller.php?email=alreadyexist");
+				$message = "<strong>Success!</strong> Message Not Modified .Please check Carefully..";
+			header('location:message.php?response=warning');
 		}
 	}
-		else if($_GET['action']=='delete'){
-		$id=(int)$_GET['id'];
-		$page=$_GET['page'];
-		$deleteMessage =mysql_query("DELETE FROM r_message WHERE id_message=$id");
-		if($result)
+		else if($_REQUEST['action']=='delete'){
+			
+			$messageid=explode(",",$_REQUEST["chkdelids"]);
+		$count=count($messageid);
+		for($i=0;$i<$count;$i++)
 		{
-			header("location:message.php?page=$page");
+			$deletemessage=mysql_query("DELETE FROM r_message WHERE id_message=".$messageid[$i]);
+		}
+			if ($deletemessage) 
+		{
+			$message = "<strong>Success!</strong> Message Deleted Successfully.";
+			header('location:message.php?response=success&message='.$message);
+			} else {
+				$message = "<strong>Success!</strong> Message Not Deleted.Please check Carefully..";
+			header('location:message.php?response=warning');
 		}
 	}
 ?>

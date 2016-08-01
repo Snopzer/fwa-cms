@@ -21,13 +21,14 @@
         if($addPage){
 			$pageid=mysql_insert_id();
 			addSeoURL($seo_url,0,0,$pageid,0);
-            header('location:pages.php');
+            $message = "<strong>Success!</strong> Page Added Successfully.";
+			header('location:pages.php?response=success&message='.$message);
+			} else {
+				$message = "<strong>Success!</strong> Page Not Added .Please check Carefully..";
+			header('location:pages.php?response=warning');
 		}
-        else
-		{
-            echo "Error Deatails Not Stored";
 		}
-		}else if($_POST['action']=='edit'){
+		else if($_POST['action']=='edit'){
 		$id=(int)$_POST['id'];
 		$page=$_POST['page'];
        
@@ -42,19 +43,33 @@
 		if($editPage)
 		{
 			updateSeoURLbyPage($seo_url,0,0,$id,0);
-			header("location:posts.php?page=$page");
-			header("location:pages.php?page=$page");
-		}
-		else {
-			echo "failed to update";
+			$message = "<strong>Success!</strong> Page Modified Successfully.";
+			header('location:pages.php?response=success&message='.$message);
+			
+			} else {
+				$message = "<strong>Warning!</strong> Page Not Modified.Please check Carefully..";
+			header('location:pages.php?response=danger&message='.$message);
+			
 		}
 	}
-	else if($_GET['action']=='delete'){
-		$id = (int)$_GET['id'];
-		$page=$_GET['page'];
-		$deletePage = mysql_query("DELETE FROM r_page WHERE id_page=$id");
-		if ($deletePage) {
-			header("location:pages.php?page=$page");
+	else if($_REQUEST['action']=='delete'){
+		
+		$messageid=explode(",",$_REQUEST["chkdelids"]);
+		$count=count($messageid);
+		for($i=0;$i<$count;$i++)
+		{
+			$row="DELETE FROM r_page WHERE id_page=".$messageid[$i];
+			$result= mysql_query($row);
+		}
+		if($result)
+		{
+			$message = "<strong>Success!</strong> Page Deleted Successfully.";
+			header('location:pages.php?response=success&message='.$message);
+			
+			} else {
+				$message = "<strong>Warning!</strong> Page Not Deleted. Please check Carefully.";
+			header('location:pages.php?response=danger&message='.$message);
+			
 		}
 	} 
 ?>

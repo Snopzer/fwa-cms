@@ -11,7 +11,7 @@
 	</div>
     <div class=" border-bottom">
         <div class="full-left">
-            <section class="full-top">
+            <!--<section class="full-top">
                 <button id="toggle"><i class="fa fa-arrows-alt"></i></button>
 			</section>
             <section class="full-top">
@@ -19,7 +19,7 @@
 					<input type="text" name="search" id="search" onblur="if (this.value == '') {this.value = 'Search...';}" onfocus="this.value = '';" value="Search...">
 					<input type="submit" class="fa fa-search" value="">
 				</form>
-			</section>
+			</section>-->
 			
             <div class="clearfix"> </div>
 		</div>
@@ -38,10 +38,10 @@
                     <a href="#" class="dropdown-toggle dropdown-at" data-toggle="dropdown"><span class=" name-caret"><?= $_SESSION['name'] ?><i class="caret"></i></span><img src="../images/user/<?= $_SESSION['image'] ?>" style="width:100px; height: 61px;"></a>
                     <ul class="dropdown-menu " role="menu">
                         <li><a href="profile.php"><i class="fa fa-user"></i>Edit Profile</a></li>
-                        <li><a href="inbox.php"><i class="fa fa-envelope"></i>Inbox</a></li>
+                        <!--<li><a href="inbox.php"><i class="fa fa-envelope"></i>Inbox</a></li>
 							<li><a href="calendar.php"><i class="fa fa-calendar"></i>Calender</a></li>
-						<li><a href="inbox.php"><i class="fa fa-clipboard"></i>Tasks</a></li>
-                        <li><a href="controller.php?type=logout"><i class="fa fa-sign-in"></i>Logout</a></li>                                                                        
+						<li><a href="inbox.php"><i class="fa fa-clipboard"></i>Tasks</a></li>-->
+                        <li><a href="controller.php?type=logout"><i class="fa fa-sign-in"></i>Logout</a></li>    
 					</ul>
 				</li>
 			</ul>
@@ -51,8 +51,13 @@
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
-                    <li><a href="users.php" 	class=" hvr-bounce-to-right"><i class="fa fa-user nav_icon"></i>	<span class="nav-label">Users</span> </a></li>  
-									
+                    <li class="">
+                        <a class=" hvr-bounce-to-right" href="#"><i class="fa fa-user nav_icon"></i> <span class="nav-label">User</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+                            <li><a href="users.php" 	class=" hvr-bounce-to-right"><i class="fa fa-user nav_icon"></i>	<span class="nav-label">Users </span></a></li>
+							<li><a href="userrole.php"	class=" hvr-bounce-to-right"><i class="fa fa-user nav_icon"></i>	<span class="nav-label">User Role</span> </a></li> 
+						</ul>
+					</li>		
 					<li class="">
                         <a class=" hvr-bounce-to-right" href="#"><i class="fa fa-indent nav_icon"></i> <span class="nav-label">Catalog</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">

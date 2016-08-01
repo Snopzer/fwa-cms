@@ -20,11 +20,12 @@
 		                
 			$addSiteData = mysql_query("INSERT INTO r_site_details (site_name,owner_email,email_from,phone,replay_email,title,meta_description,meta_keywords,google_analytics_code,copyrights) VALUES ('" . $site_name . "','" . $owner_email . "','" . $email_from . "','" . $phone . "','" . $replay_email . "','" . $title . "','" . $meta_description . "','" . $meta_keywords . "','" . $google_analytics_code . "','" . $copyrights . "')") or die(mysql_error());		
 			if ($addSiteData) {
-				header('location:site.php');
-				}
-			else {
-				echo "Error Deatails Not Stored";
-				}
+				$message = "<strong>Success!</strong> Site Added Successfully.";
+			header('location:site.php?response=success&message='.$message);
+			} else {
+				$message = "<strong>Success!</strong> Site Not Added .Please check Carefully..";
+			header('location:site.php?response=warning');
+		}
 			
 	}
 		else if($_REQUEST['action']=='edit'){
@@ -44,9 +45,14 @@
 			$updateSiteData = mysql_query($row);
 					
 			if ($updateSiteData) {
-				header("location:site.php?page=$page");
-				exit;
-			}
+				$message = "<strong>Success!</strong> Site Modified Successfully.";
+			header('location:site.php?response=success&message='.$message);
+			
+			} else {
+				$message = "<strong>Warning!</strong> Site Not Modified.Please check Carefully..";
+			header('location:site.php?response=danger&message='.$message);
+			
+		}
 				
 	}
 	else if($_REQUEST['action']=='delete'){
@@ -55,7 +61,14 @@
 		for($i=0;$i<$count;$i++)
 		{
 			$deleteSite=mysql_query("DELETE FROM r_site_details WHERE id=".$messageid[$i]);
+		}if ($deleteSite) {
+				$message = "<strong>Success!</strong> Site Deleted Successfully.";
+			header('location:site.php?response=success&message='.$message);
+			
+			} else {
+				$message = "<strong>Warning!</strong> Site Not Deleted.Please check Carefully..";
+			header('location:site.php?response=danger&message='.$message);
+			
 		}
-		header("location:site.php?page=$page");
 	}
 ?>

@@ -15,6 +15,7 @@
 		$skills = mysql_real_escape_string($_POST['skills']);	
 		$name = mysql_real_escape_string($_POST['name']);	
 		$country = mysql_real_escape_string($_POST['country']);	
+		$userrole = mysql_real_escape_string($_POST['userrole']);	
 		$status = mysql_real_escape_string($_POST['status']);	
 		$seo_url = $_POST['seo_url'];
 		
@@ -24,14 +25,16 @@
 		{
 			header('location:users.php?email=alreadyexist');
 			}else{                   
-			$insert = mysql_query("INSERT INTO r_user (name,email,phone,department,password,skills,id_country,status) VALUES ('" . $name . "','" . $email . "','" . $phone . "','" . $department . "','" . md5($password) . "','" . $skills . "','" . $country . "','" . $status . "')") or die(mysql_error());		
+			$insert = mysql_query("INSERT INTO r_user (name,email,phone,department,password,skills,id_country,id_user_role,status) VALUES ('" . $name . "','" . $email . "','" . $phone . "','" . $department . "','" . md5($password) . "','" . $skills . "','" . $country . "','" . $userrole . "','" . $status . "')") or die(mysql_error());		
 			if ($insert) {
 				$userid=mysql_insert_id();
 				addSeoURL($seo_url,0,0,0,$userid);
-				header('location:users.php');
+				$message = "<strong>Success!</strong> User Added Successfully.";
+				header('location:users.php?response=success&message='.$message);
 				}
 			else {
-				echo "Error Deatails Not Stored";
+				$message = "<strong>Warning!</strong> User Not Added.Please check Carefully..";
+				header('location:users.php?response=warning');
 				}
 			}
 	}
@@ -43,12 +46,13 @@
 			$skills = mysql_real_escape_string($_POST['skills']);	
 			$name = mysql_real_escape_string($_POST['name']);	
 			$country = mysql_real_escape_string($_POST['country']);	
+			$userrole = mysql_real_escape_string($_POST['userrole']);	
 			$status = mysql_real_escape_string($_POST['status']);	
 			$page = mysql_real_escape_string($_POST['page']);	
 			$seo_url = mysql_real_escape_string($_POST['seo_url']);	
 			$email = mysql_real_escape_string($_POST['email']);	
 			
-			$row = "update r_user SET email='".$email."',name='".$name."',phone='".$phone."',department='".$department."',skills='".$skills."',id_country='".$country."',status=".$status." where id_user='$id' ";
+			$row = "update r_user SET email='".$email."',name='".$name."',phone='".$phone."',department='".$department."',skills='".$skills."',id_country='".$country."',id_user_role='".$userrole."',status=".$status." where id_user='$id' ";
 			$result = mysql_query($row);
 			
 			if(isset($_POST['password']) && $_POST['password'])
@@ -60,9 +64,13 @@
 			
 			if ($result) {
 				updateSeoURLbyUser($seo_url,0,0,0,$id);
-				header("location:users.php?page=$page");
-				} 
-	}
+			$message = "<strong>Success!</strong> User Modified Successfully.";
+			header('location:users.php?response=success&message='.$message.'&page=$page');
+			} else {
+			$message = "<strong>Warning!</strong> User Not Modified.Please check Carefully..";
+			header('location:users.php?response=danger&message='.$message.'&page=$page');
+		}
+		}
 	else if($_REQUEST['action']=='delete'){
 		$messageid=explode(",",$_REQUEST["chkdelids"]);
 		$count=count($messageid);
@@ -71,6 +79,12 @@
 			$row="DELETE FROM r_user WHERE id_user=".$messageid[$i];
 			$result= mysql_query($row);
 		}
-		header("location:users.php?page=$page");
+		if ($result) {
+			$message = "<strong>Success!</strong> User Deleted Successfully.";
+			header('location:users.php?response=success&message='.$message.'&page=$page');
+		}else{
+			$message = "<strong>Warning!</strong> User Not Deleted. Please check Carefully.";
+			header('location:users.php?response=danger&message='.$message.'&page=$page');
+		}
 	}
 ?>

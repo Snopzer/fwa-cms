@@ -7,6 +7,7 @@
 ?>  
 <?php include_once('includes/header.php'); ?>
 <?php include_once('includes/menu.php'); ?>
+<script src="js/ckeditor/ckeditor.js"></script>
 <?php if (!isset($_GET['action']) & !isset($_GET['type'])) { ?>
 	<div id="page-wrapper" class="gray-bg dashbard-1">
 		<div class="content-main">	
@@ -20,6 +21,14 @@
 			<div class="grid-system">
 				<div class="horz-grid">
 					<div class="grid-system">
+						
+						<?php if(isset($_GET['message']) && $_GET['message']!=''){ ?>
+							<div class="alert alert-<?php echo $_GET['response']?> fade in">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<?php echo $_GET['message'];?>
+							</div>
+						<?php } ?>
+						
 						<div class="horz-grid">
 							<div class="bs-example">
 								<table class="table">
@@ -32,14 +41,14 @@
 											?>]</h1></td>
 											<td class="type-info text-right">
 												<a href="category.php?action=add"><span class="btn btn-success">Add New</span></a> 
-												<a><span class="btn btn-primary" id="edit">Edit</span></a>
-												<a><span class="btn btn-danger" id="delete">Delete</span></a>
+												<a  href="javascript:fnDetails();"><span class="btn btn-primary">Edit</span></a>
+												<a href="javascript:fnDelete();"><span class="btn btn-danger" id="delete">Delete</span></a>
 											</td>
 										</tr>
 									</tbody>
 								</table>
 							</div>
-							<form action="category.php?type=search" method="post">
+							<form name="frmMain" action="category.php?type=search" method="post">
 								<table class="table"> 
 									<tr class="table-row">
 										<td class="table-img">&nbsp;</td>
@@ -48,7 +57,7 @@
 									</tr>
 									<tr class="table-row">
 										<td class="table-img">
-											<input type="checkbox" id="selectall" onClick="selectAll(this)" >
+											<input type="checkbox" name="checkall" onClick="Checkall()"/>
 										</td>
 										<td class="table-text"><h6>Name</h6></td>
 										<!--<td class="table-text"><h6>Description</h6></td>-->
@@ -69,12 +78,12 @@
 											while ($row = mysql_fetch_assoc($select)) {
 											?>
 											<tr class="table-row">
-												<td class="table-img"><input type="checkbox" name="colors" value="<?php echo$row['id_category']?>"></td>
+												<td class="table-img"><input type="checkbox" name="selectcheck" value="<?php echo$row['id_category']?>"></td>
 												<td class="march"><h6><?php echo $row["name"] ?></h6></td>
 												<!--<td class="march"><h6><?php echo $row["description"] ?></h6></td>-->
 												<td class="march"><h6><?php echo ($row["status"]==1)?'Enable':'Disable'; ?></h6></td>
 												<td><a href="category.php?id=<?php echo $row["id_category"] ?>&action=edit&page=<?php echo "$page"?>"><span class="label label-primary">Edit</span><a/>
-												<a href="category-controller.php?id=<?php echo $row["id_category"] ?>&action=delete&page=<?php echo "$page"?>""><span class="label label-info">Delete</span></a>
+												<a href="category-controller.php?chkdelids=<?php echo $row["id_category"] ?>&action=delete&page=<?php echo "$page"?>""><span class="label label-info">Delete</span></a>
 												</td>
 											</tr>
 											<?php
@@ -87,6 +96,10 @@
 										<?php }
 									?>
 								</table>
+								<input type="hidden" name="action"/>
+								<input type="hidden" name="id"/>
+								<input type="hidden" name="chkdelids"/>
+								<input type="hidden" name="page" value="<?php echo "$page"; ?>"/>
 							</form>
 							<?php
 								$res1 = mysql_query("SELECT * FROM r_category");
@@ -150,7 +163,7 @@
 							<form class="form-horizontal" action="category-controller.php" method="post">
 								<input type="hidden" name="action" value="edit"/>
 								<input type="hidden" name="id" value="<?php echo $result["id_category"] ?>">
-								<input type="hidden" name="page" value='<? echo "$page"?>'>
+								<input type="hidden" name="page" value='<?php echo "$page"?>'>
 								<div class="form-group">
 									<label for="inputEmail3" class="col-sm-2 control-label hor-form">Name</label>
 									<div class="col-sm-8">
@@ -160,7 +173,7 @@
 								<div class="form-group">
 									<label for="inputEmail3" class="col-sm-2 control-label hor-form">Description</label>
 									<div class="col-sm-8">
-										<textarea class="form-control"  name="description"><?php echo $result["description"] ?></textarea>
+										<textarea class="form-control" id="description"  name="description"><?php echo $result["description"] ?></textarea>
 									</div>
 								</div>
 								
@@ -199,7 +212,7 @@
 								<div class="form-group">
 									<label for="inputEmail3" class="col-sm-2 control-label ">Meta Description</label>
 									<div class="col-sm-8">
-										<textarea  name="meta_description" class="form-control"><?php echo  $result["meta_description"] ?></textarea> 
+										<textarea  name="meta_description" id="metadescription" class="form-control"><?php echo  $result["meta_description"] ?></textarea> 
 									</div>
 								</div>
 								<div class="form-group">
@@ -275,7 +288,7 @@
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label ">Meta Description</label>
 								<div class="col-sm-8">
-									<textarea  name="meta_description" class="form-control"></textarea> 
+									<textarea id='metadescription' name="meta_description" class="form-control"></textarea> 
 								</div>
 							</div>
 							<div class="form-group">
@@ -436,33 +449,107 @@
 			<?php } ?>
 			
 			<script language="JavaScript">
-				function selectAll(source) {
-					checkboxes = document.getElementsByName('colors[]');
-					for (var i in checkboxes)
-					checkboxes[i].checked = source.checked;
+				/* editor script */
+				var editor=CKEDITOR.replace('description');
+				//var editor=CKEDITOR.replace('metadescription');
+				/* editor script */
+				function fnDetails()
+				{
+					var obj = document.frmMain.elements;
+					flag = 0;
+					for (var i = 0; i < obj.length; i++)
+					{
+						if (obj[i].name == "selectcheck" && obj[i].checked)
+						{
+							flag = 1;
+							break;
+						}
+					}
+					if (flag == 0)
+					{
+						alert("Please make a selection from a list to Edit");
+					} else if (flag == 1)
+					{
+						var checkedvals = "";
+						for (var i = 0; i < obj.length; i++) {
+							if (obj[i].checked == true) {
+								checkedvals = checkedvals + "," + obj[i].value;
+							}
+						}
+						var checkvals = checkedvals.substr(1);
+						var arrval = checkvals.split(",");
+						if (arrval.length > 1)
+						{
+							alert("Select Only One checkbox to edit");
+						} else
+						{
+							window.location.href = "category.php?action=edit&page=<?php echo "$page"?>&id=" + arrval[0];
+						}
+					}
 				}
-				
-				$("#edit").click(function(){
-					alert("Edit Record");  
-					
-					$('input[name="categoryId"]:checked').each(function() {
-						console.log(this.value); 
-						alert(this.value);
-					});
-					/*console.log($('input[name="category"]:checked'));
-						
-						$('input[name="category"]:checked').each(function() {
-						console.log(this.value);
-					});*/
-					
-					//console.log($('input[name=category\\[\\]]'));
-					
-				});
-				$("#delete").click(function(){
-					alert("Deleting Records");
-				});
-				
 			</script>
 			
+			<script language="JavaScript">
+				function Checkall()
+				{
+					if (document.frmMain.checkall.checked == true)
+					{
+						var obj = document.frmMain.elements;
+						for (var i = 0; i < obj.length; i++)
+						{
+							if ((obj[i].name == "selectcheck") && (obj[i].checked == false))
+							{
+								obj[i].checked = true;
+							}
+						}
+					} else if (document.frmMain.checkall.checked == false)
+					{
+						var obj = document.frmMain.elements;
+						for (var i = 0; i < obj.length; i++)
+						{
+							if ((obj[i].name == "selectcheck") && (obj[i].checked == true))
+							{
+								obj[i].checked = false;
+							}
+						}
+					}
+				}
+				function fnDelete()
+				{
+					var obj = document.frmMain.elements;
+					flag = 0;
+					for (var i = 0; i < obj.length; i++)
+					{
+						if (obj[i].name == "selectcheck" && obj[i].checked) {
+							flag = 1;
+							break;
+						}
+					}
+					if (flag == 0) {
+						alert("Select Checkbox to Delete");
+						} else if (flag == 1) {
+						var i, len, chkdelids, sep;
+						chkdelids = "";
+						sep = "";
+						for (var i = 0; i < document.frmMain.length; i++) {
+							if (document.frmMain.elements[i].name == "selectcheck")
+							{
+								if (document.frmMain.elements[i].checked == true) {
+									//alert(document.frmFinal.elements[i].value)
+									chkdelids = chkdelids + sep + document.frmMain.elements[i].value;
+									sep = ",";
+								}
+							}
+						}
+						ConfirmStatus = confirm("Do you want to DELETE selected User Role.?")
+						if (ConfirmStatus == true) {
+							document.frmMain.chkdelids.value = chkdelids
+							document.frmMain.action.value = "delete"
+							document.frmMain.action = "category-controller.php";
+							document.frmMain.submit()
+						}
+					}
+				}
+			</script>	
 			
-			<?php include_once('includes/footer.php'); ?>					
+		<?php include_once('includes/footer.php'); ?>							

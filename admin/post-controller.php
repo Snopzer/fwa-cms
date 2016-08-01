@@ -77,11 +77,17 @@
 			header('location:posts.php?response=danger&message='.$message.'&page=$page');
 		}
 		}
-	else if ($_GET['action'] == 'delete') {
-		$id = $_GET['id'];
-		$page = $_GET['page'];
-		$deletePost = mysql_query("DELETE FROM r_post WHERE id_post=$id");
-		if ($deletePost) {
+	else if ($_REQUEST['action'] == 'delete') {
+		
+		$messageid=explode(",",$_REQUEST["chkdelids"]);
+		$count=count($messageid);
+		for($i=0;$i<$count;$i++)
+		{
+			$row="DELETE FROM r_post WHERE id_post=".$messageid[$i];
+			$result= mysql_query($row);
+		}
+		
+		if ($result) {
 			//header("location:posts.php?page=$page");
 			$message = "<strong>Success!</strong> Post Deleted Successfully.";
 			header('location:posts.php?response=success&message='.$message.'&page=$page');

@@ -1,8 +1,10 @@
 <?php
+if(!isset($_GET['msg'])){
 	session_start();
 	if (isset($_SESSION['id'])) {
 		header('location:home.php');
-	}
+}
+}
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -23,7 +25,9 @@
 	<body>
 		<div class="login">
 			<h1><a href="home.php">TECHDEFEAT</a></h1>
-			
+			<?php
+			if(!isset($_GET['msg'])){
+				?>
 			<div class="login-bottom">
 				<h2>Sign Up - It's Free And Always Will Be</h2>
 				<div class="">
@@ -64,16 +68,28 @@
 				</div>
 				<div class="clearfix"> </div>
 			</div>
-			
+			<?php 
+			}
+			?>
+			<?php
+			if(isset($_GET['msg'])){
+				?>
+			<div class="login-bottom">
+				<h2> A confirmation link has been send to your mail</h2>
+				</div>
+			<?php
+			}
+			?>
 		</div>
 		
 		<div class="copy-right">
-			<p> &copy; 2016 WWW.TECHDEFEAT.COM All Rights Reserved </p>
+			<p> &copy; 2016 www.techdefeat.com All Rights Reserved </p>
 		</div>
 		<script src="js/jquery.nicescroll.js"></script>
 		<script src="js/scripts.js"></script>
 	</body>
 </html>
+
 
 
 <script type="text/javascript" language="JavaScript">
@@ -124,4 +140,6 @@
 	});
 	
 </script>
+
+
 

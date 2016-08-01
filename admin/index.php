@@ -23,14 +23,14 @@ if (isset($_SESSION['id'])) {
             <h1><a href="home.php">Techdefeat</a></h1>
             <div class="login-bottom">
                 <h2>Login</h2>
+                 
                 <?php
-                if (isset($_GET['login']) && $_GET['login'] == 'fail') {
+				if (isset($_GET['login']) && $_GET['login'] == 'fail') {
                     ?>
                     <p style="color:red">Login Failed Please Check Your Details</p>
                     <?php
                 }
-                ?>  
-                
+                ?> 
                     <input type="hidden" name="login">
                     <div class="">
 						<form action="controller.php?type=signin" method="POST" >

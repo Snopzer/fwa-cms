@@ -10,7 +10,7 @@
 	}
 	if($_POST['action']=='add'){
 		$pic = ($_FILES['photo']['name']);
-		$path = "images/" . $_FILES['photo']['name'];
+		$path = "../images/category/" . $_FILES['photo']['name']; 
 		if (copy($_FILES['photo']['tmp_name'], $path)) {
 			echo "The file " . basename($_FILES['uploadedfile']['name']) . " has been uploaded, and your information has been added to the directory";
 			} else {
@@ -31,16 +31,17 @@
 			
 			$categoryid=mysql_insert_id();
 			addSeoURL($seo_url,$categoryid,0,0,0);
-			
-			header('location:category.php');
+			$message = "<strong>Success!</strong> category Added Successfully.";
+			header('location:category.php?response=success&message='.$message);
 			} else {
-			echo "Error Deatails Not Stored";
+				$message = "<strong>Success!</strong> category Not Added .Please check Carefully..";
+			header('location:posts.php?response=warning');
 		}
 		}else if($_POST['action']=='edit'){
 		$id=(int)$_POST['id']  ;   
 		if (isset($_FILES['photo']['name']) && $_FILES['photo']['name']!='') {
 			$pic = $_FILES['photo']['name'];
-			$path = "images/" . $_FILES['photo']['name'];
+			$path = "../images/category/" . $_FILES['photo']['name']; 
 			if (copy($_FILES['photo']['tmp_name'], $path)) {
 				echo "The file " . basename($_FILES['uploadedfile']['name']) . " has been uploaded, and your information has been added to the directory";
 				} else {
@@ -62,19 +63,34 @@
 		
 		$editCategory = mysql_query("update r_category SET name='".$name."',description='".$description."',meta_title='".$meta_title."',meta_keywords='".$meta_keywords."',meta_description='".$meta_description."',status='".$status."',image='".$pic."'where id_category='".$id."' ");
 		if ($editCategory) {
+			
+			
 			updateSeoURLbyCategory($seo_url,$id,0,0,0);
-			header("location:category.php?page=$page");
+			$message = "<strong>Success!</strong> Category Modified Successfully.";
+			header('location:category.php?response=success&message='.$message);
+			
 			} else {
-			header("location:category-controller.php?email=alreadyexist");
+				$message = "<strong>Warning!</strong> Category Not Modified.Please check Carefully..";
+			header('location:category.php?response=danger&message='.$message);
+			
 		}
 	}
-	else if($_GET['action']=='delete'){
-		$id=$_GET['id'];
-		$page=$_GET['page'];
-		$deleteCategory= "DELETE FROM r_category WHERE id_category=$id";
-		if($deleteCategory)
+	else if($_REQUEST['action']=='delete'){
+		$messageid=explode(",",$_REQUEST["chkdelids"]);
+		$count=count($messageid);
+		for($i=0;$i<$count;$i++)
 		{
-			header("location:category.php?page=$page");
+			$row="DELETE FROM r_category WHERE id_category=".$messageid[$i];
+			$result= mysql_query($row);
+		}
+		if($result){
+		$message = "<strong>Success!</strong> Category Deleted Successfully.";
+			header('location:category.php?response=success&message='.$message);
+		}
+		else{
+			$message = "<strong>Warning!</strong> Category Not Deleted. Please check Carefully.";
+			header('location:category.php?response=danger&message='.$message);
 		}
 	}
-?>
+	
+		?>

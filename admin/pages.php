@@ -8,6 +8,7 @@
 ?>  
 <?php include_once('includes/header.php'); ?>
 <?php include_once('includes/menu.php'); ?>
+<script src="js/ckeditor/ckeditor.js"></script>
 <?php if(!isset($_GET['action'])){?>
 	<div id="page-wrapper" class="gray-bg dashbard-1">
 		<div class="content-main">	
@@ -21,7 +22,12 @@
 			<div class="grid-system">
 				<div class="horz-grid">
 					<div class="grid-system">
-						
+						<?php if(isset($_GET['message']) && $_GET['message']!=''){ ?>
+						<div class="alert alert-<?php echo $_GET['response']?> fade in">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<?php echo $_GET['message'];?>
+						</div>
+						<? } ?>
 						<div class="horz-grid">
 							<div class="bs-example">
 								<table class="table">
@@ -34,17 +40,18 @@
 											?>]</h1></td>
 											<td class="type-info text-right">
 												<a href="pages.php?action=add"><span class="btn btn-success">Add New</span></a> 
-												<a><span class="btn btn-primary">Edit</span></a>
-												<a><span class="btn btn-danger">Delete</span></a>
+												<a href="javascript:fnDetails();"><span class="btn btn-primary">Edit</span></a>
+												<a href="javascript:fnDelete();"><span class="btn btn-danger">Delete</span></a>
 											</td>
 										</tr>
 									</tbody>
 								</table>
 							</div>
+							<form name="frmMain" method="post">
 							<table  class="table">         		
 								<tr class="table-row">
 									<td class="table-img">
-										<input type="checkbox" id="selectall" onClick="selectAll(this)">
+										<input type="checkbox" name="checkall" onClick="Checkall()"/>
 									</td>
 									<td class="table-text"><h6>Title</h6></td>
 									<!--<td class="table-text"><h6>Meta Description</h6></td>-->
@@ -75,7 +82,7 @@
 										while ($row = mysql_fetch_assoc($select)) {
 										?>
 										<tr class="table-row">
-											<td class="table-img"><input type="checkbox" name="colors[]"></td>
+											<td class="table-img"><input type="checkbox" name="selectcheck" value="<?= $row["id_page"] ?>"></td>
 											<td class="march"><h6><?php echo $row["title"] ?></h6></td>
 											<!--<td class="march"><h6><?php echo $row["meta_description"] ?></h6></td>-->
 											<!--<td class="march"><h6><?php echo $row["meta_keywords"] ?></h6></td>-->
@@ -83,7 +90,7 @@
 											<!--<td class="march"><h6><?php echo $row["page_description"] ?></h6></td>-->
 											<td>
 												<a href="pages.php?id=<?php echo $row["id_page"] ?>&action=edit&page=<?php echo "$page"?>"><span class="label label-primary">Edit</span><a/>
-													<a href="pages-controller.php?id=<?php echo $row["id_page"] ?>&action=delete&page=<?php echo "$page"?>"><span class="label label-info">Delete</span></a>
+													<a href="pages-controller.php?chkdelids=<?php echo $row["id_page"] ?>&action=delete&page=<?php echo "$page"?>"><span class="label label-info">Delete</span></a>
 												</td>
 											</tr>
 											<?php
@@ -91,7 +98,12 @@
 										}
 									?>
 								</table>
-								
+							<input name="uid" type="hidden" value="<?php echo $_REQUEST["uid"]; ?>">
+                            <input type="hidden" name="action"/>
+                            <input type="hidden" name="id"/>
+                            <input type="hidden" name="chkdelids"/>
+                            <input type="hidden" name="page" value="<?php echo "$page"; ?>"/>
+								</form>
 								<?php
 									$res1 = mysql_query("SELECT * FROM r_page");
 									$count = mysql_num_rows($res1);
@@ -298,13 +310,112 @@
 				}// end of action set edit/add
 			?>
 			
-			<script language="JavaScript">
-				function selectAll(source) {
-					checkboxes = document.getElementsByName('colors[]');
-					for (var i in checkboxes)
-					checkboxes[i].checked = source.checked;
-				}
-			</script>
+			
 			<?php include_once('includes/footer.php'); ?>	
+			<script language="JavaScript">
+			/* editor script */
+		var editor=CKEDITOR.replace('meta_description');
+		var editor=CKEDITOR.replace('page_description');
+		/* editor script */
+        function fnDetails()
+        {
+            var obj = document.frmMain.elements;
+            flag = 0;
+            for (var i = 0; i < obj.length; i++)
+            {
+                if (obj[i].name == "selectcheck" && obj[i].checked)
+                {
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag == 0)
+            {
+                alert("Please make a selection from a list to Edit");
+            } else if (flag == 1)
+            {
+                var checkedvals = "";
+                for (var i = 0; i < obj.length; i++) {
+                    if (obj[i].checked == true) {
+                        checkedvals = checkedvals + "," + obj[i].value;
+                    }
+                }
+                var checkvals = checkedvals.substr(1);
+                var arrval = checkvals.split(",");
+                if (arrval.length > 1)
+                {
+                    alert("Select Only One checkbox to edit");
+                } else
+                {
+                    window.location.href = "pages.php?action=edit&page=<? echo "$page"?>&id=" + arrval[0];
+                }
+            }
+        }
+    </script>
+ 	
+
+    <script language="JavaScript">
+        function Checkall()
+        {
+            if (document.frmMain.checkall.checked == true)
+            {
+                var obj = document.frmMain.elements;
+                for (var i = 0; i < obj.length; i++)
+                {
+                    if ((obj[i].name == "selectcheck") && (obj[i].checked == false))
+                    {
+                        obj[i].checked = true;
+                    }
+                }
+            } else if (document.frmMain.checkall.checked == false)
+            {
+                var obj = document.frmMain.elements;
+                for (var i = 0; i < obj.length; i++)
+                {
+                    if ((obj[i].name == "selectcheck") && (obj[i].checked == true))
+                    {
+                        obj[i].checked = false;
+                    }
+                }
+            }
+        }
+        function fnDelete()
+        {
+            var obj = document.frmMain.elements;
+            flag = 0;
+            for (var i = 0; i < obj.length; i++)
+            {
+                if (obj[i].name == "selectcheck" && obj[i].checked) {
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag == 0) {
+                alert("Select Checkbox to Delete");
+            } else if (flag == 1) {
+                var i, len, chkdelids, sep;
+                chkdelids = "";
+                sep = "";
+                for (var i = 0; i < document.frmMain.length; i++) {
+                    if (document.frmMain.elements[i].name == "selectcheck")
+                    {
+                        if (document.frmMain.elements[i].checked == true) {
+                            //alert(document.frmFinal.elements[i].value)
+                            chkdelids = chkdelids + sep + document.frmMain.elements[i].value;
+                            sep = ",";
+                        }
+                    }
+                }
+                ConfirmStatus = confirm("Do you want to DELETE selected User Role.?")
+                if (ConfirmStatus == true) {
+                    document.frmMain.chkdelids.value = chkdelids
+                    document.frmMain.action.value = "delete"
+                    document.frmMain.action = "pages-controller.php";
+                    document.frmMain.submit()
+                }
+            }
+        }
+    </script>	
+
 			
 				
