@@ -1,4 +1,11 @@
 <?php
+	/*
+	File name 		: 	category-controller.php
+	Date Created 	:	13-06-2016
+	Date Updated 	:	08-09-2016
+	Description		:	Manage Category Operation Like Add/Edit/Delete Categories
+	*/
+	
 	ob_start();
 	session_start();
 	include_once('includes/config.php');
@@ -9,24 +16,27 @@
 		header('location:index.php');
 	}
 	if($_POST['action']=='add'){
-		$pic = ($_FILES['photo']['name']);
-		$path = "../images/category/" . $_FILES['photo']['name']; 
+	
+	if (isset($_FILES['photo']['name']) && $_FILES['photo']['name'] != '') {
+		$path = "../images/category/" . $_FILES['photo']['name'];
 		if (copy($_FILES['photo']['tmp_name'], $path)) {
+			$pic = $_FILES['photo']['name'];
 			echo "The file " . basename($_FILES['uploadedfile']['name']) . " has been uploaded, and your information has been added to the directory";
 			} else {
 			echo "Sorry, there was a problem uploading your file.";
 		}
-		$name = mysql_real_escape_string($_POST['name']);	
-		$description = mysql_real_escape_string($_POST['description']);	
-		$meta_title = mysql_real_escape_string($_POST['meta_title']);	
-		$meta_keywords = mysql_real_escape_string($_POST['meta_keywords']);	
-		$meta_description = mysql_real_escape_string($_POST['meta_description']);	
-		$seo_url = mysql_real_escape_string($_POST['seo_url']);	
-		$status = mysql_real_escape_string($_POST['status']);	
-		$pic = $_FILES['photo']['name'];
-		$date_created= date('Y-m-d h:i:s');
+		}
+		$name 				= mysql_real_escape_string($_POST['name']);	
+		$description 		= mysql_real_escape_string($_POST['description']);	
+		$meta_title 		= mysql_real_escape_string($_POST['meta_title']);	
+		$meta_keywords		= mysql_real_escape_string($_POST['meta_keywords']);	
+		$meta_description 	= mysql_real_escape_string($_POST['meta_description']);	
+		$seo_url 			= mysql_real_escape_string($_POST['seo_url']);	
+		$status 			= mysql_real_escape_string($_POST['status']);	
+		$sort_order			= mysql_real_escape_string($_POST['sort_order']);	 
+		$date_created		= date('Y-m-d h:i:s');
  		
-		$addCategory = mysql_query("INSERT INTO r_category (name,description,image,date_created,meta_title,meta_keywords,meta_description,status) VALUES ('" . $name . "','" . $description . "','" . $pic . "','" . $date_created . "','" . $meta_title . "','" . $meta_keywords . "','" . $meta_description . "','" . $status . "')") or die(mysql_error());
+		$addCategory = mysql_query("INSERT INTO r_category (name,description,image,date_created,meta_title,meta_keywords,meta_description,sort_order,status) VALUES ('" . $name . "','" . $description . "','" . $pic . "','" . $date_created . "','" . $meta_title . "','" . $meta_keywords . "','" . $meta_description . "','".$sort_order."','" . $status . "')") or die(mysql_error());
 		if ($addCategory) {
 			
 			$categoryid=mysql_insert_id();
@@ -58,10 +68,11 @@
 		$meta_description = mysql_real_escape_string($_POST['meta_description']);
 		$status = mysql_real_escape_string($_POST['status']);	
 		$seo_url = mysql_real_escape_string($_POST['seo_url']);	
-		$seo_url = mysql_real_escape_string($_POST['seo_url']);	
+		$sort_order = mysql_real_escape_string($_POST['sort_order']);
 		$date_updated = date('Y-m-d h:i:s');
-		
-		$editCategory = mysql_query("update r_category SET name='".$name."',description='".$description."',meta_title='".$meta_title."',meta_keywords='".$meta_keywords."',meta_description='".$meta_description."',status='".$status."',image='".$pic."'where id_category='".$id."' ");
+		/*echo "update r_category SET name='".$name."',description='".$description."',meta_title='".$meta_title."',meta_keywords='".$meta_keywords."',meta_description='".$meta_description."',status='".$status."',image='".$pic."',sort_order='".$sort_order."' where id_category='".$id."' ";
+		exit;*/
+		$editCategory = mysql_query("update r_category SET name='".$name."',description='".$description."',meta_title='".$meta_title."',meta_keywords='".$meta_keywords."',meta_description='".$meta_description."',status='".$status."',image='".$pic."',sort_order='".$sort_order."' where id_category='".$id."' ");
 		if ($editCategory) {
 			
 			

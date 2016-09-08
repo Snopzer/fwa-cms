@@ -1,4 +1,5 @@
 <?php
+	
 	include_once('admin/includes/config.php');
 	
 	$seo_url = $_GET['seo_url'];
@@ -46,8 +47,16 @@
 		"meta-description" => $result['meta_description']);	
 	}
 	
-	
-
+	if($checkSEO['id_category'] >=1 )	{		
+		$showCategoryDiv = true;
+		$categoryQuery = mysql_query("SELECT * FROM r_category cat, r_seo_url seo WHERE cat.id_category = seo.id_category AND cat.id_category =".$checkSEO['id_category'])or die(mysql_error());
+		$result = mysql_fetch_assoc($categoryQuery)or die(mysql_error());	
+		
+		$metaArray = array(		
+		"title"  => $result['meta_title'],		
+		"meta-keywords" => $result['meta_keywords'],		
+		"meta-description" => $result['meta_description']);	
+	}
 	include_once('includes/header.php');
 	
 ?>
@@ -56,6 +65,46 @@
     <div class="container">
         <div class="col-md-9 technology-left">
             <div class="business">
+			<?php if($showCategoryDiv==true){ ?>
+				<!--category details start -->
+				<div class=" blog-grid2">
+					<?if(!empty($result['image'])) { ?>
+                    <img src="images/category/<?= $result['image'] ?>" class="img-responsive" alt="<?= $result['image'] ?>">
+					<? }?>
+                    <div class="blog-text">
+                        <h5><?php echo $result['name'] ?></h5>
+                        <p><?php echo $result['description'] ?> </p>	
+                        <p></p>				
+					</div>
+				</div>
+				<!--category details end -->
+				
+				<div class="comment-top">
+                    <h2><?php echo $result['name'] ?> Topic's</h2><?php
+					/*echo "SELECT * FROM  `r_post` rp LEFT JOIN r_seo_url seo ON rp.id_post = seo.id_post WHERE rp.id_category =".$result['id_category']." ORDER BY rp.id_post";
+					exit;*/
+					$postQuery = mysql_query("SELECT rp.*,seo.seo_url as seourl FROM  `r_post` rp LEFT JOIN r_seo_url seo ON rp.id_post = seo.id_post WHERE rp.id_category =".$result['id_category']." ORDER BY rp.id_post")or die(mysql_error()); 		
+					
+					
+						while ($post = mysql_fetch_array($postQuery)) {
+							?>
+							<?php if($post['image']!=''){ ?>
+                            <div class="media-left">
+                                <a href="#">
+                                    <img class="article-short-image" src="images/post/<?php echo $post['image']?>">
+								</a>
+							</div>
+							<?php } ?>
+                            <div class="media-body">
+                                <a href="<?php echo SITEURL?><?php echo $post['seourl']?>"><h4 class="media-heading"><?php echo $post['title'] ?></h4></a>
+								<p><?php echo substr($post['description'],0,POST_DESCRIPTION_LENGTH); ?>....<a href="<?php echo SITEURL?><?php echo $post['seourl']?>">Read More.</a></p>
+								</div><br /> 
+                            <?php
+						}
+					?>
+				</div>
+				
+			<?php } ?>
 				<?php if($showpageDiv==true){ ?>
 				<div class=" blog-grid2">
 					<?if(!empty($result['image'])) { ?>

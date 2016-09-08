@@ -1,4 +1,10 @@
 <?php
+	/*
+	File name 		: 	post-controller.php
+	Date Created 	:	13-06-2016
+	Date Updated 	:	08-09-2016
+	Description		:	Manage Posts Operation Like Add/Edit/Delete Posts
+	*/
 	ob_start();
 	session_start();
 	include_once('includes/config.php');
@@ -52,7 +58,7 @@
 				echo "Sorry, there was a problem uploading your file.";
 			}
 			} else {
-			$pic = $_POST['preview_image']; 
+			$pic = $_POST['prev_image']; 
 		}
 		
 		$title = mysql_real_escape_string($_POST['title']);		

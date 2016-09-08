@@ -1,4 +1,10 @@
 <?php
+	/*
+	File name 		: 	gallery-controller.php
+	Date Created 	:	13-06-2016
+	Date Updated 	:	08-09-2016
+	Description		:	Manage Gallery Operation Like Add/Delete Images
+	*/
 	ob_start();
 	session_start();
 	include_once('includes/config.php');

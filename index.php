@@ -30,12 +30,12 @@
 					<div class="tc-ch">		
 						<?php if(!empty($result['image'])){?>
 							<div class="tch-img">
-								<a href="/<?php echo $result['seo_url']?>"><img src="images/post/<?php echo $result['image'] ?>" class="img-responsive" alt=""/></a>
+								<a href="<?php echo SITEURL?><?php echo $result['seo_url']?>"><img src="images/post/<?php echo $result['image'] ?>" class="img-responsive" alt=""/></a>
 							</div>
 							<a class="blog blue"><?php echo $result['name']; ?></a>
 						<?php } ?>
-						<h3> <a href="/<?php echo $result['seo_url']?>"><?php echo $result['title'] ?></a></h3>
-						<p><?php echo $result['description']; ?></p>
+						<h3> <a href="<?php echo SITEURL?><?php echo $result['seo_url']?>"><?php echo $result['title'] ?></a></h3>
+						<!--<p><?php echo substr($result['description'],0,POST_DESCRIPTION_LENGTH); ?>....<a href="<?php echo SITEURL?><?php echo $result['seo_url']?>">Read More.</a></p>-->
 						<div class="blog-poast-info">
 							<ul>
 								<li><i class="glyphicon glyphicon-user"> </i><a class="admin" href="#"><?php echo $result['user']; ?> </a></li>

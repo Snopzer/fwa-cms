@@ -18,7 +18,7 @@
         <div class="drop-men" >
             <ul class=" nav_1">
 				<li class="dropdown at-drop">
-					<a target="_blank" href="http://techdefeat.com/">
+					<a target="_blank" href="<?php echo SITEURL;?>">
 						<button class="btn btn-primary" type="button">
 							View Site<!--<span class="badge">4</span>-->
 						</button>
@@ -52,9 +52,7 @@
 							<li><a href="posts.php"	class=" hvr-bounce-to-right"><i class="fa fa-file-text-o nav_icon"></i>	<span class="nav-label">Posts</span> </a></li>	
 							<li><a href="comments.php" 	class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> 		<span class="nav-label">Comments</span> </a></li>
 						</ul>
-					</li>
-					
-					
+					</li>					
 					<li class="">
                         <a class=" hvr-bounce-to-right" href="#"><i class="fa fa-file-text-o nav_icon"></i> <span class="nav-label">CMS</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
@@ -63,11 +61,6 @@
                     <li><a href="gallery.php" 	class=" hvr-bounce-to-right"><i class="fa fa-picture-o nav_icon"></i> 	<span class="nav-label">Gallery</span> </a></li>
 						</ul>
 					</li>
-								
-                    
-                    
-					
-					
 					<li class="">
                         <a class=" hvr-bounce-to-right" href="#"><i class="fa fa-cog nav_icon"></i> <span class="nav-label">Settings</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">

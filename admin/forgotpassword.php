@@ -27,29 +27,23 @@ if (isset($_SESSION['id'])) {
                 <?php
 				if (isset($_GET['msg'])) {
                     ?>
-                    <p style="color:red"><?php echo $_GET['msg'];?></p>
+                    <p style="color:red"><?php echo  $_GET['msg'];?></p>
                     <?php
                 }
-                ?> 
-                    <input type="hidden" name="login">
-                    <div class="">
-						<form action="controller.php?type=signin" method="POST" >
+                ?>  <div class="">
+						<form action="controller.php?type=forgetpassword" method="POST" >
                         <div class="login-mail" id="mail_field">
                             <input type="text" id="email" name="email" placeholder="Email" >
                             <i class="fa fa-envelope"></i>
                         </div>
-                        <div class="login-mail" id="password_field">
-                            <input type="password" id="password" name="password" placeholder="Password" >
-                            <i class="fa fa-lock"></i>
-                        </div>
 						<div class="login-do">
 							<label class="hvr-shutter-in-horizontal login-sub">
-								<input type="submit" id="login" value="login">
+								<input type="submit" id="forgetpassword" value="login">
 							</label>
 						</div>
 						</form>
-                        <a class="left" href="forgotpassword.php">Forget Password </a>
-						<a class="right" href="signup.php">Create New Account</a>
+                        <a class="forgot-password " href="forgotpassword.php">Forget Password </a>   |
+							<a href="signup.php">Do not have an account?</a>
                     </div>
                    			
                     <div class="clearfix"> </div>
@@ -63,22 +57,20 @@ if (isset($_SESSION['id'])) {
 </html>
 
 <script>
-    $("#login").click(function ()
+    $("#forgetpassword").click(function ()
     {
         var email = $("#email").val();
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        //return regex.test(email);
+        //if email is empty or email is invalid then show alert message
         if ((email == '') || (!regex.test(email)))
         {
+            //alert("Please Enter email");
+            //instead of alert message show the warning desing to field
             $("#mail_field").css({"border-style": "solid", "border-color": "red"});
             $("#email").focus();
             return false;
 
-        }
-        if ($("#password").val() == '')
-        {
-            $("#password_field").css({"border-style": "solid", "border-color": "red"});
-            $("#password").focus();
-            return false;
         }
     });
 </script>

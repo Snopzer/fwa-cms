@@ -1,4 +1,11 @@
 <?php
+	/*
+	File name 		: 	users-controller.php
+	Date Created 	:	13-06-2016
+	Date Updated 	:	08-09-2016
+	Description		:	Manage User Operation Like Add/Edit/Delete Users
+	*/
+	
 	ob_start();
 	session_start();
 	include_once('includes/config.php');
@@ -39,18 +46,19 @@
 			}
 	}
 		else if($_REQUEST['action']=='edit'){
+		
 			$id=(int)$_POST['id']  ;   
-			$name = mysql_real_escape_string($_POST['name']);	
-			$phone = mysql_real_escape_string($_POST['phone']);	
+			$name 		= mysql_real_escape_string($_POST['name']);	
+			$phone 		= mysql_real_escape_string($_POST['phone']);	
 			$department = mysql_real_escape_string($_POST['department']);	
-			$skills = mysql_real_escape_string($_POST['skills']);	
-			$name = mysql_real_escape_string($_POST['name']);	
-			$country = mysql_real_escape_string($_POST['country']);	
-			$userrole = mysql_real_escape_string($_POST['userrole']);	
-			$status = mysql_real_escape_string($_POST['status']);	
-			$page = mysql_real_escape_string($_POST['page']);	
-			$seo_url = mysql_real_escape_string($_POST['seo_url']);	
-			$email = mysql_real_escape_string($_POST['email']);	
+			$skills 	= mysql_real_escape_string($_POST['skills']);	
+			$name 		= mysql_real_escape_string($_POST['name']);	
+			$country 	= mysql_real_escape_string($_POST['country']);	
+			$userrole 	= mysql_real_escape_string($_POST['userrole']);	
+			$status 	= mysql_real_escape_string($_POST['status']);	
+			$page 		= mysql_real_escape_string($_POST['page']);	
+			$seo_url 	= mysql_real_escape_string($_POST['seo_url']);	
+			$email 		= mysql_real_escape_string($_POST['email']);	
 			
 			$row = "update r_user SET email='".$email."',name='".$name."',phone='".$phone."',department='".$department."',skills='".$skills."',id_country='".$country."',id_user_role='".$userrole."',status=".$status." where id_user='$id' ";
 			$result = mysql_query($row);
@@ -63,6 +71,7 @@
 			}
 			
 			if ($result) {
+			
 				updateSeoURLbyUser($seo_url,0,0,0,$id);
 			$message = "<strong>Success!</strong> User Modified Successfully.";
 			header('location:users.php?response=success&message='.$message.'&page=$page');

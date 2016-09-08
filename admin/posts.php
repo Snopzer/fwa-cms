@@ -2,8 +2,6 @@
 	session_start();
 	include_once('includes/config.php');
 	if (!isset($_SESSION['id'])) {
-		
-		
 		header('location:index.php');
 	}
 	$id = (int)$_POST['id'];
@@ -11,7 +9,7 @@
 	$selectPosts = mysql_query("SELECT * FROM r_post order by id_post desc");
 	$postCount = mysql_num_rows($selectPosts);
 	
-	$pages = $postCount / 5;
+	$pages = $postCount / ADMIN_PAGE_LIMIT;
 	$pages = ceil($pages);
 	
 	//pagination
@@ -22,7 +20,7 @@
 	if ($page == "" || $page == 1) {
 		$page1 = 0;
 		} else {
-		$page1 = ($page * 5) - 5;
+		$page1 = ($page * ADMIN_PAGE_LIMIT) - ADMIN_PAGE_LIMIT;
 	}
 	$selectPostList = mysql_query("SELECT * FROM r_post order by id_post desc limit ".$page1.",5")or die(mysql_error());
 ?>  
@@ -57,9 +55,9 @@
 										<tr>
 											<td><h1 id="h1.-bootstrap-heading"> POSTS - [<?php echo $postCount;?>]</h1></td>
 											<td class="type-info text-right">
-												<a href="posts.php?action=add"><span class="btn btn-success">Add New</span></a> 
-												<a  href="javascript:fnDetails();"><span class="btn btn-primary">Edit</span></a>
-												<a href="javascript:fnDelete();"><span class="btn btn-danger">Delete</span></a>
+												<a href="posts.php?action=add"><span class="btn btn-success"><?php echo ADD_BUTTON;?></span></a> 
+												<a  href="javascript:fnDetails();"><span class="btn btn-primary"><?php echo EDIT_BUTTON; ?></span></a>
+												<a href="javascript:fnDelete();"><span class="btn btn-danger"><?php echo DELETE_BUTTON;?></span></a>
 												<!--<a><span class="btn btn-warning ">Enable</span></a>-->
 											</td>
 										</tr>
@@ -77,7 +75,9 @@
 									<td class="table-text"><h6>Status</h6></td>
 									<td class="table-text"><h6>&nbsp;</h6></td>
 								</tr>
-								<?php	while ($post = mysql_fetch_assoc($selectPostList)) {	?>
+								<?php	
+								/*if(mysql_num_rows($postCount)>0){*/
+								while ($post = mysql_fetch_assoc($selectPostList)) {	?>
 									<tr class="table-row <?php echo ($post["status"]==1)?'warning':'danger'; ?>">
 										<td class="table-img"><input type="checkbox" name="selectcheck" value="<?= $post["id_post"] ?>"></td>
 										<td class="march"><h6><?php echo  $post["title"] ?></h6></td>
@@ -87,7 +87,11 @@
 										<a href="post-controller.php?chkdelids=<?php echo  $post["id_post"] ?>&action=delete&page=<?php echo  "$page"?>""><span class="label label-info">Delete</span></a>
 										</td>
 									</tr>
-								<?php	}	?>
+								<?php	}/*}else{ ?>
+								 <tr class="table-row">
+                                            <td class="table-img text-center" colspan="4"><?php echo ADMIN_NO_RECORDS_FOUND; ?></td>
+                                        </tr>
+								<?php }*/	?>
 							</table>
 							<input name="uid" type="hidden" value="<?php echo $_REQUEST["uid"]; ?>">
                             <input type="hidden" name="action"/>
@@ -95,7 +99,7 @@
                             <input type="hidden" name="chkdelids"/>
                             <input type="hidden" name="page" value="<?php echo "$page"; ?>"/>
                             </form>
-							<?php	if ($postCount > 5) {	?>
+							<?php	if ($postCount > ADMIN_PAGE_LIMIT) {	?>
 								<div class="horz-grid text-center">
 									<ul class="pagination pagination-lg">
 										<?php for ($b = 1; $b <= $pages; $b++) { ?>
@@ -161,6 +165,7 @@
 								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Image</label>
 								<div class="col-sm-8">
 									<input type="file" name="photo">
+									<input type="hidden" name="prev_image" value="<?php echo $result["image"];?>">
 									<span id="prev_image_name"><?php echo $result["image"];?></span><br />
 									<img style="display:none;" id="prev_image" src='../images/post/<?php echo  $result["image"] ?>' width="50" height="50"> 
 									
@@ -261,7 +266,7 @@
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Image</label>
 								<div class="col-sm-8">
-									<input type="file" id="photo" name="photo" placeholder="photo">
+									<input type="file" name="photo">
 								</div>
 							</div>
 							<div class="grid-hor">

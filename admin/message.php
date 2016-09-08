@@ -39,16 +39,16 @@ if (!isset($_SESSION['id'])) {
                                                     echo "$count";
                                                     ?>]</h1></td>
                                             <td class="type-info text-right">
-                                                <a href="message.php?action=add"><span class="btn btn-success">Add New</span></a> 
-                                                <a href="javascript:fnDetails();"><span class="btn btn-primary">Edit</span></a>
-                                                <a href="javascript:fnDelete();"><span class="btn btn-danger">Delete</span></a>
+                                                <a href="message.php?action=add"><span class="btn btn-success"><?php echo ADD_BUTTON;?></span></a> 
+                                                <a href="javascript:fnDetails();"><span class="btn btn-primary"><?php echo EDIT_BUTTON;?></span></a>
+                                                <a href="javascript:fnDelete();"><span class="btn btn-danger"><?php echo DELETE_BUTTON;?></span></a>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <table class="table"> 
-                                <form name="frmMain" action="search.php?type=search" method="post">
+                                <form name="frmMain" method="post">
                                     <tr class="table-row">
                                         <td class="table-img">&nbsp;</td>
                                         <td class="march"><h6><input class="form-control" type="text" name="department" id="department" placeholder="Search Name"></h6></td>
@@ -62,7 +62,6 @@ if (!isset($_SESSION['id'])) {
                                     <td class="table-text"><h6>Name</h6></td>
                                     <td class="table-text"><h6>Subject</h6></td>
                                     <td class="table-text"><h6>Email</h6></td>
-                                    <!--<td class="table-text"><h6>Message</h6></td>-->
                                 </tr>
                                 <?php
                                 $page = false;
@@ -73,9 +72,9 @@ if (!isset($_SESSION['id'])) {
                                 if ($page == "" || $page == 1) {
                                     $page1 = 0;
                                 } else {
-                                    $page1 = ($page * 5) - 5;
+                                    $page1 = ($page * ADMIN_PAGE_LIMIT) - ADMIN_PAGE_LIMIT;
                                 }
-                                $select = mysql_query("SELECT * FROM r_message order by id_message desc limit $page1,5")or die(mysql_error());
+                                $select = mysql_query("SELECT * FROM r_message order by id_message desc limit $page1,".ADMIN_PAGE_LIMIT)or die(mysql_error());
                                 if ($select) {
                                     while ($row = mysql_fetch_assoc($select)) {
                                         ?>
@@ -84,7 +83,6 @@ if (!isset($_SESSION['id'])) {
                                             <td class="march"><h6><?php echo $row["name"] ?></h6></td>
                                             <td class="march"><h6><?php echo $row["subject"] ?></h6></td>
                                             <td class="march"><h6><?php echo $row["email"] ?></h6></td>
-                                            <!--<td class="march"><h6><?php echo $row["message"] ?></h6></td>-->
                                             <td><a href="message.php?id=<?php echo $row["id_message"] ?>&action=edit&page=<?php echo "$page"?>"><span class="label label-primary">Edit</span><a/>
                                                     <a href="message-controller.php?chkdelids=<?php echo $row["id_message"] ?>&action=delete&page=<?php echo "$page"?>""><span class="label label-info">Delete</span></a>
                                             </td>
@@ -103,9 +101,9 @@ if (!isset($_SESSION['id'])) {
                             <?php
                             $res1 = mysql_query("SELECT * FROM r_message");
                             $count = mysql_num_rows($res1);
-                            $a = $count / 5;
+                            $a = $count / ADMIN_PAGE_LIMIT;
                             $a = ceil($a);
-							 if ($count > 5) {
+							 if ($count > ADMIN_PAGE_LIMIT) {
                             ?>
                             <div class="horz-grid text-center">
                                 <ul class="pagination pagination-lg">
@@ -186,7 +184,7 @@ if (!isset($_SESSION['id'])) {
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-8 col-sm-offset-2">
-                                        <input type="submit" value="Save" class="btn-primary btn">
+                                        <input type="submit" value="<?php echo UPDATE_BUTTON;?>" class="btn-primary btn">
                                     </div>
                                 </div></div>
 
@@ -221,16 +219,9 @@ if (!isset($_SESSION['id'])) {
 									<textarea id="message" name="message"  class="form-control" rows="6"></textarea>
                                 </div>
                             </div>
-                            <!--<div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label hor-form">Date Created</label>
-                                    <div class="col-sm-8">
-                                            <input type="text" class="form-control" value="" id="date_created" name="date_created" placeholder="Date created">
-                                    </div>
-                            </div>-->
                             <div class="row">
                                 <div class="col-sm-8 col-sm-offset-2">
-                                    <input type="submit" value="Save" class="btn-primary btn">
-                                    <!--<button class="btn btn-default" type="reset">Reset</button>-->
+                                    <input type="submit" value="<?php echo SAVE_BUTTON;?>" class="btn-primary btn">
                                 </div>
                             </div>
                         </form>

@@ -14,14 +14,13 @@ $page = false;
 if (array_key_exists('page', $_GET)) {
     $page = $_GET['page'];
 }
-//  $page = $_GET["page"];
 if ($page == "" || $page == 1) {
     $page1 = 0;
 } else {
-    $page1 = ($page * 5) - 5;
+    $page1 = ($page * ADMIN_PAGE_LIMIT) - ADMIN_PAGE_LIMIT;
 }
 
-$userList = mysql_query("SELECT * FROM r_user_role order by id_user_role desc limit $page1,5")or die(mysql_error());
+$userList = mysql_query("SELECT * FROM r_user_role order by id_user_role desc limit $page1,".ADMIN_PAGE_LIMIT)or die(mysql_error());
 ?>  
 <?php include_once('includes/header.php'); ?>
 <?php include_once('includes/menu.php'); ?>
@@ -53,9 +52,9 @@ $userList = mysql_query("SELECT * FROM r_user_role order by id_user_role desc li
                                         <tr>
                                             <td><h1 id="h1.-bootstrap-heading"> USER ROLES - [<?php echo $userCount; ?>]</h1></td>
                                             <td class="type-info text-right">
-                                                <a href="userrole.php?action=add"><span class="btn btn-success">Add New</span></a> 
-                                                <a  href="javascript:fnDetails();"><span class="btn btn-primary">Edit</span></a>
-                                                <a  href="javascript:fnDelete();"><span class="btn btn-danger">Delete</span></a>
+                                                <a href="userrole.php?action=add"><span class="btn btn-success"><?php echo ADD_BUTTON;?></span></a> 
+                                                <a  href="javascript:fnDetails();"><span class="btn btn-primary"><?php echo EDIT_BUTTON; ?></span></a>
+                                                <a  href="javascript:fnDelete();"><span class="btn btn-danger"><?php echo DELETE_BUTTON;?></span></a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -63,18 +62,7 @@ $userList = mysql_query("SELECT * FROM r_user_role order by id_user_role desc li
                             </div>
 
                             <table class="table"> 
-                                <!--<form action="search.php?type=search" method="post">
-                                    <tr class="table-row">
-                                        <td class="table-img">&nbsp;</td>
-                                        <td class="march"><h6><input class="form-control" placeholder="Search Name" type="text" name="name" id="name"></h6></td>
-                                        <td class="march"><h6><input class="form-control" placeholder="Search Email" type="text" name="email" id="email"></h6></td>
-                                        <td class="march"><h6><input class="form-control" placeholder="Search Phone" type="text" name="phone" id="phone"></h6></td>
-                                        <td class="march">&nbsp;</td>
-                                        <td class="march"><h6><input class="btn btn-default" type="submit"  name="search" value="Search" ></h6></td>                                
-                                    </tr>
-                                </form>-->
                                 <form name="frmMain" method="post">
-
                                     <tr class="table-row">
                                         <td class="table-img">
                                             <input type="checkbox" name="checkall" onClick="Checkall()"/>
@@ -99,7 +87,7 @@ $userList = mysql_query("SELECT * FROM r_user_role order by id_user_role desc li
                                     } else {
                                         ?>
                                         <tr class="table-row">
-                                            <td class="table-img text-center" colspan="4">No Records Found</td>
+                                            <td class="table-img text-center" colspan="4"><?php echo ADMIN_NO_RECORDS_FOUND; ?></td>
                                         </tr>
                                     <?php } ?>
                             </table>
@@ -194,7 +182,7 @@ $userList = mysql_query("SELECT * FROM r_user_role order by id_user_role desc li
 
                                 <div class="row">
                                     <div class="col-sm-8 col-sm-offset-2">
-                                        <input type="submit" value="Save" class="btn-primary btn">
+                                        <input type="submit" value="<?php echo UPDATE_BUTTON;?>" class="btn-primary btn">
                                         <!--<button class="btn btn-default" type="reset">Reset</button>-->
                                     </div>
                                 </div></div>
@@ -222,7 +210,7 @@ $userList = mysql_query("SELECT * FROM r_user_role order by id_user_role desc li
 
                             <div class="row">
                                 <div class="col-sm-8 col-sm-offset-2">
-                                    <input type="submit" value="Save" class="btn-primary btn">
+                                    <input type="submit" value="<?php echo SAVE_BUTTON;?>" class="btn-primary btn">
                                 </div>
                             </div>
                         </form>

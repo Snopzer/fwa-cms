@@ -12,7 +12,7 @@
 	$selectSites = mysql_query("SELECT * FROM r_site_details order by id desc");
 	$siteCount = mysql_num_rows($selectSites);
 	
-	$pages = $siteCount / 5;
+	$pages = $siteCount / ADMIN_PAGE_LIMIT;
 	$pages = ceil($pages);
 	
 	//pagination
@@ -23,9 +23,9 @@
 	if ($page == "" || $page == 1) {
 		$page1 = 0;
 		} else {
-		$page1 = ($page * 5) - 5;
+		$page1 = ($page * ADMIN_PAGE_LIMIT) - ADMIN_PAGE_LIMIT;
 	}
-	$selectSiteList = mysql_query("SELECT * FROM r_site_details order by id desc limit ".$page1.",5")or die(mysql_error());					
+	$selectSiteList = mysql_query("SELECT * FROM r_site_details order by id desc limit ".$page1.",".ADMIN_PAGE_LIMIT)or die(mysql_error());					
 	
 ?>  
 <?php include_once('includes/header.php'); ?>
@@ -45,10 +45,10 @@
 				<div class="horz-grid">
 					<div class="grid-system">
 						<?php if(isset($_GET['message']) && $_GET['message']!=''){ ?>
-						<div class="alert alert-<?php echo $_GET['response']?> fade in">
-							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							<?php echo $_GET['message'];?>
-						</div>
+							<div class="alert alert-<?php echo $_GET['response']?> fade in">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<?php echo $_GET['message'];?>
+							</div>
 						<?php } ?>
 						<div class="horz-grid">
 							<div class="bs-example">
@@ -57,49 +57,51 @@
 										<tr>
 											<td><h1 id="h1.-bootstrap-heading"> Sites - [<?php echo $siteCount;?>]</h1></td>
 											<td class="type-info text-right">
-												<a href="site.php?action=add"><span class="btn btn-success">Add New</span></a> 
-												<a href="javascript:fnDetails();"><span class="btn btn-primary">Edit</span></a>
-												<a href="javascript:fnDelete();"><span class="btn btn-danger">Delete</span></a>
+												<a href="site.php?action=add"><span class="btn btn-success"><?php echo ADD_BUTTON;?></span></a> 
+												<a href="javascript:fnDetails();"><span class="btn btn-primary"><?php echo EDIT_BUTTON; ?></span></a>
+												<a href="javascript:fnDelete();"><span class="btn btn-danger"><?php echo DELETE_BUTTON;?></span></a>
 											</td>
 										</tr>
 									</tbody>
 								</table>
 							</div>
 							<table class="table"> 
-								<form name="frmMain" action="search.php?type=search" method="post">
+								<form name="frmMain" method="post">
 									<tr class="table-row">
 										<td class="table-img">&nbsp;</td>
 										<td class="march"><h6><input class="form-control" type="text" name="department" id="department"></h6></td>
 										<td class="march"><h6><input class="btn btn-default" type="submit"  name="search" value="Search"></h6></td>                                
 									</tr>
-								
-								<tr class="table-row">
-									<td class="table-img">
-										<input type="checkbox" name="checkall" onClick="Checkall()"/>
-									</td>
-									<td class="table-text"><h6>Site Name</h6></td>
-                                <td class="table-text"><h6>Owner Email</h6></td>
-                                <td class="table-text"><h6>Email From</h6></td>
-                                <td class="table-text"><h6>Phone</h6></td>
-								</tr>
-								<?php	while ($site = mysql_fetch_assoc($selectSiteList)) {	?>
+									
 									<tr class="table-row">
-										<td class="table-img"><input type="checkbox" name="selectcheck" value="<?= $site["id"] ?>"></td>
-										 <td class="march"><h6><?php echo $site["site_name"] ?></h6></td>
-										<td class="march"><h6><?php echo $site["owner_email"] ?></h6></td>
-                                        <td class="march"><h6><?php echo $site["email_from"] ?></h6></td>
-                                        <td class="march"><h6><?php echo $site["phone"] ?></h6></td>
-										<td><a href="site.php?id=<?php echo  $site["id"] ?>&action=edit&page=<?php echo  "$page"?>"><span class="label label-primary">Edit</span><a/>
-										<a href="site-controller.php?chkdelids=<?php echo  $site["id"] ?>&action=delete&page=<?php echo  "$page"?>""><span class="label label-info">Delete</span></a>
+										<td class="table-img">
+											<input type="checkbox" name="checkall" onClick="Checkall()"/>
 										</td>
+										<td class="table-text"><h6>Site Name</h6></td>
+										<td class="table-text"><h6>Owner Email</h6></td>
+										<td class="table-text"><h6>Email From</h6></td>
+										<td class="table-text"><h6>Phone</h6></td>
 									</tr>
+									<?php	
+										
+										while ($site = mysql_fetch_assoc($selectSiteList)) {	?>
+										<tr class="table-row">
+											<td class="table-img"><input type="checkbox" name="selectcheck" value="<?= $site["id"] ?>"></td>
+											<td class="march"><h6><?php echo $site["site_name"] ?></h6></td>
+											<td class="march"><h6><?php echo $site["owner_email"] ?></h6></td>
+											<td class="march"><h6><?php echo $site["email_from"] ?></h6></td>
+											<td class="march"><h6><?php echo $site["phone"] ?></h6></td>
+											<td><a href="site.php?id=<?php echo  $site["id"] ?>&action=edit&page=<?php echo  "$page"?>"><span class="label label-primary">Edit</span><a/>
+											<a href="site-controller.php?chkdelids=<?php echo  $site["id"] ?>&action=delete&page=<?php echo  "$page"?>""><span class="label label-info">Delete</span></a>
+											</td>
+										</tr>
 									<?php	}	?>
-							</table>
-							<input name="uid" type="hidden" value="<?php echo $_REQUEST["uid"]; ?>">
-                            <input type="hidden" name="action"/>
-                            <input type="hidden" name="id"/>
-                            <input type="hidden" name="chkdelids"/>
-                            <input type="hidden" name="page" value="<?php echo "$page"; ?>"/>
+								</table>
+								<input name="uid" type="hidden" value="<?php echo $_REQUEST["uid"]; ?>">
+								<input type="hidden" name="action"/>
+								<input type="hidden" name="id"/>
+								<input type="hidden" name="chkdelids"/>
+								<input type="hidden" name="page" value="<?php echo "$page"; ?>"/>
 							</form>
 							<?php	if ($siteCount > 5) {	?>
 								<div class="horz-grid text-center">
@@ -136,10 +138,6 @@
 				</div>
 				<div class="grid-system">
 					<div class="horz-grid">
-						<div class="grid-hor">
-							<h4 id="grid-example-basic">User Details:</h4>
-							
-						</div>
 						<?php if($_GET['action'] == "edit"){
 							$id = $_GET['id'];
 							$page=$_GET['page'];
@@ -147,96 +145,170 @@
 							$result = mysql_fetch_assoc($query);
 						?>
 						
-					
-
+						
+						
 						<form class="form-horizontal" action="site-controller.php" method="post" enctype="multipart/form-data" >
 							<input type="hidden" name="action" value="edit"/>
 							<input type="hidden" name="id" value="<?php echo $result["id"] ?>">
 							<input type="hidden" name="page" value='<?php echo "$page"?>'>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Site Name</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["site_name"] ?>" name="site_name" placeholder="Enter Site Name">
+							
+							
+							<ul class="nav nav-tabs" id="myTab">
+								<li class="active"><a data-target="#site-details" data-toggle="tab">
+								<h4 id="grid-example-basic">Site Details</h4></a></li>
+								<li><a data-target="#site-mail" data-toggle="tab"><h4 id="grid-example-basic">Mail</h4></a></li>
+								<li><a data-target="#site-settings" data-toggle="tab"><h4 id="grid-example-basic">Settings</h4></a></li>
+							</ul>
+							
+							<div class="tab-content">
+								<div class="tab-pane active" id="site-details">
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-2 control-label hor-form">Site Name</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" value="<?php echo  $result["site_name"] ?>" name="site_name" placeholder="Enter Site Name">
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-2 control-label hor-form">Site URL</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" value="<?php echo  $result["site_url"] ?>" name="site_url" placeholder="Enter Site Name">
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-2 control-label hor-form">Site Admin URL</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" value="<?php echo  $result["site_admin_url"] ?>" name="site_admin_url" placeholder="Enter Site Name">
+										</div>
+									</div>
+									
+									
+									
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-2 control-label hor-form">owner Name</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" value="<?php echo  $result["owner_email"] ?>" name="owner_email" placeholder="Enter owner Name">
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-2 control-label hor-form">Phone</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" value="<?php echo  $result["phone"] ?>" name="phone" placeholder="Enter Phone Number">
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-2 control-label hor-form">Title</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" value="<?php echo  $result["title"] ?>" name="title" placeholder="Enter Title">
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-2 control-label ">Meta keywords</label>
+										<div class="col-sm-8">
+											<textarea  name="meta_keywords" id="meta_keywords" class="form-control"><?php echo  $result["meta_keywords"] ?></textarea> 
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-2 control-label ">Meta Description</label>
+										<div class="col-sm-8">
+											<textarea  name="meta_description" id="meta_description" class="form-control"><?php echo  $result["meta_description"] ?></textarea> 
+										</div>
+									</div>
+									
+									
+								</div>
+								<div class="tab-pane" id="site-settings">
+									
+									
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-2 control-label ">Google Analytics Codes</label>
+										<div class="col-sm-8">
+											<textarea  name="google_analytics_code" class="form-control"><?php echo  $result["google_analytics_code"] ?></textarea> 
+										</div>
+									</div>
+									
+									
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-2 control-label hor-form">Admin Page Limit</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" value="<?php echo  $result["admin_page_limit"] ?>" name="admin_page_limit" placeholder="Enter Copyrights">
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-2 control-label hor-form">Post Description Length</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" value="<?php echo  $result["post_description_length"] ?>" name="post_description_length" placeholder="Enter Copyrights">
+										</div>
+									</div>
+									
+									
+									
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-2 control-label hor-form">Copyrights</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" value="<?php echo  $result["copyrights"] ?>" name="copyrights" placeholder="Enter Copyrights">
+										</div>
+									</div>
+									
+									
+								</div>
+								<div class="tab-pane" id="site-mail">
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-2 control-label hor-form">From Mail</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" value="<?php echo  $result["email_from"] ?>" name="email_from" placeholder="Enter From Mail">
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-2 control-label hor-form">Reply Mail</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" value="<?php echo  $result["replay_email"] ?>" name="replay_email" placeholder="Enter Reply Mail">
+										</div>
+									</div>
 								</div>
 							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">owner Name</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["owner_email"] ?>" name="owner_email" placeholder="Enter owner Name">
-								</div>
-							</div>
 							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">From Mail</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["email_from"] ?>" name="email_from" placeholder="Enter From Mail">
-								</div>
-							</div>
-							
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Phone</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["phone"] ?>" name="phone" placeholder="Enter Phone Number">
-								</div>
-							</div>
+							<!--
+								site_url
+site_admin_url
+admin_page_limit
+post_description_length
+
+add_button_lable
+edit_button_lable
+delete_button_lable
+save_button_lable
+admin_no_reocord_found
+							-->
 							
 							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Reply Mail</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["replay_email"] ?>" name="replay_email" placeholder="Enter Reply Mail">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Title</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["title"] ?>" name="title" placeholder="Enter Title">
-								</div>
-							</div>
 							
 							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label ">Meta keywords</label>
-								<div class="col-sm-8">
-									<textarea  name="meta_keywords" id="meta_keywords" class="form-control"><?php echo  $result["meta_keywords"] ?></textarea> 
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label ">Meta Description</label>
-								<div class="col-sm-8">
-									<textarea  name="meta_description" id="meta_description" class="form-control"><?php echo  $result["meta_description"] ?></textarea> 
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label ">Google Analytics Codes</label>
-								<div class="col-sm-8">
-									<textarea  name="google_analytics_code" class="form-control"><?php echo  $result["google_analytics_code"] ?></textarea> 
-								</div>
-							</div>
 							
 							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Copyrights</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["copyrights"] ?>" name="copyrights" placeholder="Enter Copyrights">
-								</div>
-							</div>
 							
-							<div class="form-group">
+							
+							
+							
+							<!--<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Select Status</label>
 								<div class="col-sm-8">
-									<select name="status" id="status" class="form-control selectpicker"  >
-										<option name="enable"  value="1" <?php if($result['status']==1){ echo "Selected";}?>>Enable</option>
-										<option name="disable"  value="0" <?php if($result['status']==0){ echo "Selected";}?>>Disable</option>
-									</select>
+								<select name="status" id="status" class="form-control selectpicker"  >
+								<option name="enable"  value="1" <?php if($result['status']==1){ echo "Selected";}?>>Enable</option>
+								<option name="disable"  value="0" <?php if($result['status']==0){ echo "Selected";}?>>Disable</option>
+								</select>
 								</div>                      
-							</div>
+							</div>-->
 							<div class="row">
 								<div class="col-sm-8 col-sm-offset-2">
-									<input type="submit" value="UPDATE" class="btn-primary btn">
+									<input type="submit" value="<?php echo UPDATE_BUTTON;?>" class="btn-primary btn">
 								</div>
 							</div></div>
 						</form>
@@ -328,7 +400,7 @@
 							</div>
 							<div class="row">
 								<div class="col-sm-8 col-sm-offset-2">
-									<input type="submit" value="SAVE" class="btn-primary btn">
+									<input type="submit" value="<?php echo SAVE_BUTTON;?>" class="btn-primary btn">
 								</div>
 							</div>
 						</form>
@@ -341,14 +413,6 @@
 	?>
 	
 	<script language="JavaScript">
-	
-	/* editor script */
-		//var editor=CKEDITOR.replace('meta_description');
-		//var editor=CKEDITOR.replace('meta_keywords');
-		/* editor script */
-		//var img= '121212121212';
-		//var img = '<img src="https://si0.twimg.com/a/1339639284/images/three_circles/twitter-bird-white-on-blue.png" />';
-		
 		$('#prev_image_name').mouseover(function() {	$('#prev_image').show();	});
 		$('#prev_image_name').mouseout(function() {	$('#prev_image').hide();	});
 		
@@ -358,104 +422,104 @@
 			checkboxes[i].checked = source.checked;
 		}
 	</script>
-<?php include_once('includes/footer.php'); ?>	
-<script language="JavaScript">
-        function fnDetails()
-        {
-            var obj = document.frmMain.elements;
-            flag = 0;
-            for (var i = 0; i < obj.length; i++)
-            {
-                if (obj[i].name == "selectcheck" && obj[i].checked)
-                {
-                    flag = 1;
-                    break;
-                }
-            }
-            if (flag == 0)
-            {
-                alert("Please make a selection from a list to Edit");
-            } else if (flag == 1)
-            {
-                var checkedvals = "";
-                for (var i = 0; i < obj.length; i++) {
-                    if (obj[i].checked == true) {
-                        checkedvals = checkedvals + "," + obj[i].value;
-                    }
-                }
-                var checkvals = checkedvals.substr(1);
-                var arrval = checkvals.split(",");
-                if (arrval.length > 1)
-                {
-                    alert("Select Only One checkbox to edit");
-                } else
-                {
-                    window.location.href = "site.php?action=edit&page=<? echo "$page"?>&id=" + arrval[0];
-                }
-            }
-        }
-    </script>
- 	
-
-    <script language="JavaScript">
-        function Checkall()
-        {
-            if (document.frmMain.checkall.checked == true)
-            {
-                var obj = document.frmMain.elements;
-                for (var i = 0; i < obj.length; i++)
-                {
-                    if ((obj[i].name == "selectcheck") && (obj[i].checked == false))
-                    {
-                        obj[i].checked = true;
-                    }
-                }
-            } else if (document.frmMain.checkall.checked == false)
-            {
-                var obj = document.frmMain.elements;
-                for (var i = 0; i < obj.length; i++)
-                {
-                    if ((obj[i].name == "selectcheck") && (obj[i].checked == true))
-                    {
-                        obj[i].checked = false;
-                    }
-                }
-            }
-        }
-        function fnDelete()
-        {
-            var obj = document.frmMain.elements;
-            flag = 0;
-            for (var i = 0; i < obj.length; i++)
-            {
-                if (obj[i].name == "selectcheck" && obj[i].checked) {
-                    flag = 1;
-                    break;
-                }
-            }
-            if (flag == 0) {
-                alert("Select Checkbox to Delete");
-            } else if (flag == 1) {
-                var i, len, chkdelids, sep;
-                chkdelids = "";
-                sep = "";
-                for (var i = 0; i < document.frmMain.length; i++) {
-                    if (document.frmMain.elements[i].name == "selectcheck")
-                    {
-                        if (document.frmMain.elements[i].checked == true) {
-                            //alert(document.frmFinal.elements[i].value)
-                            chkdelids = chkdelids + sep + document.frmMain.elements[i].value;
-                            sep = ",";
-                        }
-                    }
-                }
-                ConfirmStatus = confirm("Do you want to DELETE selected User Role.?")
-                if (ConfirmStatus == true) {
-                    document.frmMain.chkdelids.value = chkdelids
-                    document.frmMain.action.value = "delete"
-                    document.frmMain.action = "site-controller.php";
-                    document.frmMain.submit()
-                }
-            }
-        }
-    </script>	
+	<?php include_once('includes/footer.php'); ?>	
+	<script language="JavaScript">
+		function fnDetails()
+		{
+			var obj = document.frmMain.elements;
+			flag = 0;
+			for (var i = 0; i < obj.length; i++)
+			{
+				if (obj[i].name == "selectcheck" && obj[i].checked)
+				{
+					flag = 1;
+					break;
+				}
+			}
+			if (flag == 0)
+			{
+				alert("Please make a selection from a list to Edit");
+			} else if (flag == 1)
+			{
+				var checkedvals = "";
+				for (var i = 0; i < obj.length; i++) {
+					if (obj[i].checked == true) {
+						checkedvals = checkedvals + "," + obj[i].value;
+					}
+				}
+				var checkvals = checkedvals.substr(1);
+				var arrval = checkvals.split(",");
+				if (arrval.length > 1)
+				{
+					alert("Select Only One checkbox to edit");
+				} else
+				{
+					window.location.href = "site.php?action=edit&page=<? echo "$page"?>&id=" + arrval[0];
+				}
+			}
+		}
+	</script>
+	
+	
+	<script language="JavaScript">
+		function Checkall()
+		{
+			if (document.frmMain.checkall.checked == true)
+			{
+				var obj = document.frmMain.elements;
+				for (var i = 0; i < obj.length; i++)
+				{
+					if ((obj[i].name == "selectcheck") && (obj[i].checked == false))
+					{
+						obj[i].checked = true;
+					}
+				}
+			} else if (document.frmMain.checkall.checked == false)
+			{
+				var obj = document.frmMain.elements;
+				for (var i = 0; i < obj.length; i++)
+				{
+					if ((obj[i].name == "selectcheck") && (obj[i].checked == true))
+					{
+						obj[i].checked = false;
+					}
+				}
+			}
+		}
+		function fnDelete()
+		{
+			var obj = document.frmMain.elements;
+			flag = 0;
+			for (var i = 0; i < obj.length; i++)
+			{
+				if (obj[i].name == "selectcheck" && obj[i].checked) {
+					flag = 1;
+					break;
+				}
+			}
+			if (flag == 0) {
+				alert("Select Checkbox to Delete");
+				} else if (flag == 1) {
+				var i, len, chkdelids, sep;
+				chkdelids = "";
+				sep = "";
+				for (var i = 0; i < document.frmMain.length; i++) {
+					if (document.frmMain.elements[i].name == "selectcheck")
+					{
+						if (document.frmMain.elements[i].checked == true) {
+							//alert(document.frmFinal.elements[i].value)
+							chkdelids = chkdelids + sep + document.frmMain.elements[i].value;
+							sep = ",";
+						}
+					}
+				}
+				ConfirmStatus = confirm("Do you want to DELETE selected User Role.?")
+				if (ConfirmStatus == true) {
+					document.frmMain.chkdelids.value = chkdelids
+					document.frmMain.action.value = "delete"
+					document.frmMain.action = "site-controller.php";
+					document.frmMain.submit()
+				}
+			}
+		}
+	</script>								

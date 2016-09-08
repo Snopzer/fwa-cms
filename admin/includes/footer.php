@@ -1,5 +1,5 @@
 							<div class="copy">
-								<p> &copy; 2016 Techdefeat.com All Rights Reserved </p>
+								<p> <?php echo  SITE_COPY_RIGHTS;?> </p>
 							</div>
 						</div>
 					</div>

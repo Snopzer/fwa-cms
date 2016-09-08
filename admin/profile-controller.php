@@ -1,4 +1,10 @@
 <?php
+	/*
+	File name 		: 	profile-controller.php
+	Date Created 	:	13-06-2016
+	Date Updated 	:	08-09-2016
+	Description		:	Update Admin Profile
+	*/
 	ob_start();
 	session_start();
 	include_once('includes/config.php');
@@ -16,12 +22,12 @@
 		} else {
 		$pic = $_POST['preview_image'];
 	}
-	$name = $_POST['name'];
-	$department = $_POST['department'];
-	$email = $_POST['email'];
-	$skills = $_POST['skills'];
-	$phone = $_POST['phone'];
-	$id_country = $_POST['country'];
+	$name		 	= mysql_real_escape_string($_POST['name']);
+	$department 	= mysql_real_escape_string($_POST['department']);
+	$email 			= mysql_real_escape_string($_POST['email']);
+	$skills 		= mysql_real_escape_string($_POST['skills']);
+	$phone 			= mysql_real_escape_string($_POST['phone']);
+	$id_country 	= mysql_real_escape_string($_POST['country']);
 	$row = "update r_user SET  name='$name',image='$pic',department='$department',email='$email',phone='$phone',skills='$skills',id_country='$id_country' where id_user=" . $_SESSION['id'];
 	$result = mysql_query($row) or die(mysql_error());
 	

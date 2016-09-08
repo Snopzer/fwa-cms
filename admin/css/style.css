@@ -1327,7 +1327,7 @@ label.control-label {
     width: 100%;
     outline: none;
     padding: 0.5em 1em;
-    color: #999;
+    color: #0c0c0c;
     margin-top: 0.5em;
     font-family: 'Muli-Regular';
 }
@@ -1374,18 +1374,21 @@ label.control-label {
 	 padding: 0em 0.9em 1em;
 }
 .login-mail{
-	border: 1px solid #9494d0;
+	border: 1px solid #b9b9bb;
 	margin-bottom: 2em;
 	padding: 0.5em 1em;
 }
 .login-mail i{
 	color: #999;
+	float: left;
+    padding-top: 3px;
+	padding-right: 3px;
 }
 .login-mail input[type="text"],.login-mail input[type="password"]{
 	border: none;
 	outline:none;
 	font-size: 0.9em;
-    color: #999;
+    color: #232323;
     width: 89%;
     font-family: 'Muli-Regular';
 }
@@ -2337,7 +2340,7 @@ canvas#polarArea, canvas#radar, canvas#doughnut {
 }
 .profile-text {
     padding-top: 1em;
-	text-align: center;
+	/*text-align: center;*/
 }
 .profile-fo a {
     width: 50%;
@@ -2833,4 +2836,7 @@ ul.dropdown-menu.dropdown-menu-right {
 .top-content label {
     font-size: 1.6em;
 }
+}
+.right{
+	float: right;
 }

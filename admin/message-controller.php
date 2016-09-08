@@ -1,4 +1,10 @@
 <?php
+	/*
+	File name 		: 	message-controller.php
+	Date Created 	:	13-06-2016
+	Date Updated 	:	08-09-2016
+	Description		:	Manage Message Operation Like Add/Edit/Delete Messages
+	*/
 	ob_start();
 	session_start();
 	include_once('includes/config.php');

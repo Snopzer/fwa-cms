@@ -5,24 +5,20 @@
 		
 		header('location:index.php');
 	}
-	
 	$userQuery = mysql_query("SELECT u.*, ur.role as adminrole FROM r_user u LEFT JOIN r_user_role ur ON u.id_user_role=ur.id_user_role order by id_user desc")or die(mysql_error());
 	$userCount = mysql_num_rows($userQuery);
-	$pages = $userCount / 5;
+	$pages = $userCount / ADMIN_PAGE_LIMIT;
 	$pages = ceil($pages);
-	
 	$page = false;
 	if (array_key_exists('page', $_GET)) {
 		$page = (int)$_GET['page'];
 	}
-	//  $page = $_GET["page"];
 	if ($page == "" || $page == 1) {
 		$page1 = 0;
 		} else {
-		$page1 = ($page * 5) - 5;
+		$page1 = ($page * ADMIN_PAGE_LIMIT) - ADMIN_PAGE_LIMIT;
 	}
-	//select ur.role as role , ur.*,u.* from r_user_role ur,r_user u where u.id_user_role = ur.id_user_role
-	$userList = mysql_query("SELECT u.*, ur.role as adminrole FROM r_user u LEFT JOIN r_user_role ur ON u.id_user_role=ur.id_user_role order by id_user desc limit $page1,5")or die(mysql_error());
+	$userList = mysql_query("SELECT u.*, ur.role as adminrole FROM r_user u LEFT JOIN r_user_role ur ON u.id_user_role=ur.id_user_role order by id_user desc limit $page1,".ADMIN_PAGE_LIMIT."")or die(mysql_error());
 ?>  
 <?php include_once('includes/header.php'); ?>
 <?php include_once('includes/menu.php'); ?>
@@ -52,17 +48,17 @@
                                         <tr>
                                             <td><h1 id="h1.-bootstrap-heading"> USERS - [<?php echo $userCount; ?>]</h1></td>
                                             <td class="type-info text-right">
-                                                <a href="users.php?action=add"><span class="btn btn-success">Add New</span></a> 
-                                                <a  href="javascript:fnDetails();"><span class="btn btn-primary">Edit</span></a>
-                                                <a  href="javascript:fnDelete();"><span class="btn btn-danger">Delete</span></a>
+                                                <a href="users.php?action=add"><span class="btn btn-success"><?php echo ADD_BUTTON;?></span></a> 
+                                                <a  href="javascript:fnDetails();"><span class="btn btn-primary"><?php echo EDIT_BUTTON;?></span></a>
+                                                <a  href="javascript:fnDelete();"><span class="btn btn-danger"><?php echo DELETE_BUTTON;?></span></a>
 											</td>
 										</tr>
 									</tbody>
 								</table>
 							</div>
-							
-                            <table class="table"> 
-                                <form name="frmMain" method="post">
+							<div class='table-responsive'>
+							 <form name="frmMain" method="post">
+								<table class="table" id="snopzertable"> 
                                     <tr class="table-row">
                                         <td class="table-img">
                                             <input type="checkbox" name="checkall" onClick="Checkall()"/>
@@ -93,10 +89,11 @@
 											} else {
 										?>
                                         <tr class="table-row">
-                                            <td class="table-img text-center" colspan="4">No Records Found</td>
+                                            <td class="table-img text-center" colspan="4"><?php echo ADMIN_NO_RECORDS_FOUND;?></td>
 										</tr>
 									<?php } ?>
 								</table>
+								</div>
 								<input name="uid" type="hidden" value="<?php echo $_REQUEST["uid"]; ?>">
 								<input type="hidden" name="action"/>
 								<input type="hidden" name="id"/>
@@ -104,7 +101,7 @@
 								<input type="hidden" name="page" value="<?php echo "$page"; ?>"/>
 							</form>
                             <?php
-								if ($userCount > 5) {
+								if ($userCount > ADMIN_PAGE_LIMIT) {
 								?>
                                 <div class="horz-grid text-center">
                                     <ul class="pagination pagination-lg">
@@ -149,18 +146,13 @@
 						</div>
                         <?php
 							if ($_GET['action'] == "edit") {
-								if (isset($_GET['uid'])) {
-									$id = $_GET['uid'];
-									} else {
-									$id = $_GET['id'];
-								}
 								$page = $_GET['page'];
-								$query = mysql_query("SELECT * FROM r_user u LEFT JOIN r_seo_url seo ON u.id_user=seo.id_user order by u.id_user desc")or die(mysql_error());
+								$query = mysql_query("SELECT * FROM r_user u LEFT JOIN r_seo_url seo ON u.id_user=seo.id_user where u.id_user=".$_GET['id']." order by u.id_user desc")or die(mysql_error());
 								$result = mysql_fetch_assoc($query);
 							?>
                             <form class="form-horizontal" action="users-controller.php" method="post">
                                 <input type="hidden" name="action" value="edit"/>
-                                <input type="hidden" name="id" value="<?php echo $result["id_user"] ?>">
+                                <input type="hidden" name="id" value="<?php echo $_GET['id'] ?>">
                                 <input type="hidden" name="page" value="<?php echo "$page" ?>"/>
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-2 control-label hor-form">Name</label>
@@ -263,7 +255,7 @@
 								
                                 <div class="row">
                                     <div class="col-sm-8 col-sm-offset-2">
-                                        <input type="submit" value="Save" class="btn-primary btn">
+                                        <input type="submit" value="<?php echo UPDATE_BUTTON;?>" class="btn-primary btn">
                                         <!--<button class="btn btn-default" type="reset">Reset</button>-->
 									</div>
 								</div></div>
@@ -361,11 +353,9 @@
 									</select>
 								</div>                      
 							</div>
-							
-							
                             <div class="row">
                                 <div class="col-sm-8 col-sm-offset-2">
-                                    <input type="submit" value="Save" class="btn-primary btn">
+                                    <input type="submit" value="<?php echo  SAVE_BUTTON;?>" class="btn-primary btn">
 								</div>
 							</div>
 						</form>
@@ -376,6 +366,8 @@
 			}// end of add
 		}// end of action set edit/add
 	?>
+	
+    <?php include_once('includes/footer.php'); ?>			
 	<script language="JavaScript">
         function fnDetails()
         {
@@ -407,12 +399,11 @@
                     alert("Select Only One checkbox to edit");
 				} else
                 {
-                    window.location.href = "users.php?action=edit&page=<? echo "$page"?>&uid=" + arrval[0];
+                    window.location.href = "users.php?action=edit&page=<? echo "$page"?>&id=" + arrval[0];
 				}
 			}
 		}
 	</script>
-    <?php include_once('includes/footer.php'); ?>			
 	
     <script language="JavaScript">
         function Checkall()
@@ -475,5 +466,5 @@
 				}
 			}
 		}
+
 	</script>
-<?php include_once('includes/footer.php'); ?>	

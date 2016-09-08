@@ -9,7 +9,7 @@ if(!isset($_GET['msg'])){
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>TECHDEFEAT</title>
+		<title>Register - Techdefeat</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="keywords" content="Ramadan time table,calender,saher timings,iftaar timings,Ramadan Namaz Timings" />
@@ -29,7 +29,7 @@ if(!isset($_GET['msg'])){
 			if(!isset($_GET['msg'])){
 				?>
 			<div class="login-bottom">
-				<h2>Sign Up - It's Free And Always Will Be</h2>
+				<h2>Register</h2>
 				<div class="">
 					<?php 
 						if(isset($_GET['email'])&&$_GET['email']=="alreadyexist")
@@ -83,7 +83,7 @@ if(!isset($_GET['msg'])){
 		</div>
 		
 		<div class="copy-right">
-			<p> &copy; 2016 www.techdefeat.com All Rights Reserved </p>
+			<p> <?php echo  SITE_COPY_RIGHTS;?></p>
 		</div>
 		<script src="js/jquery.nicescroll.js"></script>
 		<script src="js/scripts.js"></script>
