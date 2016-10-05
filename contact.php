@@ -1,6 +1,4 @@
-<?php 
-	
-	
+<?php 	
 	$metaArray = array(
     "title"  => 'Contact us',
     "meta-keywords" => 'contact techdefeat, ask your questions, need support at your work.?',
@@ -23,33 +21,29 @@
                                 <div class="contact-fig">
                                     <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>
                                 </div>
-                                <p>+91 7207556743<br />
-                                +91 8332045764<br />
-                                +91 7207556743</p>
+                                <p><?php echo CONTACT_PHONE;?></p>
                             </div>
                             <div class="contact-grid">
                                 <div class="contact-fig1">
                                     <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
                                 </div>
-                                <p>H No : 10-1-601/19,
-                                    <span>Khairathabad, Hyderabad, 500002</span></p>
+                                <p><?php echo CONTACT_ADDRESS;?></p>
                             </div>
                             <div class="contact-grid">
                                 <div class="contact-fig2">
                                     <span class="glyphicon glyphicon-envelope2" aria-hidden="true"></span>
                                 </div>
-                                <p><a href="mailto:steman.fareed@gmail.com">steman.fareed@gmail.com</a><br />
-                                <a href="mailto:Mohammadwaheed567@gmail.com">Mohammadwaheed567@gmail.com</a><br />
-                                <a href="mailto:abidali70722@gmail@gmail.com">abidali70722@gmail.com</a></p>
+                                <p><a href="mailto:<?php echo CONTACT_MAIL;?>"><?php echo CONTACT_MAIL;?></a></p>
                             </div>
                             <div class="clearfix"> </div>
                         </div>
-                        <form action="controller.php?action=contact" method="post">
+						<span id="showMessage"></span>
+                        <form id="ContactForm">
                             <input type="text" name="subject" id="subject" placeholder="Subject">
                             <input type="text" name="name" id="name" placeholder="Enter Your Name">
                             <input type="text" name="email" id="email" placeholder="Enter A valid Email Address">
                             <textarea name='message' id="message" placeholder=" Type Your Message..."></textarea>
-                            <input type="submit" id="contactForm" value="SUBMIT">
+                            <button type="button" class="btn btn-success" id="Contact">Submit</button>
                         </form>
                     </div>	
                 </div>
@@ -69,7 +63,7 @@
     </div>
 </div>
 <script>
-$("#contactForm").click(function ()
+$("#Contact").click(function ()
     {
         if ($("#subject").val() == '')
         {
@@ -106,6 +100,23 @@ $("#contactForm").click(function ()
         else{
             $("#message").css({"border-style": "solid", "border-color": "green"}); 
         }
-    });
+		$.ajax({
+			url: "controller.php",
+			method: "POST",
+			data: { contactData : $("#ContactForm").serialize(), 'action':'contact'},
+			dataType: "json",
+			success: function (response) {
+					console.log(response);
+					$("#showMessage").html('<div class="alert alert-success"><strong>Success! </strong>'+response['message']+'</div>');
+					$('#ContactForm').each(function(){
+					this.reset();
+					});
+			},
+			error: function (request, status, error) {
+				$("#showMessage").html('<div class="alert alert-warning"><strong>OOPS!</strong> Server is Busy Please Try After Sometime</div>');
+			}
+		});
+		return false;
+	});
 </script>
 <?php include_once('includes/footer.php'); ?>

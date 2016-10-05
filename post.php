@@ -1,20 +1,22 @@
 <?php
+	// ini_set('display_errors', 1);
+	// ini_set('display_startup_errors', 1);
+	// error_reporting(E_ALL);
 	
 	include_once('admin/includes/config.php');
 	
 	$seo_url = $_GET['seo_url'];
 	
-	$checkSEORequest = mysql_query("select * from r_seo_url where seo_url='".$seo_url."'");	
-	$checkSEO = mysql_fetch_assoc($checkSEORequest) or die(mysql_error());	
+	$checkSEORequest = $conn->query("select * from r_seo_url where seo_url='".$seo_url."'");	
+	$checkSEO = $checkSEORequest->fetch_assoc () or die(mysql_error());	
 	
 	if($checkSEO['id_post'] >=1 )	{
 		$showProductDiv = true;		
-		$select = mysql_query("SELECT ru.name as username,rc.name,rp.id_post,rp.meta_title,rp.meta_keywords,rp.meta_description,rp.id_category,rp.title,rp.description,rp.image,rp.date_updated,rp.favourites,rp.views FROM r_post rp,r_category rc,r_user ru WHERE rp.id_category=rc.id_category and rp.id_user=ru.id_user and rp.id_post='".$checkSEO['id_post']."' order by id_post desc")or die(mysql_error()); 		
-		
-		$result = mysql_fetch_assoc($select)or die(mysql_error());	
+		$select = $conn->query("SELECT ru.name as username,rc.name,rp.id_post,rp.source,rp.image_source,rp.meta_title,rp.meta_keywords,rp.meta_description,rp.id_category,rp.title,rp.description,rp.short_description,rp.image,rp.date_updated,rp.favourites,rp.views FROM r_post rp,r_category rc,r_user ru WHERE rp.id_category=rc.id_category and rp.id_user=ru.id_user and rp.id_post='".$checkSEO['id_post']."' order by id_post desc")or die(mysql_error()); 		
+		$result = $select->fetch_assoc();	
 		
 		$id=$result['id_post'];		
-		$viewcheck=mysql_query("UPDATE `r_post` SET `views` = `views` + 1 WHERE `id_post` = '$id'");		
+		$viewcheck=$conn->query("UPDATE `r_post` SET `views` = `views` + 1 WHERE `id_post` = '$id'");		
 		$metaArray = array(		
 		"title"  => $result['meta_title'],		
 		"meta-keywords" => $result['meta_keywords'],		
@@ -25,8 +27,8 @@
 		$showpageDiv = true;	
 		
 		
-		$pageQuery = mysql_query("select * from r_page page,r_seo_url seo where page.id_page=seo.id_page and page.id_page=".$checkSEO['id_page'])or die(mysql_error());
-		$result = mysql_fetch_assoc($pageQuery)or die(mysql_error());	
+		$pageQuery = $conn->query("select * from r_page page,r_seo_url seo where page.id_page=seo.id_page and page.id_page=".$checkSEO['id_page'])or die(mysql_error());
+		$result = $pageQuery->fetch_assoc();
 		
 		$metaArray = array(		
 		"title"  => $result['title'],		
@@ -38,8 +40,8 @@
 		$showUserDiv = true;	
 		
 		
-		$pageQuery = mysql_query("select * from r_page page,r_seo_url seo where page.id_page=seo.id_page and page.id_page=".$checkSEO['id_user'])or die(mysql_error());
-		$result = mysql_fetch_assoc($pageQuery)or die(mysql_error());	
+		$pageQuery = $conn->query("select * from r_page page,r_seo_url seo where page.id_page=seo.id_page and page.id_page=".$checkSEO['id_user'])or die(mysql_error());
+		$result = $pageQuery->fetch_assoc();
 		
 		$metaArray = array(		
 		"title"  => $result['title'],		
@@ -49,8 +51,8 @@
 	
 	if($checkSEO['id_category'] >=1 )	{		
 		$showCategoryDiv = true;
-		$categoryQuery = mysql_query("SELECT * FROM r_category cat, r_seo_url seo WHERE cat.id_category = seo.id_category AND cat.id_category =".$checkSEO['id_category'])or die(mysql_error());
-		$result = mysql_fetch_assoc($categoryQuery)or die(mysql_error());	
+		$categoryQuery = $conn->query("SELECT * FROM r_category cat, r_seo_url seo WHERE cat.id_category = seo.id_category AND cat.id_category =".$checkSEO['id_category'])or die(mysql_error());
+		$result = $categoryQuery->fetch_assoc();
 		
 		$metaArray = array(		
 		"title"  => $result['meta_title'],		
@@ -65,121 +67,134 @@
     <div class="container">
         <div class="col-md-9 technology-left">
             <div class="business">
-			<?php if($showCategoryDiv==true){ ?>
-				<!--category details start -->
-				<div class=" blog-grid2">
-					<?if(!empty($result['image'])) { ?>
-                    <img src="images/category/<?= $result['image'] ?>" class="img-responsive" alt="<?= $result['image'] ?>">
-					<? }?>
-                    <div class="blog-text">
-                        <h5><?php echo $result['name'] ?></h5>
-                        <p><?php echo $result['description'] ?> </p>	
-                        <p></p>				
+				<?php if($showCategoryDiv==true){ ?>
+					<!--category details start -->
+					<div class=" blog-grid2">
+						<?if(!empty($result['image'])) { ?>
+							<img src="images/category/<?= $result['image'] ?>" class="img-responsive" alt="<?= $result['image'] ?>">
+						<? }?>
+						<div class="blog-text">
+							<h5><?php echo $result['name'] ?></h5>
+							<p><?php echo $result['description'] ?> </p>	
+							<p></p>				
+						</div>
 					</div>
-				</div>
-				<!--category details end -->
-				
-				<div class="comment-top">
-                    <h2><?php echo $result['name'] ?> Topic's</h2><?php
-					/*echo "SELECT * FROM  `r_post` rp LEFT JOIN r_seo_url seo ON rp.id_post = seo.id_post WHERE rp.id_category =".$result['id_category']." ORDER BY rp.id_post";
-					exit;*/
-					$postQuery = mysql_query("SELECT rp.*,seo.seo_url as seourl FROM  `r_post` rp LEFT JOIN r_seo_url seo ON rp.id_post = seo.id_post WHERE rp.id_category =".$result['id_category']." ORDER BY rp.id_post")or die(mysql_error()); 		
+					<!--category details end -->
 					
-					
-						while ($post = mysql_fetch_array($postQuery)) {
+					<div class="comment-top">
+						<h2><?php echo $result['name'] ?> Topic's</h2><?php
+							/*echo "SELECT * FROM  `r_post` rp LEFT JOIN r_seo_url seo ON rp.id_post = seo.id_post WHERE rp.id_category =".$result['id_category']." ORDER BY rp.id_post";
+							exit;*/
+							$postQuery = $conn->query("SELECT rp.*,seo.seo_url as seourl FROM  `r_post` rp LEFT JOIN r_seo_url seo ON rp.id_post = seo.id_post WHERE rp.id_category =".$result['id_category']." ORDER BY rp.id_post")or die(mysql_error()); 		
+							while ($post = $postQuery->fetch_assoc()) {
 							?>
 							<?php if($post['image']!=''){ ?>
-                            <div class="media-left">
-                                <a href="#">
-                                    <img class="article-short-image" src="images/post/<?php echo $post['image']?>">
-								</a>
-							</div>
+								<div class="media-left">
+									<a href="#">
+										<img class="article-short-image" width="100" height="100" src="images/post/<?php echo $post['image']?>">
+									</a>
+								</div>
 							<?php } ?>
                             <div class="media-body">
                                 <a href="<?php echo SITEURL?><?php echo $post['seourl']?>"><h4 class="media-heading"><?php echo $post['title'] ?></h4></a>
-								<p><?php echo substr($post['description'],0,POST_DESCRIPTION_LENGTH); ?>....<a href="<?php echo SITEURL?><?php echo $post['seourl']?>">Read More.</a></p>
-								</div><br /> 
+								<p><?php echo substr($post['short_description'],0,POST_DESCRIPTION_LENGTH); ?>....<a href="<?php echo SITEURL?><?php echo $post['seourl']?>">Read More.</a></p>
+							</div><br /> 
                             <?php
-						}
-					?>
-				</div>
-				
-			<?php } ?>
-				<?php if($showpageDiv==true){ ?>
-				<div class=" blog-grid2">
-					<?if(!empty($result['image'])) { ?>
-                    <img src="admin/images/<?= $result['image'] ?>" class="img-responsive" alt="<?= $result['image'] ?>">
-					<? }?>
-                    <div class="blog-text">
-                        <h5><?php echo $result['page_heading'] ?></h5>
-                        <p><?php echo $result['page_description'] ?> </p>	
-                        <p></p>				
+							}
+						?>
 					</div>
-				</div>
+					
+				<?php } ?>
+				<?php if($showpageDiv==true){ ?>
+					<div class=" blog-grid2">
+						<div class="blog-text">
+							<h5><?php echo $result['page_heading'] ?></h5>
+						</div>
+						<?if(!empty($result['image'])) { ?>
+							<img src="admin/images/<?= $result['image'] ?>" class="img-responsive" alt="<?= $result['image'] ?>">
+						<? }?>
+						<div class="blog-text">
+							<p><?php echo stripslashes($result['page_description']); ?> </p>					
+						</div>
+					</div>
 				<? } ?>
 				
 				<?php if($showUserDiv == true) {?>
-				
+					
 				<?php  } ?>
 				<?php if($showProductDiv == true) {?>
-				<div class=" blog-grid2">
-					<?if(!empty($result['image'])) { ?>
-                    <img src="images/post/<?= $result['image'] ?>" class="img-responsive" alt="<?= $result['image'] ?>">
-					<? }?>
-					<div class="blog-poast-info">
-								<ul>
-									<li><i class="glyphicon glyphicon-user"> </i><a class="admin" href="#"><?php echo $result['username'] ?> </a></li>
-									<li><i class="glyphicon glyphicon-calendar"> </i><?php echo $result['date_updated'] ?></li>
-									<li><i class="glyphicon glyphicon-comment"> </i><a class="p-blog"><?php echo $result['name'] ?></a></li>
-									<li><i class="glyphicon glyphicon-heart"> </i><a class="admin"><?php echo$result['favourites'] ?> favourites </a></li>
-									<li><i class="glyphicon glyphicon-eye-open"> </i><?php echo $result['views'] ?> views</li>
-								</ul>
-							</div>
-                    <div class="blog-text">
-                        <h5><?php echo $result['title'] ?></h5>
-                        <p><?php echo $result['description'] ?> </p>	
-                        <p></p>				
+					<div class=" blog-grid2">
+						<div class="blog-text">
+							<h5><?php echo $result['title'] ?></h5>
+						</div>
+						<?if(!empty($result['image'])) { ?>
+							<img src="images/post/<?= $result['image'] ?>" class="img-responsive" alt="<?= $result['image'] ?>">
+						<? }?>
+						<div class="blog-poast-info">
+							<ul>
+								<li><i class="glyphicon glyphicon-user"> </i><a class="admin"><?php echo $result['username'] ?> </a></li>
+								<li><i class="glyphicon glyphicon-calendar"> </i><?php echo $result['date_updated'] ?></li>
+								<li><i class="glyphicon glyphicon-comment"> </i><a class="p-blog"><?php echo $result['name'] ?></a></li>
+								<li><i class="glyphicon glyphicon-heart"> </i><a class="admin"><?php echo$result['favourites'] ?> favourites </a></li>
+								<li><i class="glyphicon glyphicon-eye-open"> </i><?php echo $result['views'] ?> views</li>
+							</ul>
+						</div>
+						<div class="blog-text">
+							<h5><?php echo $result['title'] ?></h5>
+							<p><?php echo $result['description'] ?> </p>	
+							<?php if($result['source']!=''){ ?>
+								<h6>Source :</h6> <p><a href="<?php echo $result['source'];?>"><?php echo $result['source'];?></a></p>		
+							<?php }?>
+							
+							<?php if($result['image_source']!=''){ ?>
+								<h6>Image Source :</h6> <a href="<?php echo $result['image_source'];?>"><?php echo $result['image_source'];?></a></p>
+							<?php }?>
+						</div>
 					</div>
-				</div>
 				<?php } ?>
-				 <?php if($showProductDiv == true) {?>
-                <div class="comment-top">
-                    <h2>Comment</h2><?php
-						$commentQuery = "select * from r_comment where post_id=$id order by id_comment desc";
-						$commentQuery = mysql_query($commentQuery);
-						while ($comment = mysql_fetch_array($commentQuery)) {
-							if ($comment['name'] != '' & $comment['message'] != '') {
-							?>
-                            <div class="media-left">
-                                <a href="#">
-                                    <img src="images/si.png" alt="">
-								</a>
-							</div>
-                            <div class="media-body">
-                                <h4 class="media-heading"><?php echo $comment['name'] ?></h4>
-                                <p><?php echo $comment['message'] ?></p>
-							</div><br />
-                            <?php
-							}
-						}
-					?>
-				</div>
-				
-                <div class="comment">
-                    <h3>Leave a Comment</h3>
+				<?php if($showProductDiv == true) {?>
 					
-                    <div class=" comment-bottom">
-                        <form action='savecomment.php?type=save&id=<?php echo $result['id_post']?>&seo_url=<?php echo $result['seo_url']?>' method="post">
-						
-                            <input type="text" name="name" placeholder="Name">
-                            <input type="hidden" name="id" value="$id" >
-                            <input type="text" name="email" placeholder="Email">
-                            <input type="text" name="subject" placeholder="Subject">
-                            <textarea placeholder="Message" name="message" required=""></textarea>
-                            <input type="submit" value="Send">
-						</form>
+					<div class="comment">
+						<h3>Leave a Comment</h3>
+						<span id="showMessage"></span>
+						<div class=" comment-bottom">
+							<form id="commentForm"> 
+								<input type="text" id="name" name="name" placeholder="Name">
+								<input type="hidden" name="id" value="<?php echo $result['id_post']?>" >
+								<input type="text" id="Commentemail" name="email" placeholder="Email">
+								<input type="text" id="subject" name="subject" placeholder="Subject">
+								<textarea placeholder="Message" id="message" name="message" required=""></textarea>
+								<button id="SubmitComment">Submit</button>
+							</form>
+						</div>
 					</div>
-				</div>
+					
+					<div class="comment-top">
+						<h2>Comment</h2>
+						<div id="commentsdiv">
+							<?php
+								$commentQuery = $conn->query("select * from r_comment where post_id=$id order by id_comment desc");
+								while ($comment = $commentQuery->fetch_assoc()) {
+									if ($comment['name'] != '' & $comment['message'] != '') {
+									?>
+									
+									<div class="media-left">
+										<a href="#">
+											<img src="images/si.png" alt="">
+										</a>
+									</div>
+									<div class="media-body">
+										<h4 class="media-heading"><?php echo $comment['name'] ?></h4>
+										<p><?php echo $comment['message'] ?></p>
+									</div><br />
+									
+									<?php
+									}
+								}
+							?>
+						</div>
+					</div>
+					
 				<?php } ?>
 			</div>
 		</div>
@@ -196,4 +211,70 @@
         <div class="clearfix"></div>
 	</div>
 </div>
+
+<script type="text/javascript" language="JavaScript">
+	$("#SubmitComment").click(function()
+	{
+		$("#showMessage").html('');
+		if($("#name").val()=='')
+		{
+			$("#showMessage").html('Please Enter Your Name');
+			$("#name").css({"border-style": "solid", "border-color": "red"}).focus();
+			return false;
+			}
+		else
+		{
+			$("#name").css({"border-style": "solid","border-color": "#E9E9E9"});
+		}
+		var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		var Mail = $("#Commentemail").val();
+		if((Mail=='') || (!regex.test(Mail)))
+		{
+			$("#Commentemail").css({"border-style": "solid", "border-color": "red"}).focus();
+			$("#showMessage").html('Please Enter Valid Email');
+			return false;
+			}else{
+			$("#Commentemail").css({"border-style": "solid","border-color": "#E9E9E9"});
+		}
+		if($("#subject").val()=='')
+		{
+			$("#subject").css({"border-style": "solid", "border-color": "red"}).focus();
+			$("#showMessage").html('Please Enter subject');
+			return false;
+			}else{
+			$("#subject").css({"border-style": "solid","border-color": "#E9E9E9"});
+		}
+		
+		if($("#message").val()=='')
+		{
+			$("#message").css({"border-style": "solid", "border-color": "red"}).focus();
+			$("#showMessage").html('Please Enter Your Message');
+			return false;
+			}else{
+			$("#message").css({"border-style": "solid","border-color": "#E9E9E9"});
+		}
+		$.ajax({
+			url: "controller.php",
+			method: "POST",
+			data: { CommentData : $("#commentForm").serialize(), 'type':'save'},
+			dataType: "json",
+			success: function (response) {
+				if(response["success"]==true)
+				{
+					$("#commentsdiv").prepend('<div class="media-left"><img src="images/si.png" alt=""></div><div class="media-body"><h4 class="media-heading">'+$("#name").val()+'</h4><p>'+$("#message").val()+'</p></div><br />');
+					$('#commentForm').find("input[type=text], textarea").val("");
+					$("#showMessage").html('<div class="alert alert-success"><strong>Success!</strong> '+response['message']+'</div>');
+					
+					}else{
+					$("#showMessage").html('<div class="alert alert-warning"><strong>warning!</strong> '+response['message']+'</div>');
+				}
+			},
+			error: function (request, status, error) {
+				$("#showMessage").html('<div class="alert alert-warning"><strong>warning!</strong> Please Try After Sometime!</div>');
+			}
+		});
+		return false;
+		
+	});
+</script>
 <?php include_once ('includes/footer.php'); ?>

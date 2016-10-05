@@ -60,7 +60,6 @@ label{
 .logo  a h1:hover{
  text-decoration:none;
 }
-
 /*--logo--*/
 /*--social--*/
 .social {
@@ -145,11 +144,8 @@ label{
 }
 .head-bottom {
     background: #fa4b2a;
-    position:fixed;
     width:100%;
-    z-index:100;
-	top: 0;
-    left: 0;
+    z-index:100; 
 }
 /*--navigation--*/
 ul.nav.navbar-nav li.active a {
@@ -573,7 +569,7 @@ min-height: 300px;
     font-family: 'Roboto Condensed', sans-serif;
 }
 .technology-1 p {
-    color: #060606;
+    color: #777;
     font-size: 0.875em;
     line-height: 1.8em;
     margin: 1em 0;

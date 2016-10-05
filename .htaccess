@@ -7,4 +7,4 @@ RewriteOptions inherit
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-RewriteRule ^(.*?)/?$ /techdefeat/post.php?seo_url=$1 [QSA,L]
+RewriteRule ^(.*?)/?$ post.php?seo_url=$1 [QSA,L]
