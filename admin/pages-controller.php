@@ -21,10 +21,10 @@
 			$pageid=$conn->insert_id;
 			$conn->query("INSERT INTO  `r_seo_url` (seo_url ,`id_page`) VALUES (  '".$seo_url."',  ".$pageid.")");
             $message = "<strong>Success!</strong> Page Added Successfully.";
-			header('location:pages.php?response=success&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'pages.php?response=success&message='.$message);
 			} else {
 				$message = "<strong>Success!</strong> Page Not Added .Please check Carefully..";
-			header('location:pages.php?response=warning');
+			header('location:'.SITE_ADMIN_URL.'pages.php?response=warning');
 		}
 		}
 		else if($_POST['action']=='edit'){
@@ -50,11 +50,11 @@
 				$conn->query("INSERT INTO  `r_seo_url` (seo_url ,`id_page`) VALUES (  '".$seo_url."',  ".$id.")");
 			}
 			$message = "<strong>Success!</strong> Page Modified Successfully.";
-			header('location:pages.php?response=success&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'pages.php?response=success&message='.$message);
 			
 			} else {
 				$message = "<strong>Warning!</strong> Page Not Modified.Please check Carefully..";
-			header('location:pages.php?response=danger&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'pages.php?response=danger&message='.$message);
 			
 		}
 	}
@@ -70,11 +70,11 @@
 		if($result)
 		{
 			$message = "<strong>Success!</strong> Page Deleted Successfully.";
-			header('location:pages.php?response=success&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'pages.php?response=success&message='.$message);
 			
 			} else {
 				$message = "<strong>Warning!</strong> Page Not Deleted. Please check Carefully.";
-			header('location:pages.php?response=danger&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'pages.php?response=danger&message='.$message);
 			
 		}
 	} 

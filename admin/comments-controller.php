@@ -6,9 +6,6 @@
 		header('location:index.php');
 	}
 	if($_POST['action']=='add'){
-		/*echo "<pre>";
-		print_r($_POST);
-		exit;*/
 		$name = $conn->real_escape_string($_POST['name']);
 		$email = $conn->real_escape_string($_POST['email']);
 		$subject = $conn->real_escape_string($_POST['subject']);
@@ -18,17 +15,15 @@
 		
         if($addCommentQuery){
 			$message = "<strong>Success!</strong> Comment Added Successfully.";
-			header('location:comments.php?response=success&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'comments.php?response=success&message='.$message);
 			} else {
 				$message = "<strong>Success!</strong> Comment Not Added .Please check Carefully..";
-			header('location:comments.php?response=warning');
+			header('location:'.SITE_ADMIN_URL.'comments.php?response=warning');
 		}
 		
            
 	}	else if($_POST['action']=='edit'){
 		$id = (int)$_POST['id'];
-		//echo "$id";
-		//exit;
 		$name = $conn->real_escape_string($_POST['name']);
 		$email = $conn->real_escape_string($_POST['email']);
 		$subject = $conn->real_escape_string($_POST['subject']);
@@ -38,11 +33,11 @@
 		if($editComment)
 		{
 			$message = "<strong>Success!</strong> Comment Modified Successfully.";
-			header('location:comments.php?response=success&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'comments.php?response=success&message='.$message);
 			
 			} else {
 				$message = "<strong>Warning!</strong> Comment Not Modified.Please check Carefully..";
-			header('location:comments.php?response=danger&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'comments.php?response=danger&message='.$message);
 			
 		}
 		}
@@ -59,11 +54,11 @@
 		if($result)
 		{
 			$message = "<strong>Success!</strong> Comment Deleted Successfully.";
-			header('location:comments.php?response=success&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'comments.php?response=success&message='.$message);
 			
 			} else {
 				$message = "<strong>Warning!</strong> Comment Not Deleted. Please check Carefully.";
-			header('location:comments.php?response=danger&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'comments.php?response=danger&message='.$message);
 			
 		}
 		

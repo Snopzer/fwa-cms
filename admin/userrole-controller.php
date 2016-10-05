@@ -12,11 +12,11 @@
 		$insert = $conn->query("INSERT INTO r_user_role (role,status) VALUES ('" . $role . "','" . $status . "')") or die(mysqli_error());		
 			if ($insert) {
 				$message = "<strong>Success!</strong> User role Added Successfully.";
-				header('location:userrole.php?response=success&message='.$message);
+				header('location:'.SITE_ADMIN_URL.'userrole.php?response=success&message='.$message);
 				}
 			else {
 				$message = "<strong>Warning!</strong> User Not Added.Please check Carefully..";
-				header('location:userrole.php?response=Warning&message='.$message);
+				header('location:'.SITE_ADMIN_URL.'userrole.php?response=Warning&message='.$message);
 				}
 			}
 		else if($_REQUEST['action']=='edit'){
@@ -29,10 +29,10 @@
 						
 			if ($result) {
 			$message = "<strong>Success!</strong> User Modified Successfully.";
-			header('location:userrole.php?response=success&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'userrole.php?response=success&message='.$message);
 			} else {
 			$message = "<strong>Warning!</strong> User Not Modified.Please check Carefully..";
-			header('location:userrole.php?response=danger&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'userrole.php?response=danger&message='.$message);
 				} 
 	}
 	else if($_REQUEST['action']=='delete'){
@@ -45,10 +45,10 @@
 		}
 		if ($result) {
 			$message = "<strong>Success!</strong> user role Deleted Successfully.";
-		     header('location:userrole.php?response=success&message='.$message);
+		     header('location:'.SITE_ADMIN_URL.'userrole.php?response=success&message='.$message);
 		}else{
 			$message = "<strong>Warning!</strong> User role Not Deleted. Please check Carefully.";
-			header('location:userrole.php?response=danger&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'userrole.php?response=danger&message='.$message);
 		}
 	}
 ?>

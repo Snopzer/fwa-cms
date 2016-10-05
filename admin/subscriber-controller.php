@@ -15,7 +15,7 @@
 			header('location:subscriber.php?response=success&message='.$message);
 			} else {
 			$message = "<strong>Success!</strong> Subscriber Not Added .Please check Carefully..";
-			header('location:subscriber.php?response=warning');
+			header('location:'.SITE_ADMIN_URL.'subscriber.php?response=warning');
 		}
 	}
 	else if($_POST['action']=='edit')
@@ -30,11 +30,11 @@
 		if($result)
 		{
 			$message = "<strong>Success!</strong> Subscriber Modified Successfully.";
-			header('location:subscriber.php?response=success&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'subscriber.php?response=success&message='.$message);
 			
 			} else {
 			$message = "<strong>Warning!</strong> Subscriber Not Modified.Please check Carefully..";
-			header('location:subscriber.php?response=danger&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'subscriber.php?response=danger&message='.$message);
 			
 		}
 		
@@ -52,11 +52,11 @@
 		{
 			
 			$message = "<strong>Success!</strong> Subscriber Deleted Successfully.";
-			header('location:subscriber.php?response=success&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'subscriber.php?response=success&message='.$message);
 			
 			} else {
 			$message = "<strong>Warning!</strong> Subscriber Not Deleted. Please check Carefully.";
-			header('location:subscriber.php?response=danger&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'subscriber.php?response=danger&message='.$message);
 			
 		}
 	}

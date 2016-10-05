@@ -108,7 +108,7 @@ if (isset($_SESSION['id'])) {
 				$("#showMessageDiv").hide();
 				$("#showSuccessMessageDiv").show();
 				$("#showSuccessMessage").html("<strong>Success! </strong> Please Wait...!");
-				location = '/admin/controller.php?action=checkLogin&loginid='+response["id"];
+				location = '<?php echo SITE_ADMIN_URL;?>/controller.php?action=checkLogin&loginid='+response["id"];
 				window.open(location);
 			}else{
 				$("#showMessageDiv").show();

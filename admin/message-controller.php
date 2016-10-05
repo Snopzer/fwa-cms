@@ -16,10 +16,10 @@
 		$addMessage = $conn->query("INSERT INTO r_message (name,subject,email,message,date_created) VALUES ('" . $name . "','" . $subject . "','" . $email . "','" . $message . "','" . $date_created . "')") or die(mysqli_error());
 		if ($addMessage) {
 			$message = "<strong>Success!</strong> Message Added Successfully.";
-			header('location:message.php?response=success&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'message.php?response=success&message='.$message);
 			} else {
 				$message = "<strong>Success!</strong> Message Not Added .Please check Carefully..";
-			header('location:message.php?response=warning');
+			header('location:'.SITE_ADMIN_URL.'message.php?response=warning');
 		}
 	}else if($_POST['action']=='edit'){
 		$id = $_POST['id'];
@@ -33,10 +33,10 @@
 		if ($editMessage) 
 		{
 			$message = "<strong>Success!</strong> Message Modified Successfully.";
-			header('location:message.php?response=success&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'message.php?response=success&message='.$message);
 			} else {
 				$message = "<strong>Success!</strong> Message Not Modified .Please check Carefully..";
-			header('location:message.php?response=warning');
+			header('location:'.SITE_ADMIN_URL.'message.php?response=warning');
 		}
 	}
 		else if($_REQUEST['action']=='delete'){
@@ -50,10 +50,10 @@
 			if ($deletemessage) 
 		{
 			$message = "<strong>Success!</strong> Message Deleted Successfully.";
-			header('location:message.php?response=success&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'message.php?response=success&message='.$message);
 			} else {
 				$message = "<strong>Success!</strong> Message Not Deleted.Please check Carefully..";
-			header('location:message.php?response=warning');
+			header('location:'.SITE_ADMIN_URL.'message.php?response=warning');
 		}
 	}
 ?>

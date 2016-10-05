@@ -31,10 +31,10 @@
 		if(!empty($pic)){
 			$_SESSION['image'] = $pic;
 		}
-		header('location:profile.php');
+		header('location:'.SITE_ADMIN_URL.'profile.php');
 	} 
 	else 
 	{
-		header('location:profile.php');
+		header('location:'.SITE_ADMIN_URL.'profile.php');
 	}
 ?>

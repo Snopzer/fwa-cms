@@ -12,7 +12,7 @@
 		$addPic = $conn->query("insert into r_image (image,image_name) VALUES ('".$pic."','".$name."') ")or die(mysql_error());
 		$path = "../images/gallery/" . $_FILES['photo']['name'];
 		if (copy($_FILES['photo']['tmp_name'], $path)) {
-			header('location:gallery.php');
+			header('location:'.SITE_ADMIN_URL.'gallery.php');
 			} else {
 			echo "Sorry, there was a problem uploading your file.";
 		}
@@ -25,7 +25,7 @@
         $row = $res->fetch_assoc();
 	    $deltePic = $conn->query("DELETE FROM r_image WHERE id_image='$id'");
         if ($deltePic) {
-            header("location:gallery.php");
+            header('location:'.SITE_ADMIN_URL.'gallery.php');
 		}
 		else {
 			echo "cannot delete record";

@@ -12,10 +12,10 @@
 		
         if($insert){
 			$message = "<strong>Success!</strong> Country Added Successfully.";
-			header('location:country.php?response=success&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'country.php?response=success&message='.$message);
 			} else {
 				$message = "<strong>Success!</strong> Country Not Added .Please check Carefully..";
-			header('location:country.php?response=warning');
+			header('location:'.SITE_ADMIN_URL.'country.php?response=warning');
 		}
 		}else if($_POST['action']=='edit'){
 		$id = (int)$_POST['id'];
@@ -28,11 +28,11 @@
 		if($result)
 		{
 			$message = "<strong>Success!</strong> Country Modified Successfully.";
-			header('location:country.php?response=success&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'country.php?response=success&message='.$message);
 			
 			} else {
 				$message = "<strong>Warning!</strong> Country Not Modified.Please check Carefully..";
-			header('location:country.php?response=danger&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'country.php?response=danger&message='.$message);
 			
 		}
 			
@@ -50,11 +50,11 @@
 		{
 		    
 				$message = "<strong>Success!</strong> Country Deleted Successfully.";
-			header('location:country.php?response=success&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'country.php?response=success&message='.$message);
 			
 			} else {
 				$message = "<strong>Warning!</strong> Page Not Deleted. Please check Carefully.";
-			header('location:country.php?response=danger&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'country.php?response=danger&message='.$message);
 			
 		}
 		}

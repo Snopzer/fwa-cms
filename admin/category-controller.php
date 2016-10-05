@@ -44,10 +44,10 @@
 				
 			}
 			$message = "<strong>Success!</strong> category Added Successfully.";
-			header('location:category.php?response=success&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'category.php?response=success&message='.$message);
 			} else {
 			$message = "<strong>Success!</strong> category Not Added .Please check Carefully..";
-			header('location:posts.php?response=warning');
+			header('location:'.SITE_ADMIN_URL.'posts.php?response=warning');
 			}
 		}
 		}
@@ -88,11 +88,11 @@
 			}
 			/*seo url end*/	
 			$message = "<strong>Success!</strong> Category Modified Successfully.";
-			header('location:category.php?response=success&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'category.php?response=success&message='.$message);
 			
 			} else {
 			$message = "<strong>Warning!</strong> Category Not Modified.Please check Carefully..";
-			header('location:category.php?response=danger&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'category.php?response=danger&message='.$message);
 			
 		}
 	}
@@ -105,11 +105,11 @@
 		}
 		if($Deleted){
 			$message = "<strong>Success!</strong> Category Deleted Successfully.";
-			header('location:category.php?response=success&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'category.php?response=success&message='.$message);
 		}
 		else{
 			$message = "<strong>Warning!</strong> Category Not Deleted. Please check Carefully.";
-			header('location:category.php?response=danger&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'category.php?response=danger&message='.$message);
 		}
 	}
 	else if($_REQUEST['action']=='undo'){
@@ -118,11 +118,11 @@
 		}
 		if($UndoDelete){
 			$message = "<strong>Success!</strong> Categories Restored Successfully.";
-			header('location:category.php?response=success&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'category.php?response=success&message='.$message);
 		}
 		else{
 			$message = "<strong>Warning!</strong> Category Not Restored. Please check Carefully.";
-			header('location:category.php?response=danger&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'category.php?response=danger&message='.$message);
 		}
 	}
 	

@@ -38,9 +38,9 @@
 				move_uploaded_file($_FILES["photo"]["tmp_name"], "../images/post/" . $pic);
 			}
 			$message = "<strong>Success!</strong> Post Added Successfully.";
-			header('location:posts.php?response=success&message='.$message);
+			header('location:'.SITE_ADMIN_URL.'posts.php?response=success&message='.$message);
 			} else {
-			header('location:posts.php?response=warning');
+			header('location:'.SITE_ADMIN_URL.'posts.php?response=warning');
 		}
 		
 		} else if ($_POST['action'] == 'edit') {
@@ -84,10 +84,10 @@
 				}
 			
 			$message = "<strong>Success!</strong> Post Modified Successfully.";
-			header('location:posts.php?response=success&message='.$message.'&page=$page');
+			header('location:'.SITE_ADMIN_URL.'posts.php?response=success&message='.$message.'&page=$page');
 			} else {
 			$message = "<strong>Warning!</strong> Post Not Modified.Please check Carefully..";
-			header('location:posts.php?response=danger&message='.$message.'&page=$page');
+			header('location:'.SITE_ADMIN_URL.'posts.php?response=danger&message='.$message.'&page=$page');
 		}
 	}
 	else if ($_REQUEST['action'] == 'delete') {
@@ -109,10 +109,10 @@
 		
 		if ($result) {
 			$message = "<strong>Success!</strong> Post Deleted Successfully.";
-			header('location:posts.php?response=success&message='.$message.'&page=$page');
+			header('location:'.SITE_ADMIN_URL.'posts.php?response=success&message='.$message.'&page=$page');
 			}else{
 			$message = "<strong>Warning!</strong> Post Not Deleted. Please check Carefully.";
-			header('location:posts.php?response=danger&message='.$message.'&page=$page');
+			header('location:'.SITE_ADMIN_URL.'posts.php?response=danger&message='.$message.'&page=$page');
 		}
 	}
 ?>
