@@ -11,25 +11,25 @@
 	
 	
 	/* MySQL Server Host address */
-	$host 		=	"mysql11.000webhost.com";
+	$host 		=	"localhost";
 	
 	/* MySQL User Name */
-	$user		=	"a4447154_dev";
+	$user		=	"root";
 	
 	/* MySQL User Password*/
-	$password	=	"543fareed";
+	$password	=	"";
 	
 	/* MySQL Database*/
-	$database	=	"a4447154_dev";		
+	$database	=	"fwa-cms";		
 	
 	/*The Below Parameters will enhance in Next Edit will get the Details form Database so that no need to change in Config File */
 	/*SITE Details*/
-	define ( SITE_NAME , 'TechDefeat');
-	define ( SITE_KEYWORDS , 'TechDefeat');
-	define ( SITE_DESCRIPTION , 'TechDefeat');
-	define ( SITE_ADMIN_URL , 'http://techdefeat.com/admin/');
-	define ( SITEURL , 'http://techdefeat.com/');
-	define ( OWNER_NAME , 'Mohammad Fareed');
+	define ( SITE_NAME , 'FWACMS');
+	define ( SITE_KEYWORDS , 'FWACMS');
+	define ( SITE_DESCRIPTION , 'FWACMS');
+	define ( SITE_ADMIN_URL , 'http://localhost/fwacms/admin/');
+	define ( SITEURL , 'http://localhost/fwacms/');
+	define ( OWNER_NAME , 'Owner Name');
 	
 	/* Admin parameters */
 	define ( ADD_BUTTON , 'Add');
@@ -44,15 +44,15 @@
 	
 	/* Contact Page Parameters*/
 	define ( CONTACT_MAIL , 'info@snopzer.com');
-	define ( CONTACT_PHONE , '7207556743');
+	define ( CONTACT_PHONE , '1234567890');
 	define ( CONTACT_ADDRESS , 'snopzer.com');
 	define ( POST_DESCRIPTION_LENGTH,300);
 	
 	/*Email Settings*/
-	define ( ADMIN_MAIL , 'fareed@techdefeat.com');
-	define ( FROM_MAIL , 'info@techdefeat.com');
-	define ( REPLY_TO_MAIL , 'no-reply@techdefeat.com');
-	define ( SITE_COPY_RIGHTS , '&copy; 2016 www.techdefeat.com All Rights Reserved');
+	define ( ADMIN_MAIL , 'info@snopzer.com');
+	define ( FROM_MAIL , 'info@snopzer.com');
+	define ( REPLY_TO_MAIL , 'no-reply@snopzer.com');
+	define ( SITE_COPY_RIGHTS , '&copy; 2016 www.snopzer.com All Rights Reserved');
 	
 	/*Social Link*/
 	define ( SOCIAL_FACEBOOK_URL , 'https://www.facebook.com/techdefeat1/');
@@ -62,17 +62,7 @@
 	define ( SOCIAL_BEHANCE_URL , '');
 	define ( SOCIAL_VIMIO_URL , 'https://vimeo.com/techdefeat');
 	define ( SOCIAL_YOUTUBE_URL , 'https://www.youtube.com/channel/UCbHsMI8xvNudPGi2OvIxPxw');
-		/*Social Network Pages*/
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/*Social Network Pages*/	
 	
 	/*Connect to Database start*/
 	$conn = new mysqli($host, $user, $password, $database);

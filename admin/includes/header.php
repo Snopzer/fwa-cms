@@ -1,10 +1,11 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>TECHDEFEAT ADMIN PANEL</title>
+        <title><?php echo SITE_NAME;?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="keywords" content="Ramadan time table,calender,saher timings,iftaar timings,Ramadan Namaz Timings" />
+        <meta name="keywords" content="<?php echo SITE_KEYWORDS;?>" />
+        <meta name="keywords" content="<?php echo SITE_DESCRIPTION;?>" />
         <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
         <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
         <!-- Custom Theme files -->

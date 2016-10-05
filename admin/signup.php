@@ -27,7 +27,7 @@
 	</head>
 	<body>
 		<div class="login">
-			<h1><a href="home.php">TECHDEFEAT</a></h1>
+			<h1><a href="home.php"><?php echo SITE_NAME;?></a></h1>
 			<div class="login-bottom">
 				<h2>Sign Up</h2>
 				<div class="">
@@ -69,9 +69,7 @@
 				<div class="clearfix"> </div>
 			</div>
 		</div>
-		<div class="copy-right">
-			<p> &copy; 2016 www.techdefeat.com All Rights Reserved </p>
-		</div>
+		<div class="copy-right"><p><?php echo SITE_COPY_RIGHTS;?></p></div>
 		<script src="js/jquery.nicescroll.js"></script>
 		<script src="js/scripts.js"></script>
 	</body>

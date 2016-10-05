@@ -22,7 +22,7 @@ if (isset($_SESSION['id'])) {
     </head>
     <body>
         <div class="login">
-            <h1><a href="home.php">Techdefeat</a></h1>
+            <h1><a href="home.php"><?php echo SITE_NAME;?></a></h1>
             <div class="login-bottom">
                 <h2>Login</h2>
 					<div id="showMessageDiv" style="display:none;" class="alert alert-danger">
@@ -59,7 +59,7 @@ if (isset($_SESSION['id'])) {
                
             </div>
         </div>
-        <div class="copy-right"><p> &copy; 2016 Techdefeat.com All Rights Reserved </p></div>  
+        <div class="copy-right"><p><?php echo SITE_COPY_RIGHTS;?></p></div>  
         <script src="js/jquery.nicescroll.js"></script>
         <script src="js/scripts.js"></script>
     </body>
@@ -120,6 +120,5 @@ if (isset($_SESSION['id'])) {
 		}
 		});
 		return false;
-		
 	});
 </script>

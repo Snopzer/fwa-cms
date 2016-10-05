@@ -22,7 +22,7 @@
 	</head>
     <body>
         <div class="login">
-            <h1><a href="home.php">Techdefeat</a></h1>
+            <h1><a href="home.php"><?php echo SITE_NAME;?></a></h1>
             <div class="login-bottom">
                 <h2>Forgot Password</h2>
 				
@@ -52,7 +52,7 @@
 				
 			</div>
 		</div>
-        <div class="copy-right"><p> &copy; 2016 Techdefeat.com All Rights Reserved </p></div>  
+        <div class="copy-right"><p><?php echo SITE_COPY_RIGHTS;?></p></div>  
         <script src="js/jquery.nicescroll.js"></script>
         <script src="js/scripts.js"></script>
 	</body>
@@ -63,12 +63,8 @@
     {
         var email = $("#email").val();
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        //return regex.test(email);
-        //if email is empty or email is invalid then show alert message
         if ((email == '') || (!regex.test(email)))
         {
-            //alert("Please Enter email");
-            //instead of alert message show the warning desing to field
             $("#mail_field").css({"border-style": "solid", "border-color": "red"});
             $("#email").focus();
             return false;
