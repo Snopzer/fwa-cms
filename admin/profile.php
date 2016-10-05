@@ -4,8 +4,8 @@
 	if (!isset($_SESSION['id'])) {
 		header('location:index.php');
 	}
-	$row = mysql_query("select * from r_user where id_user=" . $_SESSION['id'])or die(mysql_error());
-	$result = mysql_fetch_assoc($row)or die(mysql_error());
+	$row = $conn->query("select * from r_user where id_user=" . $_SESSION['id'])or die(mysqli_error());
+	$result = $row->fetch_assoc()or die(mysqli_error());
 ?>
 <?php include_once('includes/header.php'); ?>
 <?php include_once('includes/menu.php'); ?>
@@ -28,14 +28,13 @@
                         <div class="col-md-4 profile-bottom-img">
                             <img src="../images/user/<?php echo $result['image'] ?>" alt="<?php echo $result['name'] ?>" style="width:200px; height: 200px;">
 						</div>
-                        <div class="col-md-4 profile-text">
+                        <div class="col-md-8 profile-text">
 							
                             <form action="profile-controller.php" method="post" enctype="multipart/form-data">
-							<div class='table-responsive'>
-                                <table class="col-md-4 profile-text"><tr><td>Name</td><td>:</td><td><input type="text" class="form-control" name="name" id="name" value="<?php echo $result['name'] ?>"></td></tr>	
+                                <table><tr><td>Name</td><td>:</td><td><input type="text" class="form-control" name="name" id="name" value="<?php echo $result['name'] ?>"></td></tr>	
                                     <tr><td>Department</td>  
                                         <td>:</td><input type="hidden" name="id" value="<?php echo $result['id_user'] ?>">  
-									<td><input type="text" class="form-control" name="department" id="department" value="<?php echo $result['department'] ?>"></td></tr>                         
+									<td><input type="text"  class="form-control" name="department" id="department" value="<?php echo $result['department'] ?>"></td></tr>                         
                                     <tr>
                                         <td>Email</td>
                                         <td> :</td>
@@ -58,8 +57,8 @@
 											<div class="col-sm-14">
 												<select name="country" id="selector1" class="form-control" >
 													<option>select country</option>
-													<?php $row = mysql_query("select * from r_country order by name asc")or die(mysql_error());
-														while ($run = mysql_fetch_assoc($row)) {
+													<?php $row = $conn->query("select * from r_country order by name asc")or die(mysqli_error());
+														while ($run = $row->fetch_assoc()) {
 															if($run['id_country']==$result['id_country']){ ?>
 															<option value="<?php echo $run['id_country'] ?>" selected><?php echo $run['name'] ?></option>
 															<?php }else{ ?>
@@ -80,7 +79,6 @@
 									</tr>
 									
 								</table>
-								</div>
 								
 							</div>
 							<div class="clearfix"></div>
@@ -116,8 +114,9 @@
 									<img src="../images/user/<?php echo $result['image'] ?>" alt="<?php echo $result['name'] ?>" style="width:200px; height: 200px;">
 									<input type="hidden" name="preview_image" value="<?php echo $result["image"] ?>">
 								</div>
-									<table class="col-md-4" >
-										<?php if ($result['name'] != "") { ?><h2><?php echo $result['name'] ?></h2><?php } ?> 
+								<div class="col-md-8 profile-text">
+									<table>
+										<?php if ($result['name'] != "") { ?><h6><?php echo $result['name'] ?></h6><?php } ?> 
 										<?php if ($result['department'] != "") { ?>
 											<tr><td>Department</td>  
 												<td>:</td>  
@@ -148,6 +147,7 @@
 																<td><?php echo $result['country'] ?></td>
 															</tr><?php } ?>
 									</table>
+								</div>
 								<div class="clearfix"></div>
 							</div>
 							<div class="profile-bottom-bottom">
@@ -166,4 +166,4 @@
 						</div>
 					</div>
 				<?php } // profile page ends here?>
-			<?php include_once('includes/footer.php'); ?>																
+			<?php include_once('includes/footer.php'); ?>										

@@ -1,30 +1,23 @@
 <?php
-	/*
-	File name 		: 	site-controller.php
-	Date Created 	:	13-06-2016
-	Date Updated 	:	08-09-2016
-	Description		:	Manage Sites Operation Like Add/Edit/Delete Sites
-	*/
 	ob_start();
 	session_start();
 	include_once('includes/config.php');
-	include_once('includes/fwa-function.php');
 	if (!isset($_SESSION['id'])) {
 		header('location:index.php');
 	}
 	if($_POST['action']=='add'){	
-		$site_name = mysql_real_escape_string($_POST['site_name']);	
-		$owner_email = mysql_real_escape_string($_POST['owner_email']);	
-		$email_from = mysql_real_escape_string($_POST['email_from']);	
-		$phone = mysql_real_escape_string($_POST['phone']);	
-		$replay_email = mysql_real_escape_string($_POST['replay_email']);	
-		$title = mysql_real_escape_string($_POST['title']);	
-		$meta_description = mysql_real_escape_string($_POST['meta_description']);	
-		$meta_keywords = mysql_real_escape_string($_POST['meta_keywords']);	
-		$google_analytics_code = mysql_real_escape_string($_POST['google_analytics_code']);	
-		$copyrights = mysql_real_escape_string($_POST['copyrights']); 
+		$site_name = $conn->real_escape_string($_POST['site_name']);	
+		$owner_email = $conn->real_escape_string($_POST['owner_email']);	
+		$email_from = $conn->real_escape_string($_POST['email_from']);	
+		$phone = $conn->real_escape_string($_POST['phone']);	
+		$replay_email = $conn->real_escape_string($_POST['replay_email']);	
+		$title = $conn->real_escape_string($_POST['title']);	
+		$meta_description = $conn->real_escape_string($_POST['meta_description']);	
+		$meta_keywords = $conn->real_escape_string($_POST['meta_keywords']);	
+		$google_analytics_code = $conn->real_escape_string($_POST['google_analytics_code']);	
+		$copyrights = $conn->real_escape_string($_POST['copyrights']); 
 		                
-			$addSiteData = mysql_query("INSERT INTO r_site_details (site_name,owner_email,email_from,phone,replay_email,title,meta_description,meta_keywords,google_analytics_code,copyrights) VALUES ('" . $site_name . "','" . $owner_email . "','" . $email_from . "','" . $phone . "','" . $replay_email . "','" . $title . "','" . $meta_description . "','" . $meta_keywords . "','" . $google_analytics_code . "','" . $copyrights . "')") or die(mysql_error());		
+			$addSiteData = $conn->query("INSERT INTO r_site_details (site_name,owner_email,email_from,phone,replay_email,title,meta_description,meta_keywords,google_analytics_code,copyrights) VALUES ('" . $site_name . "','" . $owner_email . "','" . $email_from . "','" . $phone . "','" . $replay_email . "','" . $title . "','" . $meta_description . "','" . $meta_keywords . "','" . $google_analytics_code . "','" . $copyrights . "')") or die(mysqli_error());		
 			if ($addSiteData) {
 				$message = "<strong>Success!</strong> Site Added Successfully.";
 			header('location:site.php?response=success&message='.$message);
@@ -36,19 +29,19 @@
 	}
 		else if($_REQUEST['action']=='edit'){
 			$id=(int)$_POST['id']  ;  
-			$site_name = mysql_real_escape_string($_POST['site_name']);	
-			$owner_email = mysql_real_escape_string($_POST['owner_email']);	
-			$email_from = mysql_real_escape_string($_POST['email_from']);	
-			$phone = mysql_real_escape_string($_POST['phone']);	
-			$replay_email = mysql_real_escape_string($_POST['replay_email']);	
-			$title = mysql_real_escape_string($_POST['title']);	
-			$meta_description = mysql_real_escape_string($_POST['meta_description']);	
-			$meta_keywords = mysql_real_escape_string($_POST['meta_keywords']);	
-			$google_analytics_code = mysql_real_escape_string($_POST['google_analytics_code']); 	
-			$copyrights = mysql_real_escape_string($_POST['copyrights']); 	
+			$site_name = $conn->real_escape_string($_POST['site_name']);	
+			$owner_email = $conn->real_escape_string($_POST['owner_email']);	
+			$email_from = $conn->real_escape_string($_POST['email_from']);	
+			$phone = $conn->real_escape_string($_POST['phone']);	
+			$replay_email = $conn->real_escape_string($_POST['replay_email']);	
+			$title = $conn->real_escape_string($_POST['title']);	
+			$meta_description = $conn->real_escape_string($_POST['meta_description']);	
+			$meta_keywords = $conn->real_escape_string($_POST['meta_keywords']);	
+			$google_analytics_code = $conn->real_escape_string($_POST['google_analytics_code']); 	
+			$copyrights = $conn->real_escape_string($_POST['copyrights']); 	
 			
 			$row = "update r_site_details SET site_name='".$site_name."',owner_email='".$owner_email."',email_from='".$email_from."',phone='".$phone."',replay_email='".$replay_email."',title='".$title."',meta_description='".$meta_description."',meta_keywords='".$meta_keywords."',google_analytics_code='".$google_analytics_code."',copyrights='".$copyrights."' where id='$id' ";
-			$updateSiteData = mysql_query($row);
+			$updateSiteData = $conn->query($row);
 					
 			if ($updateSiteData) {
 				$message = "<strong>Success!</strong> Site Modified Successfully.";
@@ -66,7 +59,7 @@
 		$count=count($messageid);
 		for($i=0;$i<$count;$i++)
 		{
-			$deleteSite=mysql_query("DELETE FROM r_site_details WHERE id=".$messageid[$i]);
+			$deleteSite=$conn->query("DELETE FROM r_site_details WHERE id=".$messageid[$i]);
 		}if ($deleteSite) {
 				$message = "<strong>Success!</strong> Site Deleted Successfully.";
 			header('location:site.php?response=success&message='.$message);

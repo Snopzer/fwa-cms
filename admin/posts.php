@@ -6,8 +6,12 @@
 	}
 	$id = (int)$_POST['id'];
 	// display all posts
-	$selectPosts = mysql_query("SELECT * FROM r_post order by id_post desc");
-	$postCount = mysql_num_rows($selectPosts);
+	if($_SESSION['id_user_role']==1){
+		$selectPosts = $conn->query("SELECT * FROM r_post order by id_post desc");
+	}else{
+		$selectPosts = $conn->query("SELECT * FROM r_post where id_user=".$_SESSION['id']." order by id_post desc");
+	}
+	$postCount = mysqli_num_rows($selectPosts);
 	
 	$pages = $postCount / ADMIN_PAGE_LIMIT;
 	$pages = ceil($pages);
@@ -22,7 +26,12 @@
 		} else {
 		$page1 = ($page * ADMIN_PAGE_LIMIT) - ADMIN_PAGE_LIMIT;
 	}
-	$selectPostList = mysql_query("SELECT * FROM r_post order by id_post desc limit ".$page1.",5")or die(mysql_error());
+	
+	if($_SESSION['id_user_role']==1){
+		$selectPostList = $conn->query("SELECT * FROM r_post order by id_post desc limit ".$page1.",".ADMIN_PAGE_LIMIT)or die(mysqli_error());
+	}else{
+		$selectPostList = $conn->query("SELECT * FROM r_post where id_user=".$_SESSION['id']." order by id_post desc limit ".$page1.",".ADMIN_PAGE_LIMIT)or die(mysqli_error());
+	}
 ?>  
 <?php include_once('includes/header.php'); ?>
 <?php include_once('includes/menu.php'); ?>
@@ -53,10 +62,10 @@
 								<table class="table">
 									<tbody>
 										<tr>
-											<td><h1 id="h1.-bootstrap-heading"> POSTS - [<?php echo $postCount;?>]</h1></td>
+											<td><h3 id="h3.-bootstrap-heading"> POSTS - [<?php echo $postCount;?>]</h3></td>
 											<td class="type-info text-right">
 												<a href="posts.php?action=add"><span class="btn btn-success"><?php echo ADD_BUTTON;?></span></a> 
-												<a  href="javascript:fnDetails();"><span class="btn btn-primary"><?php echo EDIT_BUTTON; ?></span></a>
+												<a  href="javascript:fnDetails();"><span class="btn btn-primary"><?php echo EDIT_BUTTON;?></span></a>
 												<a href="javascript:fnDelete();"><span class="btn btn-danger"><?php echo DELETE_BUTTON;?></span></a>
 												<!--<a><span class="btn btn-warning ">Enable</span></a>-->
 											</td>
@@ -75,9 +84,7 @@
 									<td class="table-text"><h6>Status</h6></td>
 									<td class="table-text"><h6>&nbsp;</h6></td>
 								</tr>
-								<?php	
-								/*if(mysql_num_rows($postCount)>0){*/
-								while ($post = mysql_fetch_assoc($selectPostList)) {	?>
+								<?php	while ($post = $selectPostList->fetch_assoc()) {	?>
 									<tr class="table-row <?php echo ($post["status"]==1)?'warning':'danger'; ?>">
 										<td class="table-img"><input type="checkbox" name="selectcheck" value="<?= $post["id_post"] ?>"></td>
 										<td class="march"><h6><?php echo  $post["title"] ?></h6></td>
@@ -87,11 +94,7 @@
 										<a href="post-controller.php?chkdelids=<?php echo  $post["id_post"] ?>&action=delete&page=<?php echo  "$page"?>""><span class="label label-info">Delete</span></a>
 										</td>
 									</tr>
-								<?php	}/*}else{ ?>
-								 <tr class="table-row">
-                                            <td class="table-img text-center" colspan="4"><?php echo ADMIN_NO_RECORDS_FOUND; ?></td>
-                                        </tr>
-								<?php }*/	?>
+								<?php	}	?>
 							</table>
 							<input name="uid" type="hidden" value="<?php echo $_REQUEST["uid"]; ?>">
                             <input type="hidden" name="action"/>
@@ -137,12 +140,18 @@
 						<?php if($_GET['action'] == "edit"){
 							$id = $_GET['id'];
 							$page=$_GET['page'];
-							$query = mysql_query("select p.id_category as category , p.*,su.* from r_post p,r_seo_url su where su.id_post = p.id_post and p.id_post=$id")or die(mysql_error());
-							$result = mysql_fetch_assoc($query);
+							if($_SESSION['id_user_role']==1){
+								$query = $conn->query("select p.id_user as userId,p.id_category as category , p.*,su.* from r_post p
+								LEFT JOIN r_seo_url su ON su.id_post = p.id_post WHERE p.id_post=$id")or die(mysqli_error());
+							}else{
+								$query = $conn->query("select p.id_user as userId,p.id_category as category , p.*,su.* from r_post p LEFT JOIN r_seo_url su ON su.id_post = p.id_post WHERE p.id_post=$id and p.id_user=".$_SESSION['id']."")or die(mysqli_error());	
+							}
+							$result = $query->fetch_assoc();
+							
 						?>
 						<form class="form-horizontal" action="post-controller.php" method="post" enctype="multipart/form-data" >
 							<input type="hidden" name="action" value="edit"/>
-							<input type="hidden" name="id" value="<?php echo $result["id_post"] ?>">
+							<input type="hidden" name="id" value="<?php echo $id ?>">
 							<input type="hidden" name="page" value='<?php echo "$page"?>'>
 							<div class="grid-hor">
 								<h4 id="grid-example-basic">Article Information</h4>
@@ -156,6 +165,12 @@
 								</div>
 							</div>
 							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Short Description</label>
+								<div class="col-sm-8">
+									<textarea  name="short_description" class="form-control" rows="6"><?php echo  $result["short_description"] ?></textarea> 
+								</div>
+							</div>
+							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label hor-form ">Description</label>
 								<div class="col-sm-8">
 									<textarea name="description" id="description" class="form-control" rows="6"><?php echo  $result["description"] ?></textarea> 
@@ -164,8 +179,8 @@
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Image</label>
 								<div class="col-sm-8">
+									<input type="hidden" name="preview_image" value="<?php echo $result["image"];?>">
 									<input type="file" name="photo">
-									<input type="hidden" name="prev_image" value="<?php echo $result["image"];?>">
 									<span id="prev_image_name"><?php echo $result["image"];?></span><br />
 									<img style="display:none;" id="prev_image" src='../images/post/<?php echo  $result["image"] ?>' width="50" height="50"> 
 									
@@ -212,8 +227,8 @@
 									<select name="category" id="selector1" class="form-control selectpicker" >
 										<option value="">select category</option>
 										<?php
-											$row = mysql_query("select * from r_category ")or die(mysql_error());						
-											while ($run = mysql_fetch_assoc($row)) {
+											$row = $conn->query("select * from r_category")or die(mysqli_error());						
+											while ($run = $row->fetch_assoc()) {
 												if($run['id_category']==$result['category']){?> 
 												<option value="<?php echo $run['id_category']?>" selected><?php echo $run['name']?></option>
 												<?php }else{ ?>
@@ -236,12 +251,30 @@
 									</select>
 								</div>                      
 							</div>
+							<div class="grid-hor">
+								<h4 id="grid-example-basic">Article Source</h4>
+					 			</div>
+					 		<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Source</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" name="source" value="<?php echo  $result["source"] ?>">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Image Surce</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" name="image_source" value="<?php echo  $result["image_source"] ?>">
+								</div>
+							</div>
+							
+							
 							<div class="row">
 								<div class="col-sm-8 col-sm-offset-2">
-									<input type="submit" value="UPDATE" class="btn-primary btn">
+									<input type="submit" value="<?php echo UPDATE_BUTTON;?>" class="btn-primary btn">
 								</div>
 							</div></div>
 						</form>
+						
 						<?php
 							} elseif($_GET['action'] == "add") {
 						?>
@@ -257,6 +290,15 @@
 									<input type="text" class="form-control" id="title" name="title" placeholder="title">
 								</div>
 							</div>
+							
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Short Description</label>
+								<div class="col-sm-8">
+									<textarea  name="short_description" class="form-control" rows="6"></textarea> 
+								</div>
+							</div>
+							
+							
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Description</label>
 								<div class="col-sm-8">
@@ -266,7 +308,7 @@
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Image</label>
 								<div class="col-sm-8">
-									<input type="file" name="photo">
+									<input type="file" id="photo" name="photo" placeholder="photo">
 								</div>
 							</div>
 							<div class="grid-hor">
@@ -308,8 +350,8 @@
 									<select name="category" id="selector1" class="form-control" >
 										<option value="0">Select Category</option>
 										<?php  
-											$row = mysql_query("select * from r_category ")or die(mysql_error());
-											while ($run = mysql_fetch_array($row)) {	?>
+											$row = $conn->query("select * from r_category ")or die(mysqli_error());
+											while ($run = $row->fetch_assoc()) {	?>
 											<option value="<?php echo $run['id_category'] ?>"><?php echo $run['name'] ?></option>
 										<?php }?>
 									</select>
@@ -324,10 +366,25 @@
 									</select>
 								</div>                      
 							</div>
+							<div class="grid-hor">
+								<h4 id="grid-example-basic">Article Source</h4>
+							</div>
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Source</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" name="source" placeholder="Source Link">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Image Surce</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" name="image_source" placeholder="Image Source Link">
+								</div>
+							</div>
 							
 							<div class="row">
 								<div class="col-sm-8 col-sm-offset-2">
-									<input type="submit" value="SAVE" class="btn-primary btn">
+									<input type="submit" value="<?php echo SAVE_BUTTON;?>" class="btn-primary btn">
 								</div>
 							</div>
 						</form>

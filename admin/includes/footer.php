@@ -1,5 +1,5 @@
 							<div class="copy">
-								<p> <?php echo  SITE_COPY_RIGHTS;?> </p>
+								<p><?php echo SITE_COPY_RIGHTS; ?> </p>
 							</div>
 						</div>
 					</div>
@@ -9,4 +9,3 @@
 				<script src="js/scripts.js"></script>
 			</body>
 		</html>
-		

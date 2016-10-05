@@ -19,7 +19,9 @@
             <ul class=" nav_1">
 				<li class="dropdown at-drop">
 					<a target="_blank" href="<?php echo SITEURL;?>">
+						
 						<button class="btn btn-primary" type="button">
+							<span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
 							View Site<!--<span class="badge">4</span>-->
 						</button>
 					</a>
@@ -33,43 +35,68 @@
 				</li>
 			</ul>
 		</div><!-- /.navbar-collapse -->
-        <div class="clearfix">
+		<div class="clearfix">
 		</div>
-        <div class="navbar-default sidebar" role="navigation">
-            <div class="sidebar-nav navbar-collapse">
-                <ul class="nav" id="side-menu">
-                    <li class="">
-                        <a class=" hvr-bounce-to-right" href="#"><i class="fa fa-user nav_icon"></i> <span class="nav-label">User</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
-                            <li><a href="users.php" 	class=" hvr-bounce-to-right"><i class="fa fa-user nav_icon"></i>	<span class="nav-label">Users </span></a></li>
-							<li><a href="userrole.php"	class=" hvr-bounce-to-right"><i class="fa fa-user nav_icon"></i>	<span class="nav-label">User Role</span> </a></li> 
-						</ul>
-					</li>		
+		<div class="navbar-default sidebar" role="navigation">
+			<div class="sidebar-nav navbar-collapse">
+				<ul class="nav" id="side-menu">
+					<li class="active"> 
+						<a class="hvr-bounce-to-right" href="home.php"><i class="fa fa-user nav_icon"></i> <span class="nav-label">Dashboard</span></a>
+					</li>
+					<?php //echo  "Role".$_SESSION['id_user_role'];
+					//exit;?>
+					<?php if($_SESSION['id_user_role']==1){?>
+						<li class="">
+							<a class=" hvr-bounce-to-right" href="#"><i class="fa fa-user nav_icon"></i> <span class="nav-label">User</span><span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level collapse" aria-expanded="false">
+								<li><a href="users.php" class=" hvr-bounce-to-right"><i class="fa fa-user nav_icon"></i>	<span class="nav-label">Users </span></a></li>
+								<li><a href="userrole.php"	class=" hvr-bounce-to-right"><i class="fa fa-user nav_icon"></i>	<span class="nav-label">User Role</span> </a></li> 
+							</ul>
+						</li>		
+					<?php } ?>
 					<li class="">
-                        <a class=" hvr-bounce-to-right" href="#"><i class="fa fa-indent nav_icon"></i> <span class="nav-label">Catalog</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
-                            <li><a href="category.php" 	class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i>	<span class="nav-label">Category</span></a></li>
-							<li><a href="posts.php"	class=" hvr-bounce-to-right"><i class="fa fa-file-text-o nav_icon"></i>	<span class="nav-label">Posts</span> </a></li>	
-							<li><a href="comments.php" 	class=" hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> 		<span class="nav-label">Comments</span> </a></li>
+						<a class=" hvr-bounce-to-right" href="#"><i class="fa fa-indent nav_icon"></i> <span class="nav-label">Catalog</span><span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level collapse" aria-expanded="false">
+							<li><a href="category.php" 	class="hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i>	<span class="nav-label">Category</span></a></li>
+							<li><a href="posts.php"	class="hvr-bounce-to-right"><i class="fa fa-file-text-o nav_icon"></i>	<span class="nav-label">Posts</span> </a></li>	
+							<li><a href="comments.php" 	class="hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> 		<span class="nav-label">Comments</span> </a></li>
 						</ul>
 					</li>					
 					<li class="">
-                        <a class=" hvr-bounce-to-right" href="#"><i class="fa fa-file-text-o nav_icon"></i> <span class="nav-label">CMS</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
-                          <li><a href="pages.php" 	class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i>	<span class="nav-label">Pages</span> </a></li>
-                    <li><a href="message.php" 	class=" hvr-bounce-to-right"><i class="fa fa-inbox nav_icon"></i> 		<span class="nav-label">Message</span> </a></li>
-                    <li><a href="gallery.php" 	class=" hvr-bounce-to-right"><i class="fa fa-picture-o nav_icon"></i> 	<span class="nav-label">Gallery</span> </a></li>
+						<a class=" hvr-bounce-to-right" href="#"><i class="fa fa-file-text-o nav_icon"></i> <span class="nav-label">CMS</span><span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level collapse" aria-expanded="false">
+							<li><a href="pages.php" 	class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i>	<span class="nav-label">Pages</span> </a></li>
+							<li><a href="message.php" 	class=" hvr-bounce-to-right"><i class="fa fa-inbox nav_icon"></i> 		<span class="nav-label">Message</span> </a></li>
+							<li><a href="gallery.php" 	class=" hvr-bounce-to-right"><i class="fa fa-picture-o nav_icon"></i> 	<span class="nav-label">Gallery</span> </a></li>
 						</ul>
 					</li>
+					<?php if($_SESSION['id_user_role']==1){?>
 					<li class="">
-                        <a class=" hvr-bounce-to-right" href="#"><i class="fa fa-cog nav_icon"></i> <span class="nav-label">Settings</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+						<a class=" hvr-bounce-to-right" href="#"><i class="fa fa-cog nav_icon"></i> <span class="nav-label">Settings</span><span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level collapse" aria-expanded="false">
+							
 							<li><a href="country.php" 	class=" hvr-bounce-to-right"><i class="fa fa-inbox nav_icon"></i> 		<span class="nav-label">Countries</span> </a></li>
-                            <li><a href="site.php" class=" hvr-bounce-to-right"><i class="fa fa-cog nav_icon"></i> 	<span class="nav-label">Site details</span> </a></li>
-					
+							<li><a href="site.php" class=" hvr-bounce-to-right"><i class="fa fa-cog nav_icon"></i> 	<span class="nav-label">Site details</span> </a></li>
 						</ul>
 					</li>
+					<?php } ?>
+					
+					<li>
+						<a href="subscriber.php" 	class="hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> 		<span class="nav-label">Subscribers</span> </a>
+					</li>
+					
+					<?php /*?>
+					<li>
+						<a href="question.php" 	class="hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> 		<span class="nav-label">Questions</span> </a>
+					</li><li>
+						<a href="course.php" 	class=" hvr-bounce-to-right"><i class="fa fa-file-text-o nav_icon"></i> 	<span class="nav-label">Course</span> </a>
+					</li>
+					<li>
+								<a href="testimonial.php" 	class=" hvr-bounce-to-right"><i class="fa fa-picture-o nav_icon"></i> 	<span class="nav-label">Testimonial</span> </a>
+							</li><?php */?>
+					
+					
 				</ul>
 			</div>
 		</div>
-	</nav>				
+	</nav>								

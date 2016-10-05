@@ -1,10 +1,4 @@
 <?php
-	/*
-	File name 		: 	comments-controller.php
-	Date Created 	:	13-06-2016
-	Date Updated 	:	08-09-2016
-	Description		:	Manage Comment Operation Like Add/Edit/Delete Comments
-	*/
 	ob_start(); 
 	session_start();
 	include_once('includes/config.php');
@@ -12,12 +6,15 @@
 		header('location:index.php');
 	}
 	if($_POST['action']=='add'){
-		$name = mysql_real_escape_string($_POST['name']);
-		$email = mysql_real_escape_string($_POST['email']);
-		$subject = mysql_real_escape_string($_POST['subject']);
-		$message = mysql_real_escape_string($_POST['message']);
+		/*echo "<pre>";
+		print_r($_POST);
+		exit;*/
+		$name = $conn->real_escape_string($_POST['name']);
+		$email = $conn->real_escape_string($_POST['email']);
+		$subject = $conn->real_escape_string($_POST['subject']);
+		$message = $conn->real_escape_string($_POST['message']);
 		
-		$addCommentQuery =  mysql_query("INSERT INTO r_comment (name,email,subject,message) VALUES ('".$name."','".$email."','".$subject."','".$message."')") or die(mysql_error());
+		$addCommentQuery =  $conn->query("INSERT INTO r_comment (name,email,subject,message) VALUES ('".$name."','".$email."','".$subject."','".$message."')") or die(mysqli_error());
 		
         if($addCommentQuery){
 			$message = "<strong>Success!</strong> Comment Added Successfully.";
@@ -32,12 +29,12 @@
 		$id = (int)$_POST['id'];
 		//echo "$id";
 		//exit;
-		$name = mysql_real_escape_string($_POST['name']);
-		$email = mysql_real_escape_string($_POST['email']);
-		$subject = mysql_real_escape_string($_POST['subject']);
-		$message = mysql_real_escape_string($_POST['message']);
+		$name = $conn->real_escape_string($_POST['name']);
+		$email = $conn->real_escape_string($_POST['email']);
+		$subject = $conn->real_escape_string($_POST['subject']);
+		$message = $conn->real_escape_string($_POST['message']);
 		
-		$editComment=  mysql_query("update r_comment SET name='".$name."',email='".$email."',subject='".$subject."',message='".$message."' where id_comment=".$id ) or die(mysql_error());
+		$editComment=  $conn->query("update r_comment SET name='".$name."',email='".$email."',subject='".$subject."',message='".$message."' where id_comment=".$id ) or die(mysqli_error());
 		if($editComment)
 		{
 			$message = "<strong>Success!</strong> Comment Modified Successfully.";
@@ -56,8 +53,9 @@
 		for($i=0;$i<$count;$i++)
 		{
 			$row="DELETE FROM r_comment WHERE id_comment=".$messageid[$i];
-			$result= mysql_query($row);
+			$result= $conn->query($row);
 		}
+		
 		if($result)
 		{
 			$message = "<strong>Success!</strong> Comment Deleted Successfully.";

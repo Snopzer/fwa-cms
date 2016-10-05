@@ -1,105 +1,119 @@
 <?php
-	/*
-	File name 		: 	post-controller.php
-	Date Created 	:	13-06-2016
-	Date Updated 	:	08-09-2016
-	Description		:	Manage Posts Operation Like Add/Edit/Delete Posts
-	*/
 	ob_start();
 	session_start();
 	include_once('includes/config.php');
-	include_once('includes/fwa-function.php');
+	
 	if (!isset($_SESSION['id'])) {
 		header('location:index.php');
 	}
 	
 	if ($_POST['action'] == 'add') {
-		$pic = ($_FILES['photo']['name']);
-		//$rows = mysql_query("update r_post SET image='$pic' where id_post=$id")or die(mysql_error());
-		$path = "../images/post/" . $_FILES['photo']['name']; 
-		if (copy($_FILES['photo']['tmp_name'], $path)) {
-			echo "The file " . basename($_FILES['uploadedfile']['name']) . " has been uploaded, and your information has been added to the directory";
-			} else {
-			echo "Sorry, there was a problem uploading your file.";
-		}
-		 
-		$title = mysql_real_escape_string($_POST['title']);		
-		$description = mysql_real_escape_string($_POST['description']);		
-		$category = mysql_real_escape_string($_POST['category']);		
-		$status = mysql_real_escape_string($_POST['status']);		
-		$category = mysql_real_escape_string($_POST['category']);		
-		$seo_url = mysql_real_escape_string($_POST['seo_url']);		
-		$meta_title = mysql_real_escape_string($_POST['meta_title']);		
-		$meta_keywords = mysql_real_escape_string($_POST['meta_keywords']);		
-		$meta_description = mysql_real_escape_string($_POST['meta_description']);
-		$date_added = date('Y-m-d h:i:s'); 
+		
+		$title 				= $conn->real_escape_string($_POST['title']);		
+		$description 		= $conn->real_escape_string($_POST['description']);		
+		$short_description 	= $conn->real_escape_string($_POST['short_description']);		
+		$category 			= $conn->real_escape_string($_POST['category']);		
+		$status 			= $conn->real_escape_string($_POST['status']);		
+		$category 			= $conn->real_escape_string($_POST['category']);		
+		$seo_url 			= $conn->real_escape_string($_POST['seo_url']);		
+		$meta_title 		= $conn->real_escape_string($_POST['meta_title']);		
+		$meta_keywords		= $conn->real_escape_string($_POST['meta_keywords']);		
+		$meta_description 	= $conn->real_escape_string($_POST['meta_description']);
+		$source 			= $conn->real_escape_string($_POST['source']);
+		$image_source 		= $conn->real_escape_string($_POST['image_source']);
 		$user=$_SESSION['id'];
-		$addPost = mysql_query("INSERT INTO r_post (title,image,description,id_category,id_user,date_added,meta_title,meta_keywords,meta_description,status) VALUES ('" . $title . "','" . $pic . "','" . $description . "','" . $category . "','" . $user . "','" . $date_added . "','" . $meta_title . "','" . $meta_keywords . "','" . $meta_description . "','" . $status . "')") or die(mysql_error());
-
-		if ($addPost) {
-			$postid=mysql_insert_id();
-			addSeoURL($seo_url,0,$postid,0,0);
+		$date_added = date('Y-m-d h:i:s'); 
+		
+		$addPost = "INSERT INTO r_post (title,description,short_description,id_category,id_user,date_added,meta_title,meta_keywords,meta_description,source,image_source,status) VALUES ('" . $title . "','" . $description . "','" . $short_description . "','" . $category . "','" . $user . "','" . $date_added . "','" . $meta_title . "','" . $meta_keywords . "','" . $meta_description . "','" . $source . "','" . $image_source . "','" . $status . "')";
+		/* echo "$addPost";
+		exit;*/
+		if ($conn->query($addPost) === TRUE) {
+			$postid=$conn->insert_id;
+			$seo_url  = strtolower(preg_replace('/\s+/', '-', $seo_url));
+			$conn->query("INSERT INTO  `r_seo_url` (seo_url ,`id_post`) VALUES (  '".$seo_url."',  ".$postid.")");
+			if($postid && $_FILES['photo']['name']!=''){
+				$temp = explode(".", $_FILES["photo"]["name"]);
+			    $pic =$seo_url. '' .$postid. '.' . end($temp);
+				$rows = $conn->query("update r_post SET image='$pic' where id_post=$postid")or die(mysql_error());
+				move_uploaded_file($_FILES["photo"]["tmp_name"], "../images/post/" . $pic);
+			}
 			$message = "<strong>Success!</strong> Post Added Successfully.";
 			header('location:posts.php?response=success&message='.$message);
 			} else {
 			header('location:posts.php?response=warning');
 		}
-		} else if ($_POST['action'] == 'edit') {
 		
+		} else if ($_POST['action'] == 'edit') {
 		
 		$id = (int)$_POST['id'];
 		
 		if (isset($_FILES['photo']['name']) && $_FILES['photo']['name']!='') {
-			$pic = $_FILES['photo']['name'];
-			$path = "../images/post/" . $_FILES['photo']['name']; 
-			if (copy($_FILES['photo']['tmp_name'], $path)) {
-				echo "The file " . basename($_FILES['uploadedfile']['name']) . " has been uploaded, and your information has been added to the directory";
-				} else {
-				echo "Sorry, there was a problem uploading your file.";
-			}
+			$removeimage = $_POST['preview_image']; 
+			$Path2 =  "../images/post/".$removeimage;
+			unlink($Path2);
+			$seo_url 			= $_POST['seo_url'];	
+			$temp = explode(".", $_FILES["photo"]["name"]);
+			$pic =$seo_url. '' .$id. '.' .end($temp);
+			move_uploaded_file($_FILES["photo"]["tmp_name"], "../images/post/" . $pic);
 			} else {
-			$pic = $_POST['prev_image']; 
+			$pic = $_POST['preview_image']; 
 		}
 		
-		$title = mysql_real_escape_string($_POST['title']);		
-		$description = mysql_real_escape_string($_POST['description']);		
-		$category = mysql_real_escape_string($_POST['category']);		
-		$status = mysql_real_escape_string($_POST['status']);		
-		$category = mysql_real_escape_string($_POST['category']);				
-		$seo_url = mysql_real_escape_string($_POST['seo_url']);		
-		$meta_title = mysql_real_escape_string($_POST['meta_title']);		
-		$meta_keywords = mysql_real_escape_string($_POST['meta_keywords']);		
-		$meta_description = mysql_real_escape_string($_POST['meta_description']);				
+		$title 				= $conn->real_escape_string($_POST['title']);		
+		$description 		= $conn->real_escape_string($_POST['description']);
+		$short_description 	= $conn->real_escape_string($_POST['short_description']);
+		$category 			= $conn->real_escape_string($_POST['category']);		
+		$status 			= $conn->real_escape_string($_POST['status']);		
+		$category 			= $conn->real_escape_string($_POST['category']);		
+		$seo_url 			= $conn->real_escape_string($_POST['seo_url']);		
+		$meta_title 		= $conn->real_escape_string($_POST['meta_title']);		
+		$meta_keywords		= $conn->real_escape_string($_POST['meta_keywords']);		
+		$meta_description 	= $conn->real_escape_string($_POST['meta_description']);
+		$source 			= $conn->real_escape_string($_POST['source']);
+		$image_source 		= $conn->real_escape_string($_POST['image_source']);
 		
-		$editPost = mysql_query( "update r_post SET title='".$title."',image='".$pic."',description='".$description."',id_category='".$category."',meta_title = '".$meta_title."',	meta_keywords = '".$meta_keywords."',	meta_description = '".$meta_description."',	status = '".$status."'	where id_post='".$id."' ");
+		$editPost = $conn->query( "update r_post SET title='".$title."',image='".$pic."',description='".$description."',short_description='".$short_description."',id_category='".$category."',meta_title = '".$meta_title."',	meta_keywords = '".$meta_keywords."',	meta_description = '".$meta_description."', source ='" . $source . "', image_source ='" . $image_source . "',	status = '".$status."'	where id_post='".$id."' ");
 		$page = $_POST['page'];
 		if ($editPost) {
-			updateSeoURLbyPost($seo_url,0,$id,0,0);
+		
+			$seo_url  = strtolower(preg_replace('/\s+/', '-', $seo_url));
+			$seoCheck = $conn->query("UPDATE  `r_seo_url` SET `seo_url`='".$seo_url."' where id_post=".$id);
+			if($conn->affected_rows!=1)
+			{
+				$conn->query("INSERT INTO  `r_seo_url` (seo_url ,`id_post`) VALUES (  '".$seo_url."',  ".$id.")");
+				}
+			
 			$message = "<strong>Success!</strong> Post Modified Successfully.";
 			header('location:posts.php?response=success&message='.$message.'&page=$page');
-			//header("location:posts.php?page=$page");
 			} else {
 			$message = "<strong>Warning!</strong> Post Not Modified.Please check Carefully..";
 			header('location:posts.php?response=danger&message='.$message.'&page=$page');
 		}
-		}
+	}
 	else if ($_REQUEST['action'] == 'delete') {
 		
 		$messageid=explode(",",$_REQUEST["chkdelids"]);
 		$count=count($messageid);
 		for($i=0;$i<$count;$i++)
 		{
-			$row="DELETE FROM r_post WHERE id_post=".$messageid[$i];
-			$result= mysql_query($row);
-		}
+			$result2= $conn->query("select image from r_post where id_post=".$messageid[$i])or die(mysqli_error());
+			$image = $result2->fetch_assoc();
+			$Path =  "../images/post/".$image['image'];
+			unlink($Path);
+			/*Delete SEO URL Details*/
+			$result= $conn->query("DELETE FROM r_seo_url WHERE id_post=".$messageid[$i])or die(mysqli_error());
+			$result= $conn->query("DELETE FROM r_post WHERE id_post=".$messageid[$i])or die(mysqli_error());
+			
+			
+		} 
 		
 		if ($result) {
-			//header("location:posts.php?page=$page");
 			$message = "<strong>Success!</strong> Post Deleted Successfully.";
 			header('location:posts.php?response=success&message='.$message.'&page=$page');
-		}else{
+			}else{
 			$message = "<strong>Warning!</strong> Post Not Deleted. Please check Carefully.";
 			header('location:posts.php?response=danger&message='.$message.'&page=$page');
 		}
 	}
 ?>
+

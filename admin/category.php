@@ -1,9 +1,29 @@
 <?php
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+	error_reporting(E_ALL);
 	session_start();
 	include_once('includes/config.php');
 	if (!isset($_SESSION['id'])) {
 		header('location:index.php');
 	}
+	
+	
+	$page = false;
+	if (array_key_exists('page', $_GET)) {
+		$page = $_GET['page'];
+	}
+	if ($page == "" || $page == 1) {
+		$page1 = 0;
+		} else {
+		$page1 = ($page * ADMIN_PAGE_LIMIT) - ADMIN_PAGE_LIMIT;
+	}
+	$categoryResult = $conn->query("SELECT * FROM r_category where deleted=0 order by id_category desc limit $page1,".ADMIN_PAGE_LIMIT)or die(mysqli_error());
+	
+	$categoryQuery = $conn->query("SELECT * FROM r_category where deleted=0 order by id_category desc") or die(mysqli_error());
+	$categoryCount = mysqli_num_rows($categoryQuery);
+	$a = $categoryCount / ADMIN_PAGE_LIMIT;
+	$a = ceil($a);							
 ?>  
 <?php include_once('includes/header.php'); ?>
 <?php include_once('includes/menu.php'); ?>
@@ -34,15 +54,12 @@
 								<table class="table">
 									<tbody>
 										<tr>
-											<td><h1 id="h1.-bootstrap-heading"> CATEGORIES - [<?php
-												$select = mysql_query("SELECT * FROM r_category order by id_category desc")or die(mysql_error());
-												$count = mysql_num_rows($select);
-												echo "$count";
-											?>]</h1></td>
+											<td><h3 id="h3.-bootstrap-heading"> CATEGORIES - [<?php echo $categoryCount; ?>]</h3></td>
 											<td class="type-info text-right">
 												<a href="category.php?action=add"><span class="btn btn-success"><?php echo ADD_BUTTON;?></span></a> 
 												<a  href="javascript:fnDetails();"><span class="btn btn-primary"><?php echo EDIT_BUTTON;?></span></a>
 												<a href="javascript:fnDelete();"><span class="btn btn-danger" id="delete"><?php echo DELETE_BUTTON;?></span></a>
+												<a href="category-controller.php?action=undo"><span class="btn btn-primary">Undo</span></a>
 											</td>
 										</tr>
 									</tbody>
@@ -55,32 +72,21 @@
 											<input type="checkbox" name="checkall" onClick="Checkall()"/>
 										</td>
 										<td class="table-text"><h6>Name</h6></td>
-										<!--<td class="table-text"><h6>Description</h6></td>-->
 										<td class="table-text"><h6>Sort Order</h6></td>
 										<td class="table-text"><h6>Status</h6></td>
 									</tr>
 									<?php
-										$page = false;
-										if (array_key_exists('page', $_GET)) {
-											$page = $_GET['page'];
-										}
-										if ($page == "" || $page == 1) {
-											$page1 = 0;
-											} else {
-											$page1 = ($page * ADMIN_PAGE_LIMIT) - ADMIN_PAGE_LIMIT;
-										}
-										$select = mysql_query("SELECT * FROM r_category order by id_category desc limit $page1,".ADMIN_PAGE_LIMIT)or die(mysql_error());
-										if (mysql_num_rows($select) > 0) {
-											while ($row = mysql_fetch_assoc($select)) {
+										if ($categoryCount > 0) {
+											while ($categoryData = $categoryResult->fetch_assoc()) {
 											?>
 											<tr class="table-row">
-												<td class="table-img"><input type="checkbox" name="selectcheck" value="<?php echo$row['id_category']?>"></td>
-												<td class="march"><h6><?php echo $row["name"] ?></h6></td>
-												<!--<td class="march"><h6><?php echo $row["description"] ?></h6></td>-->
-												<td class="march"><h6><?php echo $row["sort_order"] ?></h6></td>
-												<td class="march"><h6><?php echo ($row["status"]==1)?'Enable':'Disable'; ?></h6></td>
-												<td><a href="category.php?id=<?php echo $row["id_category"] ?>&action=edit&page=<?php echo "$page"?>"><span class="label label-primary">Edit</span><a/>
-												<a href="category-controller.php?chkdelids=<?php echo $row["id_category"] ?>&action=delete&page=<?php echo "$page"?>""><span class="label label-info">Delete</span></a>
+												<td class="table-img"><input type="checkbox" name="selectcheck" value="<?php echo $categoryData['id_category']?>"></td>
+												<td class="march"><h6><?php echo $categoryData["name"] ?></h6></td>
+												<!--<td class="march"><h6><?php echo $categoryData["description"] ?></h6></td>-->
+												<td class="march"><h6><?php echo $categoryData["sort_order"] ?></h6></td>
+												<td class="march"><h6><?php echo ($categoryData["status"]==1)?'Enable':'Disable'; ?></h6></td>
+												<td><a href="category.php?id=<?php echo $categoryData["id_category"] ?>&action=edit&page=<?php echo "$page"?>"><span class="label label-primary">Edit</span><a/>
+												<a href="category-controller.php?chkdelids=<?php echo $categoryData["id_category"] ?>&action=delete&page=<?php echo "$page"?>""><span class="label label-info">Delete</span></a>
 												</td>
 											</tr>
 											<?php
@@ -97,17 +103,8 @@
 								<input type="hidden" name="id"/>
 								<input type="hidden" name="chkdelids"/>
 								<input type="hidden" name="page" value="<?php echo "$page"; ?>"/>
-								</form>
-							<?php
-								$res1 = mysql_query("SELECT * FROM r_category");
-								$count = mysql_num_rows($res1);
-								//echo "$count";
-								$a = $count / ADMIN_PAGE_LIMIT;
-								$a = ceil($a);
-								/*echo $a;
-								exit;*/
-								if ($count > ADMIN_PAGE_LIMIT) {
-								?>
+							</form>
+							<?php if ($categoryCount > ADMIN_PAGE_LIMIT) {	?>
 								<div class="horz-grid text-center">
 									<ul class="pagination pagination-lg">
 										<?php for ($b = 1; $b <= $a; $b++) { ?>
@@ -154,12 +151,15 @@
 							if ($_GET['action'] == "edit") {
 								$id = $_GET['id'];
 								$page = $_GET['page'];
-								$query = mysql_query("select c.*,su.* from r_category c, r_seo_url su where  c.id_category = su.id_category  and c.id_category=$id")or die(mysql_error());
-								$result = mysql_fetch_assoc($query);
+								
+								/*$query = $conn->query("select c.*,su.* from r_category c, r_seo_url su where  c.id_category = su.id_category  and c.id_category=$id")or die(mysql_error());*/
+								$query = $conn->query("select c.*,su.* from r_category c
+								LEFT JOIN r_seo_url su ON c.id_category = su.id_category  where c.id_category=$id")or die(mysql_error());
+								$result = $query->fetch_assoc();
 							?>
 							<form class="form-horizontal" action="category-controller.php" method="post" enctype="multipart/form-data">
 								<input type="hidden" name="action" value="edit"/>
-								<input type="hidden" name="id" value="<?php echo $result["id_category"] ?>">
+								<input type="hidden" name="id" value="<?php echo $id; ?>">
 								<input type="hidden" name="page" value='<?php echo "$page"?>'>
 								<div class="form-group">
 									<label for="inputEmail3" class="col-sm-2 control-label hor-form">Name</label>
@@ -321,109 +321,109 @@
 			}// end of add
 		}// end of action set edit/add
 	?> 
-			
-			<script language="JavaScript">
-				/* editor script */
-				var editor=CKEDITOR.replace('description');
-				//var editor=CKEDITOR.replace('metadescription');
-				/* editor script */
-				function fnDetails()
+	
+	<script language="JavaScript">
+		/* editor script */
+		var editor=CKEDITOR.replace('description');
+		//var editor=CKEDITOR.replace('metadescription');
+		/* editor script */
+		function fnDetails()
+		{
+			var obj = document.frmMain.elements;
+			flag = 0;
+			for (var i = 0; i < obj.length; i++)
+			{
+				if (obj[i].name == "selectcheck" && obj[i].checked)
 				{
-					var obj = document.frmMain.elements;
-					flag = 0;
-					for (var i = 0; i < obj.length; i++)
-					{
-						if (obj[i].name == "selectcheck" && obj[i].checked)
-						{
-							flag = 1;
-							break;
-						}
+					flag = 1;
+					break;
+				}
+			}
+			if (flag == 0)
+			{
+				alert("Please make a selection from a list to Edit");
+			} else if (flag == 1)
+			{
+				var checkedvals = "";
+				for (var i = 0; i < obj.length; i++) {
+					if (obj[i].checked == true) {
+						checkedvals = checkedvals + "," + obj[i].value;
 					}
-					if (flag == 0)
+				}
+				var checkvals = checkedvals.substr(1);
+				var arrval = checkvals.split(",");
+				if (arrval.length > 1)
+				{
+					alert("Select Only One checkbox to edit");
+				} else
+				{
+					window.location.href = "category.php?action=edit&page=<?php echo "$page"?>&id=" + arrval[0];
+				}
+			}
+		}
+	</script>
+	
+	<script language="JavaScript">
+		function Checkall()
+		{
+			if (document.frmMain.checkall.checked == true)
+			{
+				var obj = document.frmMain.elements;
+				for (var i = 0; i < obj.length; i++)
+				{
+					if ((obj[i].name == "selectcheck") && (obj[i].checked == false))
 					{
-						alert("Please make a selection from a list to Edit");
-					} else if (flag == 1)
+						obj[i].checked = true;
+					}
+				}
+			} else if (document.frmMain.checkall.checked == false)
+			{
+				var obj = document.frmMain.elements;
+				for (var i = 0; i < obj.length; i++)
+				{
+					if ((obj[i].name == "selectcheck") && (obj[i].checked == true))
 					{
-						var checkedvals = "";
-						for (var i = 0; i < obj.length; i++) {
-							if (obj[i].checked == true) {
-								checkedvals = checkedvals + "," + obj[i].value;
-							}
-						}
-						var checkvals = checkedvals.substr(1);
-						var arrval = checkvals.split(",");
-						if (arrval.length > 1)
-						{
-							alert("Select Only One checkbox to edit");
-						} else
-						{
-							window.location.href = "category.php?action=edit&page=<?php echo "$page"?>&id=" + arrval[0];
+						obj[i].checked = false;
+					}
+				}
+			}
+		}
+		function fnDelete()
+		{
+			var obj = document.frmMain.elements;
+			flag = 0;
+			for (var i = 0; i < obj.length; i++)
+			{
+				if (obj[i].name == "selectcheck" && obj[i].checked) {
+					flag = 1;
+					break;
+				}
+			}
+			if (flag == 0) {
+				alert("Select Checkbox to Delete");
+				} else if (flag == 1) {
+				var i, len, chkdelids, sep;
+				chkdelids = "";
+				sep = "";
+				for (var i = 0; i < document.frmMain.length; i++) {
+					if (document.frmMain.elements[i].name == "selectcheck")
+					{
+						if (document.frmMain.elements[i].checked == true) {
+							//alert(document.frmFinal.elements[i].value)
+							chkdelids = chkdelids + sep + document.frmMain.elements[i].value;
+							sep = ",";
 						}
 					}
 				}
-			</script>
-			
-			<script language="JavaScript">
-				function Checkall()
-				{
-					if (document.frmMain.checkall.checked == true)
-					{
-						var obj = document.frmMain.elements;
-						for (var i = 0; i < obj.length; i++)
-						{
-							if ((obj[i].name == "selectcheck") && (obj[i].checked == false))
-							{
-								obj[i].checked = true;
-							}
-						}
-					} else if (document.frmMain.checkall.checked == false)
-					{
-						var obj = document.frmMain.elements;
-						for (var i = 0; i < obj.length; i++)
-						{
-							if ((obj[i].name == "selectcheck") && (obj[i].checked == true))
-							{
-								obj[i].checked = false;
-							}
-						}
-					}
+				ConfirmStatus = confirm("Do you want to DELETE selected User Role.?")
+				if (ConfirmStatus == true) {
+					document.frmMain.chkdelids.value = chkdelids
+					document.frmMain.action.value = "delete"
+					document.frmMain.action = "category-controller.php";
+					document.frmMain.submit()
 				}
-				function fnDelete()
-				{
-					var obj = document.frmMain.elements;
-					flag = 0;
-					for (var i = 0; i < obj.length; i++)
-					{
-						if (obj[i].name == "selectcheck" && obj[i].checked) {
-							flag = 1;
-							break;
-						}
-					}
-					if (flag == 0) {
-						alert("Select Checkbox to Delete");
-						} else if (flag == 1) {
-						var i, len, chkdelids, sep;
-						chkdelids = "";
-						sep = "";
-						for (var i = 0; i < document.frmMain.length; i++) {
-							if (document.frmMain.elements[i].name == "selectcheck")
-							{
-								if (document.frmMain.elements[i].checked == true) {
-									//alert(document.frmFinal.elements[i].value)
-									chkdelids = chkdelids + sep + document.frmMain.elements[i].value;
-									sep = ",";
-								}
-							}
-						}
-						ConfirmStatus = confirm("Do you want to DELETE selected User Role.?")
-						if (ConfirmStatus == true) {
-							document.frmMain.chkdelids.value = chkdelids
-							document.frmMain.action.value = "delete"
-							document.frmMain.action = "category-controller.php";
-							document.frmMain.submit()
-						}
-					}
-				}
-			</script>	
-			
-		<?php include_once('includes/footer.php'); ?>							
+			}
+		}
+	</script>	
+	
+<?php include_once('includes/footer.php'); ?>							

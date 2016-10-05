@@ -14,7 +14,7 @@
 					<a href="home.php">Home</a>
 					<i class="fa fa-angle-right"></i>
 					<span><a href="gallery.php">Gallery</a></span><i class="fa fa-angle-right"></i>
-					<span><a href="gallery.php?action=add"><button type="button" class="btn btn-sm btn-info"><?php echo ADD_BUTTON;?></button></a></span>
+					<span><a href="gallery.php?action=add"><button type="button" class="btn btn-sm btn-info">Add New Image</button></a></span>
 				</h2>
 			</div>
 			
@@ -23,8 +23,8 @@
 			<div class="gallery">		
 					
 					<?php
-						$row = mysql_query("select * from r_image order by id_image")or die(mysql_error());
-						while ($result = mysql_fetch_assoc($row)) {
+						$row = $conn->query("select * from r_image order by id_image")or die(mysqli_error());
+						while ($result = $row->fetch_assoc()) {
 						?> 
 						<div class="col-md">
 							<div class="gallery-img">

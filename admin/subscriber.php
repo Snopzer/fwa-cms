@@ -5,6 +5,21 @@ if (!isset($_SESSION['id'])) {
 
     header('location:index.php');
 }
+
+$subscriberQuery = $conn->query("SELECT * FROM r_subscriber order by id_subscriber desc")or die(mysql_error());
+$subscriberCount = mysqli_num_rows($subscriberQuery);
+$a = $subscriberCount / ADMIN_PAGE_LIMIT;
+$a = ceil($a);
+			
+$page = false;
+if (array_key_exists('page', $_GET)) {
+	$page = $_GET['page'];
+}
+if ($page == "" || $page == 1) {
+	$page1 = 0;
+} else {
+	$page1 = ($page * ADMIN_PAGE_LIMIT) - ADMIN_PAGE_LIMIT;
+}
 ?>  
 <?php include_once('includes/header.php'); ?>
 <?php include_once('includes/menu.php'); ?>
@@ -15,7 +30,7 @@ if (!isset($_SESSION['id'])) {
                 <h2>
                     <a href="home.php">Home</a>
                     <i class="fa fa-angle-right"></i>
-                    <span>Countries</span>
+                    <span>Subscribers</span>
                 </h2>
             </div>
             <div class="grid-system">
@@ -32,13 +47,9 @@ if (!isset($_SESSION['id'])) {
                                 <table class="table">
                                     <tbody>
                                         <tr>
-                                            <td><h3 id="h3.-bootstrap-heading"> COUNTRIES - [<?php
-                                                    $select = $conn->query("SELECT * FROM r_country order by id_country  desc")or die(mysql_error());
-                                                    $count = mysqli_num_rows($select);
-                                                    echo "$count";
-                                                    ?>]</h3></td>
+                                            <td><h3 id="h3.-bootstrap-heading"> Subscribers - [<?php echo $subscriberCount; ?>]</h3></td>
                                             <td class="type-info text-right">
-                                                <a href="country.php?action=add"><span class="btn btn-success"><?php echo ADD_BUTTON;?></span></a> 
+                                                <a href="subscriber.php?action=add"><span class="btn btn-success"><?php echo ADD_BUTTON;?></span></a> 
                                                 <a href="javascript:fnDetails();"><span class="btn btn-primary"><?php echo EDIT_BUTTON;?></span></a>
                                                 <a href="javascript:fnDelete();"><span class="btn btn-danger"><?php echo DELETE_BUTTON;?></span></a>
                                             </td>
@@ -46,46 +57,25 @@ if (!isset($_SESSION['id'])) {
                                     </tbody>
                                 </table>
                             </div>
-                            <form name="frmMain" action="country.php?type=search" method="post">
                                 <table class="table"> 
-
-                                    <tr class="table-row">
-                                        <td class="table-img">&nbsp;</td>
-                                        <td class="march"><h6><input class="form-control" type="text" name="search"></h6></td>
-                                        <td class="march"><h6><input class="btn btn-default" type="submit"  ></h6></td>                                
-                                        <!--<td class="table-text"><h6>Password</h6></td>
-                                                <td class="table-text"><h6>Skills</h6></td>
-                                        <td class="table-text"><h6>Country</h6></td>-->
-                                    </tr>
-
                                     <tr class="table-row">
                                         <td class="table-img">
                                            <input type="checkbox" name="checkall" onClick="Checkall()"/>
                                         </td>
-                                        <td class="table-text"><h6>Country's</h6></td>
+                                        <td class="table-text"><h6>Subscriber's</h6></td>
                                         <td class="march"> Action </td>
                                     </tr>
                                     <?php
-                                    $page = false;
-                                    if (array_key_exists('page', $_GET)) {
-                                        $page = $_GET['page'];
-                                    }
-                                    //  $page = $_GET["page"];
-                                    if ($page == "" || $page == 1) {
-                                        $page1 = 0;
-                                    } else {
-                                        $page1 = ($page * ADMIN_PAGE_LIMIT) - ADMIN_PAGE_LIMIT;
-                                    }
-                                    $select = $conn->query("SELECT * FROM r_country order by id_country desc limit $page1,".ADMIN_PAGE_LIMIT)or die(mysql_error());
+                                    $select = $conn->query("SELECT * FROM r_subscriber order by id_subscriber desc limit $page1,".ADMIN_PAGE_LIMIT)or die(mysql_error());
                                     if ($select) {
                                         while ($row = $select->fetch_assoc()) {
                                             ?>
                                             <tr class="table-row">
-                                                <td class="table-img"><input type="checkbox" name="selectcheck" value="<?php echo $row["id_country"] ?>"></td>
-                                                <td class="march"><h6><?php echo$row["name"] ?></h6></td>
+                                                <td class="table-img"><input type="checkbox" name="selectcheck" value="<?php echo $row["id_subscriber"] ?>"></td>
+                                                <td class="march"><h6><?php echo$row["email"] ?></h6></td>
 
-                                                <td><a href="country.php?id=<?php echo $row["id_country"] ?>&action=edit&page=<?php echo "$page"?>"><span class="label label-primary">Edit</span><a/>
-                                                        <a href="country-controller.php?chkdelids=<?php echo $row["id_country"] ?>&action=delete&page=<?php echo "$page"?>""><span class="label label-info">Delete</span></a>
+                                                <td><a href="subscriber.php?id=<?php echo $row["id_subscriber"] ?>&action=edit&page=<?php echo "$page"?>"><span class="label label-primary">Edit</span><a/>
+                                                        <a href="subscriber-controller.php?chkdelids=<?php echo $row["id_subscriber"] ?>&action=delete&page=<?php echo "$page"?>""><span class="label label-info">Delete</span></a>
                                                 </td>
                                             </tr>
                                             <?php
@@ -98,23 +88,18 @@ if (!isset($_SESSION['id'])) {
                             <input type="hidden" name="id"/>
                             <input type="hidden" name="chkdelids"/>
                             <input type="hidden" name="page" value="<?php echo "$page"; ?>"/>
-                            </form>
                             <?php
-                            $res1 = $conn->query("SELECT * FROM r_country");
-                            $count = mysqli_num_rows($res1);
-                            //echo "$count";
-                            $a = $count / ADMIN_PAGE_LIMIT;
-                            $a = ceil($a);
-							 if ($count > ADMIN_PAGE_LIMIT) {
+                            
+							 if ($subscriberCount > ADMIN_PAGE_LIMIT) {
                             ?>
                             <div class="horz-grid text-center">
                                 <ul class="pagination pagination-lg">
                                     
                                     <?php for ($b = 1; $b <= $a; $b++) { ?>
                                         <?php if ($b == $page) { ?>
-                                            <li class="active"><a href="country.php?page=<?php echo $b; ?>"><?php echo $b . " "; ?></a></li>    
+                                            <li class="active"><a href="subscriber.php?page=<?php echo $b; ?>"><?php echo $b . " "; ?></a></li>    
                                         <?php } else { ?>
-                                            <li><a href="country.php?page=<?php echo $b; ?>"><?php echo $b . " "; ?></a></li>
+                                            <li><a href="subscriber.php?page=<?php echo $b; ?>"><?php echo $b . " "; ?></a></li>
                                             <?php
                                         }
                                     }
@@ -138,55 +123,55 @@ if (!isset($_SESSION['id'])) {
                     <h2>
                         <a href="home.php">Home</a>
                         <i class="fa fa-angle-right"></i>
-                        <span><a href="country.php">Countries</a></span>
+                        <span><a href="subscriber.php">Subscriber</a></span>
                         <i class="fa fa-angle-right"></i>
-                        <span><?php echo ($_GET['action'] == 'edit') ? 'Edit Country' : 'Add Country'; ?></span>
+                        <span><?php echo ($_GET['action'] == 'edit') ? 'Edit Subscriber' : 'Add Subscriber'; ?></span>
                     </h2>
                 </div>
                 <div class="grid-system">
                     <div class="horz-grid">
                         <div class="grid-hor">
-                            <h4 id="grid-example-basic">Country Details:</h4>
+                            <h4 id="grid-example-basic">Subscriber Details:</h4>
 
                         </div>
                         <?php
                         if ($_GET['action'] == "edit") {
                             $id = $_GET['id'];
                             $page = $_GET['page'];
-                            $query = $conn->query("select * from r_country where id_country=$id")or die(mysql_error());
+                            $query = $conn->query("select * from r_subscriber where id_subscriber=$id")or die(mysql_error());
                             $result = $query->fetch_assoc();
                             ?>
-                            <form class="form-horizontal" action="country-controller.php" method="post">
+                            <form class="form-horizontal" action="subscriber-controller.php" method="post">
                                 <input type="hidden" name="action" value="edit"/>
-                                <input type="hidden" name="id" value="<?php echo $result["id_country"] ?>">
+                                <input type="hidden" name="id" value="<?php echo $result["id_subscriber"] ?>">
                                 <input type="hidden" name="page" value='<? echo "$page"?>'>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label hor-form" for="inputEmail3">Country</label>
+                                    <label class="col-sm-2 control-label hor-form" for="inputEmail3">Email</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="country" class="form-control" id="country" value="<?php echo $result["name"] ?>">
+                                        <input type="text" name="email" class="form-control"  value="<?php echo $result["email"] ?>">
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-sm-8 col-sm-offset-2">
-                                        <input type="submit" value="<?php echo  UPDATE_BUTTON;?>" class="btn-primary btn">
+                                        <input type="submit" value="<?php echo UPDATE_BUTTON;?>" class="btn-primary btn">
                                     </div>
                                 </div>	
-                            </form>
+								</form>
                             <?php
                         } elseif ($_GET['action'] == "add") {
                             ?>
-                            <form class="form-horizontal" action="country-controller.php" method="post">
+                            <form class="form-horizontal" action="subscriber-controller.php" method="post">
                                 <input type="hidden" name="action" value="add"/>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label hor-form" for="inputEmail3">Country Name</label>
+                                    <label class="col-sm-2 control-label hor-form" for="inputEmail3">Email</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="country" id="country" >
+                                        <input type="text" class="form-control" name="email" >
                                     </div>
                                 </div>	
                                 <div class="row">
                                     <div class="col-sm-8 col-sm-offset-2"><br>
-                                        <input type="submit" value="<?php echo  SAVE_BUTTON;?>" class="btn-primary btn">
+                                        <input type="submit" value="<?php echo SAVE_BUTTON;?>" class="btn-primary btn">
                                     </div>
                                 </div>
                             </form>
@@ -197,7 +182,9 @@ if (!isset($_SESSION['id'])) {
             }// end of add
         }// end of action set edit/add
         ?>
-
+        
+          
+<?php include_once('includes/footer.php'); ?>	
 
 <script language="JavaScript">
         function fnDetails()
@@ -230,7 +217,7 @@ if (!isset($_SESSION['id'])) {
                     alert("Select Only One checkbox to edit");
                 } else
                 {
-                    window.location.href = "country.php?action=edit&page=<?php echo "$page"?>&id=" + arrval[0];
+                    window.location.href = "subscriber.php?action=edit&page=<?php echo "$page"?>&id=" + arrval[0];
                 }
             }
         }
@@ -293,11 +280,10 @@ if (!isset($_SESSION['id'])) {
                 if (ConfirmStatus == true) {
                     document.frmMain.chkdelids.value = chkdelids
                     document.frmMain.action.value = "delete"
-                    document.frmMain.action = "country-controller.php";
+                    document.frmMain.action = "subscriber-controller.php";
                     document.frmMain.submit()
                 }
             }
         }
     </script>	
 
-<?php include_once('includes/footer.php'); ?>

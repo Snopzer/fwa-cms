@@ -1,16 +1,18 @@
 <?php
-session_start();
-if (!isset($_SESSION['id'])) {
-  header('location:index.php');
-}
-?>
-<?php
+	session_start();
+	if (!isset($_SESSION['id'])) {
+		header('location:index.php');
+	}
+	
 	include_once('includes/config.php');
 	include_once('includes/header.php');
-include 'includes/menu.php'; ?>
+	include_once('includes/menu.php');
+?>
 <?php
-	$select = mysql_query("SELECT (SELECT COUNT(*) FROM r_user) as usercount ,(SELECT COUNT(*) FROM r_category) as categorycount, (SELECT COUNT(*) FROM r_post) as postcount, (SELECT COUNT(*) FROM r_post where status=1) as activeposts,(SELECT SUM(views) FROM r_post) as totalviews")or die(mysql_error());
-	$count = mysql_fetch_array($select);
+	$selectData = $conn->query("SELECT (SELECT COUNT(*) FROM r_user) as usercount ,(SELECT COUNT(*) FROM r_category) as categorycount, (SELECT COUNT(*) FROM r_post) as postcount, (SELECT COUNT(*) FROM r_post where status=1) as activeposts,(SELECT SUM(views) FROM r_post) as totalviews");
+	$count = $selectData->fetch_assoc();
+	/*print_r($count);
+	exit;*/
 ?>
 <div id="page-wrapper" class="gray-bg dashbard-1">
 	<div class="content-main">
@@ -26,22 +28,21 @@ include 'includes/menu.php'; ?>
 						<h5>Users</h5>
 						<label><?php echo $count['usercount']; ?> </label>
 					</div>
-					<div class="col-md-6 top-content">
-						<h5>Article Views</h5>
-						<label><?php echo $count['totalviews']; ?> </label>
-					</div>
-					<div class="col-md-6 top-content1">	   
-						<div id="demo-pie-1" class="pie-title-center" data-percent="25"> <span class="pie-value"></span> </div>
-					</div>
 					<div class="clearfix"> </div>
 				</div>
 				<div class="content-top-1">
 					<div class="col-md-6 top-content">
+						<h5>Article Views</h5>
+						<label><?php echo $count['totalviews']; ?> </label>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+				
+				
+				<div class="content-top-1">
+					<div class="col-md-6 top-content">
 						<h5>Categories</h5>
 						<label><?php echo $count['categorycount']; ?> </label>
-					</div>
-					<div class="col-md-6 top-content1">	   
-						<div id="demo-pie-2" class="pie-title-center" data-percent="50"> <span class="pie-value"></span> </div>
 					</div>
 					<div class="clearfix"> </div>
 				</div>
@@ -67,8 +68,8 @@ include 'includes/menu.php'; ?>
 			<div class="clearfix"> </div>
 		</div>
 		<div class="content-top">
-				<div class="middle-content">
-			<h3>Posts Time Line</h3>    
+			<div class="middle-content">
+				<h3>Posts Time Line</h3>    
 			</div>
 			<div class="mid-content-top">
 				<div class="middle-content">
@@ -78,56 +79,10 @@ include 'includes/menu.php'; ?>
 			<div class="clearfix"> </div>
 		</div>
 		
-		<div class="content-mid">
-			<div class="mid-content-top">
-				<div class="middle-content">
-					<h3>Latest Images</h3>                                
-					<div id="owl-demo" class="owl-carousel text-center">
-						<div class="item">
-							<img class="lazyOwl img-responsive" data-src="images/na.jpg" alt="name">
-						</div>
-						<div class="item">
-							<img class="lazyOwl img-responsive" data-src="images/na1.jpg" alt="name">
-						</div>
-						<div class="item">
-							<img class="lazyOwl img-responsive" data-src="images/na2.jpg" alt="name">
-						</div>
-						<div class="item">
-							<img class="lazyOwl img-responsive" data-src="images/na.jpg" alt="name">
-						</div>
-						<div class="item">
-							<img class="lazyOwl img-responsive" data-src="images/na1.jpg" alt="name">
-						</div>
-						<div class="item">
-							<img class="lazyOwl img-responsive" data-src="images/na2.jpg" alt="name">
-						</div>
-						<div class="item">
-							<img class="lazyOwl img-responsive" data-src="images/na.jpg" alt="name">
-						</div>
-						
-					</div>
-				</div>
-				<link href="css/owl.carousel.css" rel="stylesheet">
-				<script src="js/owl.carousel.js"></script>
-				<script>
-					$(document).ready(function () {
-						$("#owl-demo").owlCarousel({
-							items: 3,
-							lazyLoad: true,
-							autoPlay: true,
-							pagination: true,
-							nav: true,
-						});
-					});
-				</script>
-				<!-- //requried-jsfiles-for owl -->
-			</div>
-			<div class="clearfix"> </div>
-		</div>
 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-		<?php	$getPostsbyDate = mysql_query("SELECT COUNT( id_post ) as posts , DATE( date_added ) as date_added FROM r_post GROUP BY DATE( date_added ) ASC")or die(mysql_error()); ?>
+		<?php	$getPostsbyDate = $conn->query("SELECT COUNT( id_post ) as posts , DATE( date_added ) as date_added FROM r_post GROUP BY DATE( date_added ) ASC")or die(mysqli_error()); ?>
 		
-		<?php	$getPostListQuery = mysql_query("SELECT title, views FROM  `r_post` order by views DESC")or die(mysql_error()); ?>
+		<?php	$getPostListQuery = $conn->query("SELECT title, views FROM  `r_post` order by views DESC")or die(mysqli_error()); ?>
 		
 		<script type="text/javascript">
 			// pie chart
@@ -137,7 +92,7 @@ include 'includes/menu.php'; ?>
 				
 				var data = google.visualization.arrayToDataTable([
 				['Post', 'Views'],
-				<?php	while ($getPost = mysql_fetch_assoc($getPostListQuery)) {	?>
+				<?php	while ($getPost = $getPostListQuery->fetch_assoc()) {	?>
 					['<?php echo $getPost['title'] ?>',<?php echo $getPost['views'] ?>],
 				<?php } ?>
 				
@@ -157,7 +112,7 @@ include 'includes/menu.php'; ?>
 			function drawChart1() {
 				var data1 = google.visualization.arrayToDataTable([
 				['Date', 'Posts'],
-				<?php	while ($getPostHistoryData = mysql_fetch_assoc($getPostsbyDate)) {	?>
+				<?php	while ($getPostHistoryData = $getPostsbyDate->fetch_assoc()) {	?>
 					['<?php echo $getPostHistoryData['date_added'] ?>',<?php echo $getPostHistoryData['posts'] ?>],
 				<?php } ?>
 				]);
@@ -182,4 +137,4 @@ include 'includes/menu.php'; ?>
 		
 		
 		
-	<?php include_once('includes/footer.php');?>			
+	<?php include_once('includes/footer.php');?>					
