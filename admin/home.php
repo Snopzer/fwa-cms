@@ -1,10 +1,11 @@
 <?php
+	ob_start();
 	session_start();
+	include_once('../config.php');
+	include_once('../parameter.php');
 	if (!isset($_SESSION['id'])) {
 		header('location:index.php');
 	}
-	
-	include_once('includes/config.php');
 	include_once('includes/header.php');
 	include_once('includes/menu.php');
 ?>

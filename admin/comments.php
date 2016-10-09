@@ -1,10 +1,30 @@
 <?php
 	session_start();
-	include_once('includes/config.php');
+	include_once('../config.php');
+	include_once('../parameter.php');
 	if (!isset($_SESSION['id'])) {
 		
 		header('location:index.php');
 	}
+	
+	$res1 = $conn->query("SELECT * FROM r_comment");
+	$commentCount = $res1->num_rows;
+	
+	$a = $commentCount / ADMIN_PAGE_LIMIT;
+	$a = ceil($a);
+	
+	
+	$page = false;
+	if (array_key_exists('page', $_GET)) {
+		$page = $_GET['page'];
+	}
+	//  $page = $_GET["page"];
+	if ($page == "" || $page == 1) {
+		$page1 = 0;
+		} else {
+		$page1 = ($page * ADMIN_PAGE_LIMIT) - ADMIN_PAGE_LIMIT;
+	}
+	$commentQuery = $conn->query("SELECT * FROM r_comment order by id_comment desc limit $page1,".ADMIN_PAGE_LIMIT)or die(mysqli_error());
 ?>  
 <?php include_once('includes/header.php'); ?>
 <?php include_once('includes/menu.php'); ?>
@@ -18,7 +38,7 @@
 					<i class="fa fa-angle-right"></i>
 					<span>Comments</span>
 				</h2>
-			</div>
+				</div>
 			<div class="grid-system">
 				<div class="horz-grid">
 					<div class="grid-system">
@@ -33,70 +53,42 @@
 								<table class="table">
 									<tbody>
 										<tr>
-											<td><h3 id="h3.-bootstrap-heading"> comments - [<?php
-												$select = $conn->query("SELECT * FROM r_comment order by id_comment desc")or die(mysqli_error());
-												$count = $select->num_rows;
-												echo "$count";
-											?>]</h3>
+											<td><h3 id="h3.-bootstrap-heading"> comments - [<?php echo $commentCount;	?>]</h3>
 											</td>
 											<td class="type-info text-right">
-												<a href="comments.php?action=add"><span class="btn btn-success">Add New</span></a> 
-												<a href="javascript:fnDetails();"><span class="btn btn-primary">Edit</span></a>
-												<a href="javascript:fnDelete();"><span class="btn btn-danger">Delete</span></a>
+												<a href="comments.php?action=add"><span class="btn btn-success"><i class="fa fa-plus-square white" aria-hidden="true"></i> <span class="desktop"><?php echo ADD_BUTTON;?></span></span></a> 
+												<a href="javascript:fnDetails();"><span class="btn btn-primary"><i class="fa fa-pencil white" aria-hidden="true"></i> <span class="desktop"><?php echo EDIT_BUTTON;?></span></span></a>
+												<a href="javascript:fnDelete();"><span class="btn btn-danger"><i class="fa fa-remove white" aria-hidden="true"></i> <span class="desktop"><?php echo DELETE_BUTTON;?></span></span></a>
 											</td>
 										</tr>
 									</tbody>
 								</table>
 							</div>
-							<form name="frmMain" action="comments.php?type=search" method="post">
+							<form name="frmMain" >
 								<table class="table"> 
-									
-									<tr class="table-row">
-										<td class="table-img">&nbsp;</td>
-										<td class="march"><h6><input class="form-control" type="text" name="search"></h6></td>
-										<td class="march"><h6><input class="btn btn-default" type="submit"  ></h6></td>                                
-										<!--<td class="table-text"><h6>Password</h6></td>
-											<td class="table-text"><h6>Skills</h6></td>
-										<td class="table-text"><h6>Country</h6></td>-->
-									</tr>
-									
 									<tr class="table-row">
 										<td class="table-img">
 											<input type="checkbox" name="checkall" onClick="Checkall()"/>
 										</td>
 										<td class="table-text"><h6>Name</h6></td>
-										<td class="table-text"><h6>Email</h6></td>
-										<td class="table-text"><h6>Subject</h6></td>
-										<!--<td class="table-text"><h6>Message</h6></td>-->
+										<td class="table-text desktop"><h6>Email</h6></td>
+										<td class="table-text desktop"><h6>Subject</h6></td>
 										<td class="march"> Action </td>
 									</tr>
 									<?php
-										$page = false;
-										if (array_key_exists('page', $_GET)) {
-											$page = $_GET['page'];
-										}
-										//  $page = $_GET["page"];
-										if ($page == "" || $page == 1) {
-											$page1 = 0;
-											} else {
-											$page1 = ($page * 5) - 5;
-										}
-										$select = $conn->query("SELECT * FROM r_comment order by id_comment desc limit $page1,5")or die(mysqli_error());
-										if ($select) {
-											while ($row = $select->fetch_assoc()) {
-											?>
-											<tr class="table-row">
-												<td class="table-img"><input type="checkbox" name="selectcheck" value="<?php echo $row["id_comment"] ?>"></td>
-												<td class="march"><h6><?php echo $row["name"] ?></h6></td>
-												<td class="march"><h6><?php echo $row["email"] ?></h6></td>
-												<td class="march"><h6><?php echo $row["subject"] ?></h6></td>
-												<!--<td class="march"><h6><?php echo $row["message"] ?></h6></td>-->
-												<td><a href="comments.php?id=<?php echo $row["id_comment"] ?>&action=edit&page=<?php echo "$page"?>"><span class="label label-primary">Edit</span><a/>
-												<a href="comments-controller.php?chkdelids=<?php echo $row["id_comment"] ?>&action=delete&page=<?php echo "$page"?>""><span class="label label-info">Delete</span></a>
-												</td>
-											</tr>
-											<?php
-											}
+										
+										while ($row = $commentQuery->fetch_assoc()) {
+										?>
+										<tr class="table-row">
+											<td class="table-img"><input type="checkbox" name="selectcheck" value="<?php echo $row["id_comment"] ?>"></td>
+											<td class="march"><h6><?php echo $row["name"] ?></h6></td>
+											<td class="march desktop"><h6><?php echo $row["email"] ?></h6></td>
+											<td class="march desktop"><h6><?php echo $row["subject"] ?></h6></td>
+											<td><a href="comments.php?id=<?php echo $row["id_comment"] ?>&action=edit&page=<?php echo "$page"?>"><span class="label label-primary"><i class="fa fa-pencil white" aria-hidden="true"></i></span><a/>
+											<a href="comments-controller.php?chkdelids=<?php echo $row["id_comment"] ?>&action=delete&page=<?php echo "$page"?>""><span class="label label-info"><i class="fa fa-remove white" aria-hidden="true"></i></span></a>
+											</td>
+										</tr>
+										<?php
 										}
 									?>
 								</table>
@@ -107,12 +99,8 @@
 								<input type="hidden" name="page" value="<?php echo "$page"; ?>"/>
 							</form>
 							<?php
-								$res1 = $conn->query("SELECT * FROM r_comment");
-								$count = $res1->num_rows;
-								//echo "$count";
-								$a = $count / 5;
-								$a = ceil($a);
-								if ($count > 5) {
+								
+								if ($commentCount >  ADMIN_PAGE_LIMIT) {
 								?>
 								<div class="horz-grid text-center">
 									<ul class="pagination pagination-lg">
@@ -320,8 +308,8 @@
 														<tr class="table-row">
 															<td class="table-img"><input type="checkbox" name="colors[]"></td>
 															<td class="march"><h6><?php echo $row["message"] ?></h6></td>
-															<td><a href="comments.php?id=<?php echo $row["id_comment"] ?>&action=edit&page=<?php echo "$page"?>"><span class="label label-primary">Edit</span><a/>
-															<a href="comments-controller.php?id=<?php echo $row["id_comment"] ?>&action=delete&page=<?php echo "$page"?>""><span class="label label-info">Delete</span></a>
+															<td><a href="comments.php?id=<?php echo $row["id_comment"] ?>&action=edit&page=<?php echo "$page"?>"><span class="label label-primary"><i class="fa fa-pencil white" aria-hidden="true"></i></span><a/>
+															<a href="comments-controller.php?id=<?php echo $row["id_comment"] ?>&action=delete&page=<?php echo "$page"?>""><span class="label label-info"><i class="fa fa-remove white" aria-hidden="true"></i></span></a>
 															</td>
 														</tr>
 														<?php }

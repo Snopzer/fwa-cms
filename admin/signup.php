@@ -1,7 +1,8 @@
 <?php
 	
 	session_start();
-	include_once('includes/config.php');
+	include_once('../config.php');
+	include_once('../parameter.php');
 	if(!isset($_GET['msg'])){
 		if (isset($_SESSION['id'])) {
 			header('location:home.php');
@@ -33,9 +34,9 @@
 				<div class="">
 					<div id="showMessageDiv" style="display:none;" class="alert alert-danger">
 						<span id="showMessage" class="warning">
-						<?php if(isset($_SESSION['message'])){
-							echo $_SESSION['message'];
-						}?>	
+							<?php if(isset($_SESSION['message'])){
+								echo $_SESSION['message'];
+							}?>	
 						</span>
 					</div>	
 					<div id="showSuccessMessageDiv" <?php if(!isset($_SESSION['message'])){?> style="display:none;"<?php }?> class="alert alert-success">
@@ -55,8 +56,8 @@
 							<i class="fa fa-lock"></i>
 						</div>
 						<a class="news-letter" id="checkbox" >
-								<input  class="input-checkbox" type="checkbox" name="checkbox" id="terms" value="1" >
-								<label class="input-label" >I agree with the terms</label>
+							<input  class="input-checkbox" type="checkbox" name="checkbox" id="terms" value="1" >
+							<label class="input-label" >I agree with the terms</label>
 						</a>
 						<div class="text-center">
 							
@@ -140,7 +141,7 @@
 					$("#showMessageDiv").hide();
 					$("#showSuccessMessageDiv").show();
 					$("#showSuccessMessage").html(response["message"]);
-				}else{
+					}else{
 					$("#showMessageDiv").show();
 					$("#showMessage").html(response["message"]);
 				}

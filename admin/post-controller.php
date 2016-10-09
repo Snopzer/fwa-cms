@@ -1,16 +1,17 @@
 <?php
 	ob_start();
 	session_start();
-	include_once('includes/config.php');
+	include_once('../config.php');
+	include_once('../parameter.php');
 	
 	if (!isset($_SESSION['id'])) {
 		header('location:index.php');
 	}
 	
 	if ($_POST['action'] == 'add') {
-		
 		$title 				= $conn->real_escape_string($_POST['title']);		
-		$description 		= $conn->real_escape_string($_POST['description']);		
+		//$description 		= $conn->real_escape_string($_POST['description']);		
+		$description 		= addslashes($_POST['description']);		
 		$short_description 	= $conn->real_escape_string($_POST['short_description']);		
 		$category 			= $conn->real_escape_string($_POST['category']);		
 		$status 			= $conn->real_escape_string($_POST['status']);		
@@ -25,8 +26,7 @@
 		$date_added = date('Y-m-d h:i:s'); 
 		
 		$addPost = "INSERT INTO r_post (title,description,short_description,id_category,id_user,date_added,meta_title,meta_keywords,meta_description,source,image_source,status) VALUES ('" . $title . "','" . $description . "','" . $short_description . "','" . $category . "','" . $user . "','" . $date_added . "','" . $meta_title . "','" . $meta_keywords . "','" . $meta_description . "','" . $source . "','" . $image_source . "','" . $status . "')";
-		/* echo "$addPost";
-		exit;*/
+		
 		if ($conn->query($addPost) === TRUE) {
 			$postid=$conn->insert_id;
 			$seo_url  = strtolower(preg_replace('/\s+/', '-', $seo_url));
@@ -60,7 +60,8 @@
 		}
 		
 		$title 				= $conn->real_escape_string($_POST['title']);		
-		$description 		= $conn->real_escape_string($_POST['description']);
+		//$description 		= $conn->real_escape_string($_POST['description']);
+		$description 		= addslashes($_POST['description']);
 		$short_description 	= $conn->real_escape_string($_POST['short_description']);
 		$category 			= $conn->real_escape_string($_POST['category']);		
 		$status 			= $conn->real_escape_string($_POST['status']);		

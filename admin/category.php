@@ -1,9 +1,8 @@
 <?php
-	ini_set('display_errors', 1);
-	ini_set('display_startup_errors', 1);
-	error_reporting(E_ALL);
+	ob_start();
 	session_start();
-	include_once('includes/config.php');
+	include_once('../config.php');
+	include_once('../parameter.php');
 	if (!isset($_SESSION['id'])) {
 		header('location:index.php');
 	}
@@ -56,10 +55,10 @@
 										<tr>
 											<td><h3 id="h3.-bootstrap-heading"> CATEGORIES - [<?php echo $categoryCount; ?>]</h3></td>
 											<td class="type-info text-right">
-												<a href="category.php?action=add"><span class="btn btn-success"><?php echo ADD_BUTTON;?></span></a> 
-												<a  href="javascript:fnDetails();"><span class="btn btn-primary"><?php echo EDIT_BUTTON;?></span></a>
-												<a href="javascript:fnDelete();"><span class="btn btn-danger" id="delete"><?php echo DELETE_BUTTON;?></span></a>
-												<a href="category-controller.php?action=undo"><span class="btn btn-primary">Undo</span></a>
+												<a href="category.php?action=add"><span class="btn btn-success"><i class="fa fa-plus-square white" aria-hidden="true"></i> <span class="desktop"> <?php echo ADD_BUTTON;?></span></span></a> 
+												<a  href="javascript:fnDetails();"><span class="btn btn-primary"><i class="fa fa-pencil white" aria-hidden="true"></i> <span class="desktop"> <?php echo EDIT_BUTTON;?></span></span></a>
+												<a href="javascript:fnDelete();"><span class="btn btn-danger" id="delete"><i class="fa fa-remove white" aria-hidden="true"></i> <span class="desktop"><?php echo DELETE_BUTTON;?></span></span></a>
+												<a href="category-controller.php?action=undo"><span class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i> <?php echo UNDO_BUTTON;?></span></a>
 											</td>
 										</tr>
 									</tbody>
@@ -72,8 +71,8 @@
 											<input type="checkbox" name="checkall" onClick="Checkall()"/>
 										</td>
 										<td class="table-text"><h6>Name</h6></td>
-										<td class="table-text"><h6>Sort Order</h6></td>
-										<td class="table-text"><h6>Status</h6></td>
+										<td class="table-text desktop"><h6>Sort Order</h6></td>
+										<td class="table-text desktop"><h6>Status</h6></td>
 									</tr>
 									<?php
 										if ($categoryCount > 0) {
@@ -82,11 +81,10 @@
 											<tr class="table-row">
 												<td class="table-img"><input type="checkbox" name="selectcheck" value="<?php echo $categoryData['id_category']?>"></td>
 												<td class="march"><h6><?php echo $categoryData["name"] ?></h6></td>
-												<!--<td class="march"><h6><?php echo $categoryData["description"] ?></h6></td>-->
-												<td class="march"><h6><?php echo $categoryData["sort_order"] ?></h6></td>
-												<td class="march"><h6><?php echo ($categoryData["status"]==1)?'Enable':'Disable'; ?></h6></td>
-												<td><a href="category.php?id=<?php echo $categoryData["id_category"] ?>&action=edit&page=<?php echo "$page"?>"><span class="label label-primary">Edit</span><a/>
-												<a href="category-controller.php?chkdelids=<?php echo $categoryData["id_category"] ?>&action=delete&page=<?php echo "$page"?>""><span class="label label-info">Delete</span></a>
+												<td class="march desktop"><h6><?php echo $categoryData["sort_order"] ?></h6></td>
+												<td class="march desktop"><h6><?php echo ($categoryData["status"]==1)?'Enable':'Disable'; ?></h6></td>
+												<td><a href="category.php?id=<?php echo $categoryData["id_category"] ?>&action=edit&page=<?php echo "$page"?>"><span class="label label-primary"><i class="fa fa-pencil white" aria-hidden="true"></i></span><a/>
+												<a href="category-controller.php?chkdelids=<?php echo $categoryData["id_category"] ?>&action=delete&page=<?php echo "$page"?>""><span class="label label-info"><i class="fa fa-remove white" aria-hidden="true"></i></span></a>
 												</td>
 											</tr>
 											<?php

@@ -1,7 +1,8 @@
 <?php
 	ob_start();
 	session_start();
-	include_once('includes/config.php');
+	include_once('../config.php');
+	include_once('../parameter.php');
 	if (!isset($_SESSION['id'])) {
 		header('location:index.php');
 	}
@@ -11,7 +12,8 @@
 		$meta_description 	= $conn->real_escape_string($_POST['meta_description']);	
 		$meta_keywords 		= $conn->real_escape_string($_POST['meta_keywords']);	
 		$page_heading 		= $conn->real_escape_string($_POST['page_heading']);	
-		$page_description 	= $conn->real_escape_string($_POST['page_description']);	
+		//$page_description 	= $conn->real_escape_string($_POST['page_description']);	
+		$page_description 	= addslashes($_POST['page_description']);	
 		$seo_url 			= $conn->real_escape_string($_POST['seo_url']);	
 		
 		
@@ -36,7 +38,8 @@
 		$meta_description 	= $conn->real_escape_string($_POST['meta_description']);	
 		$meta_keywords 		= $conn->real_escape_string($_POST['meta_keywords']);	
 		$page_heading 		= $conn->real_escape_string($_POST['page_heading']);	
-		$page_description	= $conn->real_escape_string($_POST['page_description']);	
+		//$page_description	= $conn->real_escape_string($_POST['page_description']);	
+		$page_description 	= addslashes($_POST['page_description']);	
 		$seo_url 			= $conn->real_escape_string($_POST['seo_url']);	
 		
 		$editPage=$conn->query("update r_page SET title='$title',meta_description='$meta_description',meta_keywords='$meta_keywords',page_heading='$page_heading',page_description='$page_description' where id_page='$id' ");

@@ -1,6 +1,7 @@
 <?php
 	session_start();
-	include_once('includes/config.php');
+	include_once('../config.php');
+	include_once('../parameter.php');
 	if (!isset($_SESSION['id'])) {
 		
 		header('location:index.php');
@@ -37,9 +38,9 @@
 										<tr>
 											<td><h3 id="h3.-bootstrap-heading"> Pages - [<?php echo $count;?>]</h3></td>
 											<td class="type-info text-right">
-												<a href="pages.php?action=add"><span class="btn btn-success"><?php echo ADD_BUTTON;?></span></a> 
-												<a href="javascript:fnDetails();"><span class="btn btn-primary"><?php echo EDIT_BUTTON;?></span></a>
-												<a href="javascript:fnDelete();"><span class="btn btn-danger"><?php echo DELETE_BUTTON;?></span></a>
+												<a href="pages.php?action=add"><span class="btn btn-success"><i class="fa fa-plus-square white" aria-hidden="true"></i> <span class="desktop"> <?php echo ADD_BUTTON;?></span></span></a> 
+												<a href="javascript:fnDetails();"><span class="btn btn-primary"><i class="fa fa-pencil white" aria-hidden="true"></i> <span class="desktop"> <?php echo EDIT_BUTTON;?></span></span></a>
+												<a href="javascript:fnDelete();"><span class="btn btn-danger"><i class="fa fa-remove white" aria-hidden="true"></i> <span class="desktop"><?php echo DELETE_BUTTON;?></span></span></a>
 											</td>
 										</tr>
 									</tbody>
@@ -82,8 +83,8 @@
 											<td class="march"><h6><?php echo $row["page_heading"] ?></h6></td>
 											
 											<td>
-												<a href="pages.php?id=<?php echo $row["id_page"] ?>&action=edit&page=<?php echo "$page"?>"><span class="label label-primary">Edit</span><a/>
-													<a href="pages-controller.php?chkdelids=<?php echo $row["id_page"] ?>&action=delete&page=<?php echo "$page"?>"><span class="label label-info">Delete</span></a>
+												<a href="pages.php?id=<?php echo $row["id_page"] ?>&action=edit&page=<?php echo "$page"?>"><span class="label label-primary"><i class="fa fa-pencil white" aria-hidden="true"></i></span><a/>
+													<a href="pages-controller.php?chkdelids=<?php echo $row["id_page"] ?>&action=delete&page=<?php echo "$page"?>"><span class="label label-info"><i class="fa fa-remove white" aria-hidden="true"></i></span></a>
 												</td>
 											</tr>
 											<?php
@@ -195,7 +196,7 @@
                                 
                                 <div class="form-group">
 									<label class="col-sm-2 control-label" for="txtarea1">Page Description</label>
-									<div class="col-sm-8"><textarea class="form-control1" rows="4" cols="50" id="page_description" name="page_description"  style="width: 688px; height: 201px;"><?php echo $result["page_description"] ?></textarea></div>
+									<div class="col-sm-8"><textarea class="form-control1" rows="4" cols="50" id="page_description" name="page_description"  style="width: 688px; height: 201px;"><?php echo stripslashes($result["page_description"]); ?></textarea></div>
 								</div>
                                 
                                 

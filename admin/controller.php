@@ -1,12 +1,13 @@
 <?php
 	ob_start();
 	session_start();
-	include_once('includes/config.php');
+	include_once('../config.php');
+	include_once('../parameter.php');
 	
-	if($_GET['action']=='checklogin'){ 
-		header('Location:home.php');
-	}
-	elseif($_GET['action']=='signup'){ 
+	/*if($_GET['action']=='checklogin'){ 
+		header('Location:'.SITE_ADMIN_URL.'home.php');
+	}*/
+	if($_GET['action']=='signup'){ 
 		parse_str($_GET['singupData'], $singupData);
 		$email		=	$singupData['email'];
 		$password	=	$singupData['password'];
@@ -59,7 +60,7 @@
 		$_SESSION['image'] 	= ($user['image']!='')?$user['image']:'no-user-image.png';
 		$_SESSION['id'] 	= $user['id_user'];
 		$_SESSION['id_user_role'] 	= $user['id_user_role'];//1: Super Admin
-		header('Location:home.php');
+		header('Location:'.SITE_ADMIN_URL.'home.php');
 		
 		
 	}
@@ -128,19 +129,19 @@
 			$headers .= 'From:'.FROM_MAIL. "\r\n"; 
 			
 			$sendmail=mail($email, $subject, $message, $headers);
-			header('location:forgotpassword.php?msg=Password Changed Successfully'); 
+			header('location:'.SITE_ADMIN_URL.'forgotpassword.php?msg=Password Changed Successfully'); 
 		}
 		else{
-			header('location:forgotpassword.php?msg=No Email Exist!'); 
+			header('location:'.SITE_ADMIN_URL.'forgotpassword.php?msg=No Email Exist!'); 
 		}
 	}
 	elseif(isset($_GET['type']) && $_GET['type']== "logout" )
 	{
 		if (!isset($_SESSION['id'])) {
-			header('location:index.php');
+			header('location:'.SITE_ADMIN_URL.'index.php');
 			} else {
 			session_destroy();
-			header('location:index.php');
+			header('location:'.SITE_ADMIN_URL.'index.php');
 		}
 	}
 	
@@ -157,18 +158,18 @@
 			{
 				$updateStatus=$conn->query("UPDATE r_user SET status='1',activate_link='' WHERE id_user='".$id."' ");
 				$_SESSION['message'] = "Your Account is Actived, Login Now!";
-				header('location:index.php');
+				header('location:'.SITE_ADMIN_URL.'index.php');
 			}else
 			{
 				$_SESSION['message'] = "Your account is already active, no need to activate again";
-				header('location:index.php');
+				header('location:'.SITE_ADMIN_URL.'index.php');
 				exit;
 			}
 		}
 		else
 		{
 			$_SESSION['message'] = "Wrong activation code.";
-			header('location:index.php');
+			header('location:'.SITE_ADMIN_URL.'index.php');
 		}
 	}
 ?>

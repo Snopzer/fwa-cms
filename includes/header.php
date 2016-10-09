@@ -63,8 +63,8 @@
 				<div id="navbar" class="navbar-collapse collapse">					
                     <ul class="nav navbar-nav">						
                         <li class="active"><a href="index.php">Home</a></li>		
-						<?php							
-                            $categoriesQuery = $conn->query("SELECT seo.seo_url as seo_url, cat.* FROM r_category cat,r_seo_url seo where cat.id_category=seo.id_category and cat.status=1 order by cat.sort_order asc")or die(mysql_error());
+						<?php
+						$categoriesQuery = $conn->query("SELECT seo.seo_url as seo_url, cat.* FROM r_category cat,r_seo_url seo where cat.id_category=seo.id_category and cat.status=1 order by cat.sort_order asc")or die(mysql_error());
 							while ($category = $categoriesQuery->fetch_assoc()) {								
 							?>							
                             <li><a href="<?php echo SITEURL;?><?php echo $category['seo_url']; ?>"><?php echo $category['name']; ?></a></li>							

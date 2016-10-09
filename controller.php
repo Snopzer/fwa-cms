@@ -1,7 +1,7 @@
 <?php
 
 	ob_start();
-	include_once ('admin/includes/config.php');
+	include_once ('config.php');
 	
 	if($_POST['action']=='newsletter'){
 	parse_str($_POST['subscribeData'], $Subscribe);
@@ -68,7 +68,7 @@
         $subject=$CommentData['subject'];
         $message=$CommentData['message'];
 		
-        $row="insert into r_comment (name,email,subject,message,post_id) VALUES ('".$name."','".$email."','".$subject."','".$message."',".$id.")";
+        $row="insert into r_comment (name,email,subject,message,id_post) VALUES ('".$name."','".$email."','".$subject."','".$message."',".$id.")";
 		
         $result=$conn->query($row)or die(mysql_error());
 		if($result){

@@ -4,7 +4,7 @@
     "meta-keywords" => 'contact techdefeat, ask your questions, need support at your work.?',
     "meta-description" => 'Share your Work, we give you support at your technical problems, contact us for more details',
 	);
-	include_once('admin/includes/config.php');
+	include_once('config.php');
 	include_once('includes/header.php'); 
 	?>
 <div class="banner1">

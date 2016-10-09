@@ -1,6 +1,8 @@
 <?php
+	ob_start();
 	session_start();
-	include_once('includes/config.php');
+	include_once('../config.php');
+	include_once('../parameter.php');
 	if (!isset($_SESSION['id'])) {
 		header('location:index.php');
 	}

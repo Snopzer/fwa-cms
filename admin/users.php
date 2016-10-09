@@ -1,11 +1,12 @@
 <?php
 	session_start();
-	include_once('includes/config.php');
+	include_once('../config.php');
+	include_once('../parameter.php');
 	if (!isset($_SESSION['id'])) {
 		
 		header('location:index.php');
 	}
-	$userQuery = $conn->query("SELECT u.*, ur.role as adminrole FROM r_user u,r_user_role ur where u.id_user_role=ur.id_user_role order by id_user desc")or die(mysqli_error());
+	$userQuery = $conn->query("SELECT * FROM r_user")or die(mysqli_error());
 	$userCount = mysqli_num_rows($userQuery);
 	$pages = $userCount / ADMIN_PAGE_LIMIT;
 	$pages = ceil($pages);
@@ -50,9 +51,9 @@
                                         <tr>
                                             <td><h3 id="h3.-bootstrap-heading"> USERS - [<?php echo $userCount; ?>]</h></td>
                                             <td class="type-info text-right">
-                                                <a href="users.php?action=add"><span class="btn btn-success"><?php echo ADD_BUTTON;?></span></a> 
-                                                <a  href="javascript:fnDetails();"><span class="btn btn-primary"><?php echo EDIT_BUTTON;?></span></a>
-                                                <a  href="javascript:fnDelete();"><span class="btn btn-danger"><?php echo DELETE_BUTTON;?></span></a>
+                                                <a href="users.php?action=add"><span class="btn btn-success"><i class="fa fa-plus-square white" aria-hidden="true"></i> <span class="desktop"> <?php echo ADD_BUTTON;?></span></span></a> 
+                                                <a  href="javascript:fnDetails();"><span class="btn btn-primary"><i class="fa fa-pencil white" aria-hidden="true"></i> <span class="desktop"> <?php echo EDIT_BUTTON;?></span></span></a>
+                                                <a  href="javascript:fnDelete();"><span class="btn btn-danger"><i class="fa fa-remove white" aria-hidden="true"></i> <span class="desktop"><?php echo DELETE_BUTTON;?></span></span></a>
 											</td>
 										</tr>
 									</tbody>
@@ -66,9 +67,9 @@
                                             <input type="checkbox" name="checkall" onClick="Checkall()"/>
 										</td>
                                         <td class="table-text"><h6>Name</h6></td>
-                                        <td class="table-text"><h6>Email</h6></td>
-                                        <td class="table-text"><h6>Phone</h6></td>
-                                        <td class="table-text"><h6>Role</h6></td>
+                                        <td class="table-text desktop"><h6>Email</h6></td>
+                                        <td class="table-text desktop"><h6>Phone</h6></td>
+                                        <td class="table-text desktop"><h6>Role</h6></td>
                                         <td class="table-text"><h6>Status</h6></td>
 									</tr>
                                     <?php
@@ -78,12 +79,12 @@
 											<tr class="table-row <?php echo ($user["status"]==1)?'warning':'danger'; ?>">
                                                 <td class="table-img"><input type="checkbox" name="selectcheck" value="<?= $user["id_user"] ?>"/></td>
                                                 <td class="march"><h6><?php echo $user["name"] ?></h6></td>
-                                                <td class="march"><h6><?php echo $user["email"] ?></h6></td>
-                                                <td class="march"><h6><?php echo $user["phone"] ?></h6></td>
-                                                <td class="march"><h6><?php echo $user["adminrole"] ?></h6></td>
+                                                <td class="march desktop"><h6><?php echo $user["email"] ?></h6></td>
+                                                <td class="march desktop"><h6><?php echo $user["phone"] ?></h6></td>
+                                                <td class="march desktop"><h6><?php echo $user["adminrole"] ?></h6></td>
                                                 <td class="march"><h6><?php echo ($user["status"] == 1) ? 'Enable' : 'Disable'; ?></h6></td>
-                                                <td><a href="users.php?id=<?php echo $user["id_user"] ?>&action=edit&page=<?php echo "$page" ?>"><span class="label label-primary">Edit</span><a/>
-												<a href="users-controller.php?chkdelids=<?php echo $user["id_user"] ?>&action=delete&page=<?php echo "$page" ?>""><span class="label label-info">Delete</span></a>
+                                                <td><a href="users.php?id=<?php echo $user["id_user"] ?>&action=edit&page=<?php echo "$page" ?>"><span class="label label-primary"><i class="fa fa-pencil white" aria-hidden="true"></i></span><a/>
+												<a href="users-controller.php?chkdelids=<?php echo $user["id_user"] ?>&action=delete&page=<?php echo "$page" ?>""><span class="label label-info"><i class="fa fa-remove white" aria-hidden="true"></i></span></a>
                                                 </td>
 											</tr>
                                             <?php
@@ -153,7 +154,7 @@
 									$id = $_GET['id'];
 								}
 								$page = $_GET['page'];
-								$query = $conn->query("select * from r_user ru 
+								$query = $conn->query("select seo.seo_url as seoUrl,ru.* from r_user ru 
 								LEFT JOIN r_seo_url seo ON ru.id_user=seo.id_user 
 								where ru.id_user=$id")or die(mysql_error());
 								$result =$query->fetch_assoc();
@@ -172,7 +173,7 @@
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-2 control-label hor-form">SEO URL</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" value="<?php echo $result["seo_url"] ?>" id="title" name="seo_url" placeholder="SEO URL">
+                                        <input type="text" class="form-control" value="<?php echo $result["seoUrl"] ?>" id="title" name="seo_url" placeholder="SEO URL">
 									</div>
 								</div>
 								

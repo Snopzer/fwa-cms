@@ -1,29 +1,5 @@
 <?php
-	/*
-		File name 		: 	config.php
-	Date Created 	:	13-06-2016
-	Date Updated 	:	08-09-2016
-	Description		:	When the Application is set up in other system all database details should be change in each and every File, so we created this file especially for constants like db credential ect. so that we can include this files in our page and use the database connections
-	*/
-	
-	/*display error settings*/
-	error_reporting(1);
-	
-	
-	/* MySQL Server Host address */
-	$host 		=	"localhost";
-	
-	/* MySQL User Name */
-	$user		=	"root";
-	
-	/* MySQL User Password*/
-	$password	=	"";
-	
-	/* MySQL Database*/
-	$database	=	"fwa-cms";		
-	
-	/*The Below Parameters will enhance in Next Edit will get the Details form Database so that no need to change in Config File */
-	/*SITE Details*/
+	include_once('config.php');
 	define ( SITE_NAME , 'FWACMS');
 	define ( SITE_KEYWORDS , 'FWACMS');
 	define ( SITE_DESCRIPTION , 'FWACMS');

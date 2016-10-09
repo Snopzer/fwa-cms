@@ -1,6 +1,7 @@
 <?php
 	session_start();
-	include_once('includes/config.php');
+	include_once('../config.php');
+	include_once('../parameter.php');
 	if (!isset($_SESSION['id'])) {
 		
 		header('location:index.php');
@@ -52,9 +53,9 @@
                                         <tr>
                                             <td><h3 id="h3.-bootstrap-heading"> USER ROLES - [<?php echo $userCount; ?>]</h3></td>
                                             <td class="type-info text-right">
-                                                <a href="userrole.php?action=add"><span class="btn btn-success"><?php echo ADD_BUTTON;?></span></a> 
-                                                <a  href="javascript:fnDetails();"><span class="btn btn-primary"><?php echo EDIT_BUTTON;?></span></a>
-                                                <a  href="javascript:fnDelete();"><span class="btn btn-danger"><?php echo DELETE_BUTTON;?></span></a>
+                                                <a href="userrole.php?action=add"><span class="btn btn-success"><i class="fa fa-plus-square white" aria-hidden="true"></i> <span class="desktop"> <?php echo ADD_BUTTON;?></span></span></a> 
+                                                <a  href="javascript:fnDetails();"><span class="btn btn-primary"><i class="fa fa-pencil white" aria-hidden="true"></i> <span class="desktop"> <?php echo EDIT_BUTTON;?></span></span></a>
+                                                <a  href="javascript:fnDelete();"><span class="btn btn-danger"><i class="fa fa-remove white" aria-hidden="true"></i> <span class="desktop"><?php echo DELETE_BUTTON;?></span></span></a>
 											</td>
 										</tr>
 									</tbody>
@@ -78,8 +79,8 @@
                                                 <td class="table-img"><input type="checkbox" name="selectcheck" value="<?= $user["id_user_role"] ?>"/></td>
                                                 <td class="march"><h6><?php echo $user["role"] ?></h6></td>
                                                 <td class="march"><h6><?php echo ($user["status"] == 1) ? 'Enable' : 'Disable'; ?></h6></td>
-                                                <td><a href="userrole.php?id=<?php echo $user["id_user_role"] ?>&action=edit&page=<?php echo "$page" ?>"><span class="label label-primary">Edit</span><a/>
-												<a href="userrole-controller.php?chkdelids=<?php echo $user["id_user_role"] ?>&action=delete&page=<?php echo "$page" ?>""><span class="label label-info">Delete</span></a>
+                                                <td><a href="userrole.php?id=<?php echo $user["id_user_role"] ?>&action=edit&page=<?php echo "$page" ?>"><span class="label label-primary"><i class="fa fa-pencil white" aria-hidden="true"></i></span><a/>
+												<a href="userrole-controller.php?chkdelids=<?php echo $user["id_user_role"] ?>&action=delete&page=<?php echo "$page" ?>""><span class="label label-info"><i class="fa fa-remove white" aria-hidden="true"></i></span></a>
                                                 </td>
 											</tr>
                                             <?php

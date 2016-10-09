@@ -1,6 +1,7 @@
 <?php
 	session_start();
-	include_once('includes/config.php');
+	include_once('../config.php');
+	include_once('../parameter.php');
 	if (isset($_SESSION['id'])) {
 		header('location:home.php');
 	}

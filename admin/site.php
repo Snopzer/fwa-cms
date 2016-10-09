@@ -1,6 +1,7 @@
 <?php
 	session_start();
-	include_once('includes/config.php');
+	include_once('../config.php');
+	include_once('../parameter.php');
 	include_once('includes/header.php'); 
 	include_once('includes/menu.php');
 	if (!isset($_SESSION['id'])) {
@@ -57,9 +58,9 @@
 										<tr>
 											<td><h3 id="h3.-bootstrap-heading"> Sites - [<?php echo $siteCount;?>]</h3></td>
 											<td class="type-info text-right">
-												<a href="site.php?action=add"><span class="btn btn-success"><?php echo ADD_BUTTON;?></span></a> 
-												<a href="javascript:fnDetails();"><span class="btn btn-primary"><?php echo EDIT_BUTTON;?></span></a>
-												<a href="javascript:fnDelete();"><span class="btn btn-danger"><?php echo DELETE_BUTTON;?></span></a>
+												<a href="site.php?action=add"><span class="btn btn-success"><i class="fa fa-plus-square white" aria-hidden="true"></i> <span class="desktop"> <?php echo ADD_BUTTON;?></span></span></a> 
+												<a href="javascript:fnDetails();"><span class="btn btn-primary"><i class="fa fa-pencil white" aria-hidden="true"></i> <span class="desktop"> <?php echo EDIT_BUTTON;?></span></span></a>
+												<a href="javascript:fnDelete();"><span class="btn btn-danger"><i class="fa fa-remove white" aria-hidden="true"></i> <span class="desktop"><?php echo DELETE_BUTTON;?></span></span></a>
 											</td>
 										</tr>
 									</tbody>
@@ -78,19 +79,19 @@
 											<input type="checkbox" name="checkall" onClick="Checkall()"/>
 										</td>
 										<td class="table-text"><h6>Site Name</h6></td>
-										<td class="table-text"><h6>Owner Email</h6></td>
-										<td class="table-text"><h6>Email From</h6></td>
-										<td class="table-text"><h6>Phone</h6></td>
+										<td class="table-text desktop"><h6>Owner Email</h6></td>
+										<td class="table-text desktop"><h6>Email From</h6></td>
+										<td class="table-text desktop"><h6>Phone</h6></td>
 									</tr>
 									<?php	while ($site = $selectSiteList->fetch_assoc()) {	?>
 										<tr class="table-row">
 											<td class="table-img"><input type="checkbox" name="selectcheck" value="<?= $site["id"] ?>"></td>
 											<td class="march"><h6><?php echo $site["site_name"] ?></h6></td>
-											<td class="march"><h6><?php echo $site["owner_email"] ?></h6></td>
-											<td class="march"><h6><?php echo $site["email_from"] ?></h6></td>
-											<td class="march"><h6><?php echo $site["phone"] ?></h6></td>
-											<td><a href="site.php?id=<?php echo  $site["id"] ?>&action=edit&page=<?php echo  "$page"?>"><span class="label label-primary">Edit</span><a/>
-											<a href="site-controller.php?chkdelids=<?php echo  $site["id"] ?>&action=delete&page=<?php echo  "$page"?>""><span class="label label-info">Delete</span></a>
+											<td class="march desktop"><h6><?php echo $site["owner_email"] ?></h6></td>
+											<td class="march desktop"><h6><?php echo $site["email_from"] ?></h6></td>
+											<td class="march desktop"><h6><?php echo $site["phone"] ?></h6></td>
+											<td><a href="site.php?id=<?php echo  $site["id"] ?>&action=edit&page=<?php echo  "$page"?>"><span class="label label-primary"><i class="fa fa-pencil white" aria-hidden="true"></i></span><a/>
+											<a href="site-controller.php?chkdelids=<?php echo  $site["id"] ?>&action=delete&page=<?php echo  "$page"?>""><span class="label label-info"><i class="fa fa-remove white" aria-hidden="true"></i></span></a>
 											</td>
 										</tr>
 									<?php	}	?>
@@ -450,4 +451,4 @@
 				}
 			}
 		}
-	</script>				
+	</script>					

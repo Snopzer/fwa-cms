@@ -1,8 +1,8 @@
 <?php
 	ob_start();
 	session_start();
-	include_once('includes/config.php');
-	include_once('includes/fwa-function.php');
+	include_once('../config.php');
+	include_once('../parameter.php');
 	if (!isset($_SESSION['id'])) {
 		header('location:index.php');
 	}
@@ -17,7 +17,7 @@
 		$country = $conn->real_escape_string($_POST['country']);	
 		$userrole = $conn->real_escape_string($_POST['userrole']);	
 		$status = $conn->real_escape_string($_POST['status']);	
-		$seo_url = $_POST['seo_url'];
+		$seo_url = $conn->real_escape_string($_POST['seo_url']);
 		
 		$checkEmail=  $conn->query("SELECT * FROM r_user where email='".$email."' ") or die(mysqli_error());
 		$count=mysqli_num_rows($checkEmail);
@@ -28,12 +28,12 @@
 		}
 		else
 		{                   
-			$insert = $conn->query("INSERT INTO r_user (name,email,phone,department,password,skills,id_country,id_user_role,status) VALUES ('" . $name . "','" . $email . "','" . $phone . "','" . $department . "','" . md5($password) . "','" . $skills . "','" . $country . "','" . $userrole . "','" . $status . "')") or die(mysqli_error());		
+			$insert = $conn->query("INSERT INTO r_user (name,email,phone,department,password,skills,id_country,id_user_role,status) VALUES ('" . $name . "','" . $email . "','" . $phone . "','" . $department . "','" . md5($password) . "','" . $skills . "','" . $country . "','" . $userrole . "','" . $status . "')") or die(mysqli_error());	
+			$userid=$conn->insert_id;
 			if ($insert) {
-				$userid=mysql_insert_id();
 				$seo_url  = strtolower(preg_replace('/\s+/', '-', $seo_url));
+				echo "INSERT INTO  `r_seo_url` (seo_url ,`id_user`) VALUES (  '".$seo_url."',  ".$userid.")";
 				$conn->query("INSERT INTO  `r_seo_url` (seo_url ,`id_user`) VALUES (  '".$seo_url."',  ".$userid.")");
-				
 				$message = "<strong>Success!</strong> User Added Successfully.";
 				header('location:'.SITE_ADMIN_URL.'users.php?response=success&message='.$message);
 			}
@@ -85,11 +85,13 @@
 		$count=count($messageid);
 		for($i=0;$i<$count;$i++)
 		{
+			//Delete SEO URL Details
+			$conn->query("DELETE FROM r_seo_url WHERE id_user=".$messageid[$i]);
+			
 			$row="DELETE FROM r_user WHERE id_user=".$messageid[$i];
 			$result= $conn->query($row);
 		}
-		//Delete SEO URL Details
-		$result= $conn->query("DELETE FROM r_seo_url WHERE id_user=".$messageid[$i])or die(mysqli_error());
+		
 		
 		if ($result) {
 			$message = "<strong>Success!</strong> User Deleted Successfully.";

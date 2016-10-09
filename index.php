@@ -1,5 +1,5 @@
 <?php 
-	include_once('admin/includes/config.php');
+	include_once('config.php');
 	
 	$metaArray = array(
     "title"  => "Ultimate Stop for Software Solutions - Techdefeat.com",
@@ -19,8 +19,11 @@
 <div class="technology">
 	<div class="banner">
 		<div class="container">
-			<h2><?php echo SITE_NAME; ?></h2> 
-			<p><?php echo SITE_DESCRIPTION; ?></p>
+			<?php	if (isset($_GET['subscription']) && $_GET['subscription'] == "success") {?><p style="color: white">Thank You For Subscibing Our News Letter</p><?php }		?>
+			<?php	if (isset($_GET['contact']) && $_GET['contact'] == "success") {		?><p style="color: white">Your Contact Request Is Sent. You Will Get Replay Soon Thankyou For Contacting Us.</p><?php }		?> 
+			
+			<h2>Techdefeat.com</h2> 
+			<p>Techdefeat will provide you solutions for your Windows Software Problems, Website Creation, Managing websites, Static, Dynamic Websites and  Search Engine Optimization for your website and many more intrestin facts</p>
 			<a href="contact.php">Contact us for Support</a>
 		</div>
 	</div>
@@ -29,6 +32,7 @@
         <div class="col-md-9 technology-left">
             <div class="tech-no">
                 <?php while ($postData = $postQuery->fetch_assoc()) { ?>
+					
 					<div class="tc-ch">		
 						<?php if(!empty($postData['image'])){?>
 							<div class="tch-img">
@@ -42,8 +46,14 @@
 							<ul>
 								<li><i class="glyphicon glyphicon-user"> </i><a class="admin" href="#"><?php echo $postData['user']; ?> </a></li>
 								<li><i class="glyphicon glyphicon-calendar"> </i><?php echo $postData['date_updated']; ?></li>
-								<li><i class="glyphicon glyphicon-comment"> </i><a class="p-blog"><?php echo $postData['name']; ?></a></li>
-								<!--<li><i class="glyphicon glyphicon-heart"> </i><a class="admin"><?php echo $postData['favourites']; ?> favourites </a></li>-->
+								<li><i class="glyphicon glyphicon-comment"> </i><a class="p-blog">
+									<?php 
+										
+										$commentCountQuery = $conn->query("SELECT count(id_post) as count from r_comment where id_post=".$postData['id_post']);
+										$commentCount = $commentCountQuery->fetch_assoc();
+										
+										echo $commentCount['count']; ?></a></li>
+								<li><i class="glyphicon glyphicon-heart"> </i><a class="admin"><?php echo $postData['favourites']; ?> favourites </a></li>
 								<li><i class="glyphicon glyphicon-eye-open"> </i><?php echo $postData['views']; ?> views</li>
 							</ul>
 						</div>

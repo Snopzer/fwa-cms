@@ -1,9 +1,10 @@
 <?php
-session_start();
-include_once('includes/config.php');
-if (isset($_SESSION['id'])) {
-  header('location:home.php');
-}
+	session_start();
+	include_once('../config.php');
+	include_once('../parameter.php');
+	if (isset($_SESSION['id'])) {
+		header('location:home.php');
+	}
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -19,50 +20,50 @@ if (isset($_SESSION['id'])) {
         <link href="css/font-awesome.css" rel="stylesheet"> 
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
-    </head>
+	</head>
     <body>
         <div class="login">
             <h1><a href="home.php"><?php echo SITE_NAME;?></a></h1>
             <div class="login-bottom">
                 <h2>Login</h2>
-					<div id="showMessageDiv" style="display:none;" class="alert alert-danger">
-						<span id="showMessage" class="warning">
-						</span>
-						
-					</div>
-					<div id="showSuccessMessageDiv" <?php if(!isset($_SESSION['message'])){?> style="display:none;"<?php }?> class="alert alert-success">
-						<span id="showSuccessMessage" >	</span>
-						<?php if(isset($_SESSION['message'])){
-							echo $_SESSION['message'];
-							unset($_SESSION['message']);
-						}?>	
-					</div>	
-                    <div class="">
-						<form id="loginForm" >
+				<div id="showMessageDiv" style="display:none;" class="alert alert-danger">
+					<span id="showMessage" class="warning">
+					</span>
+					
+				</div>
+				<div id="showSuccessMessageDiv" <?php if(!isset($_SESSION['message'])){?> style="display:none;"<?php }?> class="alert alert-success">
+					<span id="showSuccessMessage" >	</span>
+					<?php if(isset($_SESSION['message'])){
+						echo $_SESSION['message'];
+						unset($_SESSION['message']);
+					}?>	
+				</div>	
+				<div class="">
+					<form id="loginForm" >
 						<div class="login-mail" id="mail_field">
                             <input type="text" id="email" name="email" placeholder="Email" >
                             <i class="fa fa-envelope"></i>
-                        </div>
+						</div>
                         <div class="login-mail" id="password_field">
                             <input type="password" id="password" name="password" placeholder="Password" >
                             <i class="fa fa-lock"></i>
-                        </div>
+						</div>
 						<a class="left" href="forgotpassword.php">Forget Password </a>
 						<a class="right" href="signup.php">Create New Account</a>
 						<div class="text-center">
-								<button id="LogIn" class="btn btn-warning submit-button" >LogIn</button>
+							<button class="btn btn-info" type="button" id="LogIn" ><i class="fa fa-sign-in" aria-hidden="true"></i> LogIn</button>
 						</div>
-						</form>
-                    </div>
-                   			
-                    <div class="clearfix"> </div>
-               
-            </div>
-        </div>
+					</form>
+				</div>
+				
+				<div class="clearfix"> </div>
+				
+			</div>
+		</div>
         <div class="copy-right"><p><?php echo SITE_COPY_RIGHTS;?></p></div>  
         <script src="js/jquery.nicescroll.js"></script>
         <script src="js/scripts.js"></script>
-    </body>
+	</body>
 </html>
 
 <script type="text/javascript" language="JavaScript">
@@ -81,43 +82,43 @@ if (isset($_SESSION['id'])) {
 			$("#showMessage").html('<strong>Warning! </strong> Please enter your email.');
 			$("#email").focus();
 			return false;
-		}else{
+			}else{
 			$("#mail_field").css({"border-style": "solid","border-color": "#E9E9E9"});
 		}
 		var regex = /(?=^.{5,}$)/;
 		var password = $("#password").val();
 		if((password=='') || (!regex.test(password)))
 		{
-		$("#password_field").css({"border-style": "solid", "border-color": "red" });
-		$("#showMessageDiv").show();
-		$("#showMessage").html('<strong>Warning! </strong> Please enter your password.');
-		$("#password").focus();
-		return false;
+			$("#password_field").css({"border-style": "solid", "border-color": "red" });
+			$("#showMessageDiv").show();
+			$("#showMessage").html('<strong>Warning! </strong> Please enter your password.');
+			$("#password").focus();
+			return false;
 		}
 		else{
 			$("#password_field").css({"border-style": "solid","border-color": "#E9E9E9"});
 		}	
 		$.ajax({
-		url: "controller.php",
-		method: "GET",
-		data: { loginData : $("#loginForm").serialize(), 'action':'login'},
-		dataType: "json",
-		success: function (response) {
-			if(response["success"]==true)
-			{
-				$("#showMessageDiv").hide();
-				$("#showSuccessMessageDiv").show();
-				$("#showSuccessMessage").html("<strong>Success! </strong> Please Wait...!");
-				location = '<?php echo SITE_ADMIN_URL;?>/controller.php?action=checkLogin&loginid='+response["id"];
-				window.open(location);
-			}else{
-				$("#showMessageDiv").show();
-				$("#showMessage").html(response["message"]);
+			url: "controller.php",
+			method: "GET",
+			data: { loginData : $("#loginForm").serialize(), 'action':'login'},
+			dataType: "json",
+			success: function (response) {
+				if(response["success"]==true)
+				{
+					$("#showMessageDiv").hide();
+					$("#showSuccessMessageDiv").show();
+					$("#showSuccessMessage").html("<strong>Success! </strong> Please Wait...!");
+					location = '<?php echo SITE_ADMIN_URL;?>/controller.php?action=checkLogin&loginid='+response["id"];
+					window.open(location);
+					}else{
+					$("#showMessageDiv").show();
+					$("#showMessage").html(response["message"]);
+				}
+			},
+			error: function (request, status, error) {
+				$("#showMessage").html("OOPS! Something Went Wrong Please Try After Sometime!");
 			}
-		},
-		error: function (request, status, error) {
-			$("#showMessage").html("OOPS! Something Went Wrong Please Try After Sometime!");
-		}
 		});
 		return false;
 	});
