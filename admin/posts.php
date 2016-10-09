@@ -263,7 +263,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Image Surce</label>
+								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Image Source</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" name="image_source" value="<?php echo  $result["image_source"] ?>">
 								</div>
@@ -378,7 +378,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Image Surce</label>
+								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Image Source</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" name="image_source" placeholder="Image Source Link">
 								</div>
