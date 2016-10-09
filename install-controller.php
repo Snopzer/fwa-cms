@@ -54,10 +54,20 @@ $DdatabaseContent = '<?php
 	$password	=	"";
 
 	/* MySQL Database*/
-	$database	=	"123";		
+	$database	=	"123";	
+	
+	/*Connect to Database start*/
+	$conn = new mysqli($host, $user, $password, $database);
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	} 
+	/*Connect to Database End*/
+    define ( SITE_ADMIN_URL , "http://'.$_SERVER['SERVER_NAME'] . dirname($_SERVER['REQUEST_URI']).'/admin/");
+	define ( SITEURL , "http://'.$_SERVER['SERVER_NAME'] . dirname($_SERVER['REQUEST_URI']).'");
+	
 ?>';
 			
-			$fp = fopen(dirname(__FILE__) . "/admin/includes/config.php","wb");
+			$fp = fopen(dirname(__FILE__) . "/config.php","wb");
 			fwrite($fp,$DdatabaseContent);
 			fclose($fp);
 			
@@ -224,6 +234,8 @@ $DdatabaseContent = '<?php
 			
 			
 			$response['message'] = "Installation Completed";
+			$response['adminURL'] = 'http://'.$_SERVER['SERVER_NAME'] . dirname($_SERVER['REQUEST_URI']).'/admin';
+			$response['siteURL'] = 'http://'.$_SERVER['SERVER_NAME'] . dirname($_SERVER['REQUEST_URI']);
 			$response['success'] = true;
 			
 			}else{

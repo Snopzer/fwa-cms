@@ -16,14 +16,15 @@
             <div class="login-bottom">
 				
 				<span id="showMessage"> </span>
-                <h2>Please Fill the Fields</h2>
-				<span id="installSuccess">
-				
-				Visit Admin Panel : 
-				Your Blog : 
-				</span>
+                <span id="installSuccess"></span>
+				<div id="setupdone" style="display:none;">
+				Visit Admin Panel : <a href="" id="adminURL">Manage Site</a><br />
+				Your Blog : <a href="" id="siteURL">Visit Site</a>
+				</div>
 				<form id="installForm">
-					<div class="">
+				<h2>Please Fill the Fields</h2>
+				
+				<div class="">
 						<div class="login-mail" id="database_host">
                             <input type="text" id="db_host" name="db_host" placeholder="DATABASE HOST" >
                             <i class="fa fa-desktop"></i>
@@ -58,11 +59,12 @@
                             <i class="fa fa-lock"></i>
 						</div>
 					</div>
+				
 				</form>
-				<div class="text-center">
-					<button id="install" class="btn btn-warning submit-button" >Install</button>
-					<span id="Reset" class="btn btn-warning submit-button" >Reset</span>
-				</div>
+					<div class="text-center">
+						<button id="install" class="btn btn-warning submit-button" >Install</button>
+						<span id="Reset" class="btn btn-warning submit-button" >Reset</span>
+					</div>
 				
 				<div class="clearfix"> </div>
 				
@@ -87,6 +89,9 @@
 					
 					$("#showMessage").html(response["message"]);
 					$("#installForm").hide();
+					//$("#setupdone").show();
+					$("#adminURL").attr("href",response["adminURL"]);
+					$("#siteURL").attr("href",response["siteURL"]);
 					$("#installSuccess").show();
 					}else{
 					$("#showMessage").html(response["message"]);
