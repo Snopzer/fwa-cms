@@ -1,11 +1,11 @@
 <?php
 	include_once('config.php');
-	define ( SITE_NAME , 'FWACMS');
-	define ( SITE_KEYWORDS , 'FWACMS');
-	define ( SITE_DESCRIPTION , 'FWACMS');
-	define ( SITE_ADMIN_URL , 'http://localhost/fwacms/admin/');
-	define ( SITEURL , 'http://localhost/fwacms/');
-	define ( OWNER_NAME , 'Owner Name');
+	$siteQuery = $conn->query("SELECT * FROM r_site_details WHERE site_url='".$site_url."'");
+	$siteData = $siteQuery->fetch_assoc();
+	define ( SITE_NAME , $siteData['site_name']);
+	define ( SITE_KEYWORDS , $siteData['site_keywords']);
+	define ( SITE_DESCRIPTION , $siteData['site_description']);
+	define ( OWNER_NAME , $siteData['owner_name']);
 	
 	/* Admin parameters */
 	define ( ADD_BUTTON , 'Add');
@@ -14,31 +14,31 @@
 	define ( SAVE_BUTTON , 'SAVE');
 	define ( UNDO_BUTTON , 'UNDO');
 	define ( UPDATE_BUTTON , 'UPDATE');
-	define ( ADMIN_PAGE_LIMIT , 10);
+	define ( ADMIN_PAGE_LIMIT , $siteData['admin_page_limit']);
 	
 	/* Admin Notification Messages */
 	define ( ADMIN_NO_RECORDS_FOUND , 'No Records Found');
 	
 	/* Contact Page Parameters*/
-	define ( CONTACT_MAIL , 'info@snopzer.com');
-	define ( CONTACT_PHONE , '1234567890');
-	define ( CONTACT_ADDRESS , 'snopzer.com');
-	define ( POST_DESCRIPTION_LENGTH,300);
+	define ( CONTACT_MAIL , $siteData['contact_mail']);
+	define ( CONTACT_PHONE , $siteData['contact_phone']);
+	define ( CONTACT_ADDRESS , $siteData['contact_address']);
+	define ( POST_DESCRIPTION_LENGTH,$siteData['post_description_length']);
 	
 	/*Email Settings*/
-	define ( ADMIN_MAIL , 'info@snopzer.com');
-	define ( FROM_MAIL , 'info@snopzer.com');
-	define ( REPLY_TO_MAIL , 'no-reply@snopzer.com');
-	define ( SITE_COPY_RIGHTS , '&copy; 2016 www.snopzer.com All Rights Reserved');
+	define ( ADMIN_MAIL , $siteData['admin_mail']);
+	define ( FROM_MAIL , $siteData['from_mail']);
+	define ( REPLY_TO_MAIL , $siteData['reply_to_mail']);
+	define ( SITE_COPY_RIGHTS , $siteData['site_copy_rights']);
 	
 	/*Social Link*/
-	define ( SOCIAL_FACEBOOK_URL , 'https://www.facebook.com/techdefeat1/');
-	define ( SOCIAL_TWITTER_URL , 'https://twitter.com/techdefeat_com');
-	define ( SOCIAL_GOOGLEPLUS_URL , 'https://plus.google.com/b/106136272474879652354/?pageId=106136272474879652354');
-	define ( SOCIAL_LINKEDIN_URL , '');
-	define ( SOCIAL_BEHANCE_URL , '');
-	define ( SOCIAL_VIMIO_URL , 'https://vimeo.com/techdefeat');
-	define ( SOCIAL_YOUTUBE_URL , 'https://www.youtube.com/channel/UCbHsMI8xvNudPGi2OvIxPxw');
+	define ( SOCIAL_FACEBOOK_URL , $siteData['social_facebook_url']);
+	define ( SOCIAL_TWITTER_URL , $siteData['social_twitter_url']);
+	define ( SOCIAL_GOOGLEPLUS_URL , $siteData['social_googleplus_url']);
+	define ( SOCIAL_LINKEDIN_URL ,$siteData['social_linkedin_url']);
+	define ( SOCIAL_BEHANCE_URL , $siteData['social_behance_url']);
+	define ( SOCIAL_VIMIO_URL , $siteData['social_vimio_url']);
+	define ( SOCIAL_YOUTUBE_URL , $siteData['social_youtube_url']);
 	/*Social Network Pages*/	
 	
 	/*Connect to Database start*/
