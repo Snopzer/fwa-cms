@@ -1,13 +1,12 @@
 <?php
 	$UserQuery = $conn->query("SELECT * FROM r_user order by name")or die(mysql_error());
-	if(mysqli_num_rows($UserQuery)){
+	if(mysqli_num_rows($UserQuery) > 1 ){
 	?>
 	
 	<div class="blo-top1">
 		<div class="tech-btm">
 			<h4>Featured Users </h4>
-			<?php
-				
+			<?php				
 				while ($user = $UserQuery->fetch_assoc()) {
 					if($user['image']!="" && $user['name']!=""){
 					?>

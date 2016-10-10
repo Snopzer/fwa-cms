@@ -1,14 +1,4 @@
-<!-- display alexa rank-->
 <div class="blo-top">
-	<?php
-		/*echo alexa_rank('jaancari.com');
-			function alexa_rank($url){
-			$xml = simplexml_load_file("http://data.alexa.com/data?cli=10&url=jaancari.com");
-			if(isset($xml->SD)):
-			return $xml->SD->REACH->attributes();
-			endif;
-		}*/
-	?>
     <div class="tech-btm">
         <h5>Report us Tech defeat</h5>
         <p>write issues and Enhancement</p>
@@ -35,21 +25,6 @@
 			</form>
 			<div class="clearfix"> </div>
 		</div>
-	</div>
-</div>
-
-<div class="blo-top">
-	<div class="tech-btm">
-		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-		<!-- Techdefeat Ad -1 -->
-		<ins class="adsbygoogle"
-		style="display:block"
-		data-ad-client="ca-pub-9505794457801858"
-		data-ad-slot="2227413920"
-		data-ad-format="auto"></ins>
-		<script>
-			(adsbygoogle = window.adsbygoogle || []).push({});
-		</script>
 	</div>
 </div>
 
