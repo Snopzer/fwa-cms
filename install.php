@@ -217,7 +217,7 @@
 			success: function (response) {
 				if(response["success"]==true)
 				{	
-					$(showTestConnectionMessage).html('<div class="alert alert-success"><strong>Warning!</strong> '+response["message"]+'</div>');
+					$(showTestConnectionMessage).html('<div class="alert alert-success"><strong>Success!</strong> '+response["message"]+'</div>');
 					}else{
 					$("#showTestConnectionMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> '+response["message"]+'</div>');
 				}

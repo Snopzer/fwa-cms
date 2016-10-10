@@ -102,8 +102,13 @@
 		$count=count($messageid);
 		for($i=0;$i<$count;$i++)
 		{
-			$Deleted= $conn->query("update r_category SET deleted=1 where id_category=".$messageid[$i]);
-		}
+			$result2= $conn->query("select image from r_category where id_category=".$messageid[$i])or die(mysqli_error());
+			$image = $result2->fetch_assoc();
+			$Path =  "../images/category/".$image['image'];
+			unlink($Path);
+
+			$Deleted= $conn->query("DELETE FROM r_category WHERE id_category=".$messageid[$i]);
+	}
 		if($Deleted){
 			$message = "<strong>Success!</strong> Category Deleted Successfully.";
 			header('location:'.SITE_ADMIN_URL.'category.php?response=success&message='.$message);

@@ -221,7 +221,7 @@ $DdatabaseContent = '<?php
 			  `social_youtube_url` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
 			  `contact_mail` varchar(100) NOT NULL,
 			  `contact_phone` varchar(12) NOT NULL,
-			  `contact_address` text NOT NULL")or die(mysql_error());
+			  `contact_address` text NOT NULL)")or die(mysql_error());
 
 
 			$conn->query("INSERT INTO `r_site_details` (`id`, `site_url`, `site_name`, `site_keywords`, `site_description`, `owner_name`, `owner_email`, `admin_page_limit`, `post_description_length`, `admin_mail`, `from_mail`, `reply_to_mail`, `site_copy_rights`, `phone`, `social_facebook_url`, `social_twitter_url`, `social_googleplus_url`, `social_linkedin_url`, `social_behance_url`, `social_vimio_url`, `social_youtube_url`, `contact_mail`, `contact_phone`, `contact_address`) VALUES (1, '".$SITEURL."', 'Your Site', 'Keywords', 'Description', 'owner', 'owner mail', 10, 300, 'admin@mail.com', 'info@mail.com', 'replyTo@mail.com', '2016', '123456789', 'facebook', 'twittter', 'g+', 'linkedin', 'behance', 'vimio', 'youtube', 'inf@mail.com', '123456789', 'Address')")or die(mysql_error());

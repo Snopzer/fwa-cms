@@ -1,6 +1,10 @@
 <?php 
 	include_once('config.php');
 	
+	if (!file_exists('config.php')) {
+		header('Location:install.php');
+	}
+	
 	$metaArray = array(
     "title"  => "Ultimate Stop for Software Solutions - Techdefeat.com",
     "meta-keywords" => "Windows Software Applications Solutions, SEO",
