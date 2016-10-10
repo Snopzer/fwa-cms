@@ -20,7 +20,7 @@
         <div class="header-top">
             <div class="container">
                 <div class="logo">
-                    <a href="index.php"><img src="images/logo.png"></a>
+                    <a href="index.php"><h1><?php echo SITE_NAME;?></h1></a>
 				</div>
                 <div class="social">
                     <ul>

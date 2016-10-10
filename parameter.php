@@ -1,6 +1,6 @@
 <?php
 	include_once('config.php');
-	$siteQuery = $conn->query("SELECT * FROM r_site_details WHERE site_url='".$site_url."'");
+	$siteQuery = $conn->query("SELECT * FROM r_site_details WHERE id=1");
 	$siteData = $siteQuery->fetch_assoc();
 	define ( SITE_NAME , $siteData['site_name']);
 	define ( SITE_KEYWORDS , $siteData['site_keywords']);

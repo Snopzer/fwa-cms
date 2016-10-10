@@ -1,5 +1,6 @@
 <?php 
 	include_once('config.php');
+	include_once('parameter.php');
 	
 	if (!file_exists('config.php')) {
 		header('Location:install.php');
