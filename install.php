@@ -17,14 +17,14 @@
 				
 				<span id="showMessage"> </span>
                 <span id="installSuccess"></span>
-				<div id="setupdone" style="display:none;">
-				Visit Admin Panel : <a href="" id="adminURL">Manage Site</a><br />
-				Your Blog : <a href="" id="siteURL">Visit Site</a>
+				<div id="fwaSetup" style="display:none;">
+					Visit Admin Panel : <a href="" id="adminURL">Manage Site</a><br />
+					Your Blog : <a href="" id="siteURL">Visit Site</a>
 				</div>
 				<form id="installForm">
-				<h2>Please Fill the Fields</h2>
-				
-				<div class="">
+					<h2>Please Fill the Fields</h2>
+					
+					<div class="">
 						<div class="login-mail" id="database_host">
                             <input type="text" id="db_host" name="db_host" placeholder="DATABASE HOST" >
                             <i class="fa fa-desktop"></i>
@@ -41,9 +41,12 @@
                             <input type="text" id="db_name" name="db_name" placeholder="DATABASE NAME" >
                             <i class="fa fa-database"></i>
 						</div>
-						<span id="TestConnection" class="btn btn-success  right" >Test Connection</span>
-						
+						<div>
+							<span id="TestConnection" class="btn btn-success  right" >Test Connection</span>
+							<span id="showTestConnectionMessage"></span>
+						</div>
 					</div>
+					<div class="clearfix"> </div>
 					<h2>Please Fill User Details</h2>
                     <div class="">
 						<div class="login-mail" id="username_field">
@@ -59,12 +62,11 @@
                             <i class="fa fa-lock"></i>
 						</div>
 					</div>
-				
 				</form>
-					<div class="text-center">
-						<button id="install" class="btn btn-warning submit-button" >Install</button>
-						<span id="Reset" class="btn btn-warning submit-button" >Reset</span>
-					</div>
+				<div class="text-center" id="installFormButtons">
+					<button id="install" class="btn btn-warning submit-button" >Install</button>
+					<span id="Reset" class="btn btn-warning submit-button" >Reset</span>
+				</div>
 				
 				<div class="clearfix"> </div>
 				
@@ -78,7 +80,59 @@
 
 <script type="text/javascript" language="JavaScript">
 	$("#install").click(function(){
-	$.ajax({
+	$("#showMessage").hide();
+	var db_host = $("#db_host").val();
+		if(db_host=='')
+		{
+			$("#database_host").css({"border-style": "solid", "border-color": "red" });
+			$("#showMessageDiv").show();
+			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter database host.</div>');
+			$("#db_host").focus();
+			return false;
+		}
+		else{
+			$("#database_host").css({"border-style": "solid","border-color": "#E9E9E9"});
+		}	
+		
+		var db_user = $("#db_user").val();
+		if(db_user=='')
+		{
+			$("#database_user").css({"border-style": "solid", "border-color": "red" });
+			$("#showMessageDiv").show();
+			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter yourdatabase username.</div>');
+			$("#db_user").focus();
+			return false;
+		}
+		else{
+			$("#database_user").css({"border-style": "solid","border-color": "#E9E9E9"});
+		}	
+		/*var db_password = $("#db_password").val();
+		if(db_password=='')
+		{
+			$("#database_password").css({"border-style": "solid", "border-color": "red" });
+			$("#showMessageDiv").show();
+			$("#showMessage").html('<strong>Warning! </strong> Please enter your database password.');
+			$("#db_password").focus();
+			return false;
+		}
+		else{
+			$("#database_password").css({"border-style": "solid","border-color": "#E9E9E9"});
+		}	*/
+		var db_name = $("#db_name").val();
+		if(db_name=='')
+		{
+			$("#database_name").css({"border-style": "solid", "border-color": "red" });
+			$("#showMessageDiv").show();
+			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter database name.</div>');
+			$("#db_name").focus();
+			return false;
+		}
+		else{
+			$("#database_name").css({"border-style": "solid","border-color": "#E9E9E9"});
+		}
+		
+		
+		$.ajax({
 			url: "install-controller.php",
 			method: "POST",
 			data: { installData : $("#installForm").serialize(), 'action':'install'},
@@ -86,74 +140,75 @@
 			success: function (response) {
 				if(response["success"]==true)
 				{	
-					
-					$("#showMessage").html(response["message"]);
+					$("#showMessage").html('<div class="alert alert-success"><strong>Success!</strong>'+response["message"]+'</div>');
 					$("#installForm").hide();
-					//$("#setupdone").show();
+					$("#installFormButtons").hide();
+					$("#installSuccess").show();$("#fwaSetup").show();
 					$("#adminURL").attr("href",response["adminURL"]);
 					$("#siteURL").attr("href",response["siteURL"]);
+					
 					$("#installSuccess").show();
 					}else{
-					$("#showMessage").html(response["message"]);
+					$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> '+response["message"]+'</div>');
 				}
 			},
 			error: function (request, status, error) {
-				$("#showMessage").html("OOPS! Something Went Wrong Please Try After Sometime!");
+				$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Something Missing Check and try Again.</div>');
 			}
 		});
 	});
 	$("#TestConnection").click(function()
 	{
-		/*
-			var db_host = $("#db_host").val();
-			if(db_host=='')
-			{
+		$("#showMessage").hide();
+		var db_host = $("#db_host").val();
+		if(db_host=='')
+		{
 			$("#database_host").css({"border-style": "solid", "border-color": "red" });
 			$("#showMessageDiv").show();
-			$("#showMessage").html('<strong>Warning! </strong> Please enter database host.');
+			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter database host.</div>');
 			$("#db_host").focus();
 			return false;
-			}
-			else{
+		}
+		else{
 			$("#database_host").css({"border-style": "solid","border-color": "#E9E9E9"});
-			}	
-			
-			var db_user = $("#db_user").val();
-			if(db_user=='')
-			{
+		}	
+		
+		var db_user = $("#db_user").val();
+		if(db_user=='')
+		{
 			$("#database_user").css({"border-style": "solid", "border-color": "red" });
 			$("#showMessageDiv").show();
-			$("#showMessage").html('<strong>Warning! </strong> Please enter yourdatabase username.');
+			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter yourdatabase username.</div>');
 			$("#db_user").focus();
 			return false;
-			}
-			else{
+		}
+		else{
 			$("#database_user").css({"border-style": "solid","border-color": "#E9E9E9"});
-			}	
-			var db_password = $("#db_password").val();
-			if(db_password=='')
-			{
+		}	
+		/*var db_password = $("#db_password").val();
+		if(db_password=='')
+		{
 			$("#database_password").css({"border-style": "solid", "border-color": "red" });
 			$("#showMessageDiv").show();
 			$("#showMessage").html('<strong>Warning! </strong> Please enter your database password.');
 			$("#db_password").focus();
 			return false;
-			}
-			else{
+		}
+		else{
 			$("#database_password").css({"border-style": "solid","border-color": "#E9E9E9"});
-			}	
-			var db_name = $("#db_name").val();
-			if(db_name=='')
-			{
+		}	*/
+		var db_name = $("#db_name").val();
+		if(db_name=='')
+		{
 			$("#database_name").css({"border-style": "solid", "border-color": "red" });
 			$("#showMessageDiv").show();
-			$("#showMessage").html('<strong>Warning! </strong> Please enter database name.');
+			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter database name.</div>');
 			$("#db_name").focus();
 			return false;
-			}
-			else{
+		}
+		else{
 			$("#database_name").css({"border-style": "solid","border-color": "#E9E9E9"});
-		}*/
+		}
 		$.ajax({
 			url: "install-controller.php",
 			method: "POST",
@@ -162,13 +217,14 @@
 			success: function (response) {
 				if(response["success"]==true)
 				{	
-					$("#showMessage").html(response["message"]);
+					$(showTestConnectionMessage).html('<div class="alert alert-success"><strong>Warning!</strong> '+response["message"]+'</div>');
 					}else{
-					$("#showMessage").html(response["message"]);
+					$("#showTestConnectionMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> '+response["message"]+'</div>');
 				}
 			},
 			error: function (request, status, error) {
-				$("#showMessage").html("OOPS! Something Went Wrong Please Try After Sometime!");
+				$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Something Missing Check and try Again.</div>');
+				$("#showTestConnectionMessage").html("Something Missing Check and try Again");
 			}
 		});
 		return false;

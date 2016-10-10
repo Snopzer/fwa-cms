@@ -45,16 +45,16 @@
 			
 $DdatabaseContent = '<?php
 	/* MySQL Server Host address */
-	$host 		=	"localhost";
+	$host 		=	"'.$db_host.'";
 
 	/* MySQL User Name */
-	$user		=	"root";
+	$user		=	"'.$db_user.'";
 
 	/* MySQL User Password*/
-	$password	=	"";
+	$password	=	"'.$db_password.'";
 
 	/* MySQL Database*/
-	$database	=	"123";	
+	$database	=	"'.$db_name.'";	
 	
 	/*Connect to Database start*/
 	$conn = new mysqli($host, $user, $password, $database);
@@ -63,7 +63,7 @@ $DdatabaseContent = '<?php
 	} 
 	/*Connect to Database End*/
     define ( SITE_ADMIN_URL , "http://'.$_SERVER['SERVER_NAME'] . dirname($_SERVER['REQUEST_URI']).'/admin/");
-	define ( SITEURL , "http://'.$_SERVER['SERVER_NAME'] . dirname($_SERVER['REQUEST_URI']).'");
+	define ( SITEURL , "http://'.$_SERVER['SERVER_NAME'] . dirname($_SERVER['REQUEST_URI']).'/");
 	
 ?>';
 			

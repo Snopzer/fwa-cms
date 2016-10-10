@@ -12,6 +12,7 @@
 	define ( EDIT_BUTTON , 'Edit');
 	define ( DELETE_BUTTON , 'Delete');
 	define ( SAVE_BUTTON , 'SAVE');
+	define ( UNDO_BUTTON , 'UNDO');
 	define ( UPDATE_BUTTON , 'UPDATE');
 	define ( ADMIN_PAGE_LIMIT , 10);
 	
