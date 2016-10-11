@@ -7,8 +7,8 @@
 		header('location:index.php');
 	}
 	if($_POST['action']=='add'){		
-		$role = ($_POST['role']);	
-		$status = ($_POST['status']);	
+		$role = $conn->real_escape_string($_POST['role']);	
+		$status = $conn->real_escape_string($_POST['status']);	
 		
 		$insert = $conn->query("INSERT INTO r_user_role (role,status) VALUES ('" . $role . "','" . $status . "')") or die(mysqli_error());		
 		if ($insert) {
@@ -22,8 +22,8 @@
 	}
 	else if($_REQUEST['action']=='edit'){
 		$id=(int)$_POST['id']  ;   
-		$role = ($_POST['role']);	
-		$status = ($_POST['status']);	
+		$role = $conn->real_escape_string($_POST['role']);	
+		$status = $conn->real_escape_string($_POST['status']);	
 		$page=$_POST['page'];
 		$row = "update r_user_role SET role='".$role."',status=".$status." where id_user_role='$id' ";
 		$result = $conn->query($row);

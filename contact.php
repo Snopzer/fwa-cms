@@ -1,10 +1,12 @@
 <?php 	
-	$metaArray = array(
-    "title"  => 'Contact us',
-    "meta-keywords" => 'contact techdefeat, ask your questions, need support at your work.?',
-    "meta-description" => 'Share your Work, we give you support at your technical problems, contact us for more details',
-	);
 	include_once('config.php');
+	include_once('parameter.php');
+
+	$metaArray = array(
+    "title"  => 'Contact us - '.SITE_NAME,
+    "meta-keywords" => SITE_KEYWORDS,
+    "meta-description" => 'Contact us',
+	);
 	include_once('includes/header.php'); 
 	?>
 <div class="banner1">

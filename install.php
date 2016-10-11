@@ -16,7 +16,7 @@
             <div class="login-bottom">
 				
 				<span id="showMessage"> </span>
-                <span id="installSuccess"></span>
+                <span id="installStatusMessage"></span>
 				<div id="fwaSetup" style="display:none;">
 					Visit Admin Panel : <a href="" id="adminURL">Manage Site</a><br />
 					Your Blog : <a href="" id="siteURL">Visit Site</a>
@@ -140,7 +140,7 @@
 			success: function (response) {
 				if(response["success"]==true)
 				{	
-					$("#showMessage").html('<div class="alert alert-success"><strong>Success!</strong>'+response["message"]+'</div>');
+					$("#installStatusMessage").html('<div class="alert alert-success"><strong>Success! </strong>'+response["message"]+'</div>');
 					$("#installForm").hide();
 					$("#installFormButtons").hide();
 					$("#installSuccess").show();$("#fwaSetup").show();
@@ -149,7 +149,7 @@
 					
 					$("#installSuccess").show();
 					}else{
-					$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> '+response["message"]+'</div>');
+					$("#installStatusMessage").html('<div class="alert alert-warning"><strong>Warning! </strong> '+response["message"]+'</div>');
 				}
 			},
 			error: function (request, status, error) {

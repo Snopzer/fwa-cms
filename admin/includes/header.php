@@ -21,10 +21,6 @@
         <link href="css/custom.css" rel="stylesheet">
         <script src="js/custom.js"></script>
         <script src="js/screenfull.js"></script>
-        <script type="text/javascript" src="js/chrome.js"></script>
-        <script type="text/javascript" src="js/tabcontent.js"></script>
-        <SCRIPT language=JavaScript1.2 src="js/include.js" type=text/javascript></SCRIPT>
-        <SCRIPT language="JavaScript" src="includes/spiffyCal_v2_1.js"></SCRIPT>
         <script>
 			$(function () {
 				$('#supported').text('Supported/allowed: ' + !!screenfull.enabled);

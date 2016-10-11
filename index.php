@@ -1,15 +1,15 @@
 <?php 
 	include_once('config.php');
-	include_once('parameter.php');
 	
 	if (!file_exists('config.php')) {
 		header('Location:install.php');
 	}
+	include_once('parameter.php');
 	
 	$metaArray = array(
-    "title"  => "Ultimate Stop for Software Solutions - Techdefeat.com",
-    "meta-keywords" => "Windows Software Applications Solutions, SEO",
-    "meta-description" => "Techdefeat will provide you solutions for your Windows Software Problems, Website Creation, Managing websites, Static, Dynamic Websites and  Search Engine Optimization for your website and many more intrestin facts",
+    "title"  => SITE_NAME,
+    "meta-keywords" => SITE_KEYWORDS,
+    "meta-description" => SITE_DESCRIPTION,
 	);
 	include_once('includes/header.php'); 
 ?>
@@ -24,11 +24,8 @@
 <div class="technology">
 	<div class="banner">
 		<div class="container">
-			<?php	if (isset($_GET['subscription']) && $_GET['subscription'] == "success") {?><p style="color: white">Thank You For Subscibing Our News Letter</p><?php }		?>
-			<?php	if (isset($_GET['contact']) && $_GET['contact'] == "success") {		?><p style="color: white">Your Contact Request Is Sent. You Will Get Replay Soon Thankyou For Contacting Us.</p><?php }		?> 
-			
-			<h2>Techdefeat.com</h2> 
-			<p>Techdefeat will provide you solutions for your Windows Software Problems, Website Creation, Managing websites, Static, Dynamic Websites and  Search Engine Optimization for your website and many more intrestin facts</p>
+			<h2><?php echo SITE_NAME;?></h2> 
+			<p><?php echo SITE_DESCRIPTION;?></p>
 			<a href="contact.php">Contact us for Support</a>
 		</div>
 	</div>
