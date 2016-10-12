@@ -1,6 +1,7 @@
 FWA CMS Demo Application
 
 Software's are required to Run FWA CMS Application 
+
 1. Technology : PHP 5+ 
 2. Database : mySQL 
 3. Server : Apache 
@@ -11,7 +12,7 @@ Run Install.php File
 Fill the Requreired Database configuration Files. and login Details
 That`t it.
 
-If you have any Queries or Issues or Complement write us : http://snopzer.com/contact.php
+If you have any Queries or Issues or Complement write us : http://snopzer.com/contact.html
 
 Cheers. 
 Snopzer.com
