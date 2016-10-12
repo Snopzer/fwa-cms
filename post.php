@@ -3,7 +3,8 @@
 	// ini_set('display_startup_errors', 1);
 	// error_reporting(E_ALL);
 	
-	include_once('admin/includes/config.php');
+	include_once('config.php');
+	include_once('parameter.php');
 	
 	$seo_url = $_GET['seo_url'];
 	
