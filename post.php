@@ -174,7 +174,7 @@
 						<h2>Comment</h2>
 						<div id="commentsdiv">
 							<?php
-								$commentQuery = $conn->query("select * from r_comment where post_id=$id order by id_comment desc");
+								$commentQuery = $conn->query("select * from r_comment where id_post=$id order by id_comment desc");
 								while ($comment = $commentQuery->fetch_assoc()) {
 									if ($comment['name'] != '' & $comment['message'] != '') {
 									?>
