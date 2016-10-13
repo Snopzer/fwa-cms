@@ -64,11 +64,6 @@
 			</div>
 		</div>
         <div class="col-md-3 technology-right">
-            <div class="blo-top">
-                <div class="tech-btm">
-                    <img src="images/banner1.jpg" class="img-responsive"/>
-				</div>
-			</div>
             <?php include_once('includes/subscribe.php'); ?>
             <?php include_once('includes/users.php'); ?>
 		</div>

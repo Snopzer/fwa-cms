@@ -74,7 +74,6 @@
 		</div>
         <div class="copy-right"><p> &copy; 2016 FWACMS All Rights Reserved </p></div>  
         <script src="js/jquery.nicescroll.js"></script>
-        <script src="js/scripts.js"></script>
 	</body>
 </html>
 
@@ -185,18 +184,7 @@
 		else{
 			$("#database_user").css({"border-style": "solid","border-color": "#E9E9E9"});
 		}	
-		/*var db_password = $("#db_password").val();
-		if(db_password=='')
-		{
-			$("#database_password").css({"border-style": "solid", "border-color": "red" });
-			$("#showMessageDiv").show();
-			$("#showMessage").html('<strong>Warning! </strong> Please enter your database password.');
-			$("#db_password").focus();
-			return false;
-		}
-		else{
-			$("#database_password").css({"border-style": "solid","border-color": "#E9E9E9"});
-		}	*/
+		
 		var db_name = $("#db_name").val();
 		if(db_name=='')
 		{
