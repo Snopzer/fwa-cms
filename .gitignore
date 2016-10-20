@@ -1,2 +1,3 @@
 .git
-admin/includes/config.php
+config.php
+parameter.php
