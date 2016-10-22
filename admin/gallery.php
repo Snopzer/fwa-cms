@@ -20,55 +20,58 @@
 			</div>
 			
 			
-				<?php if(!isset($_GET['action'])){?>
-			<div class="gallery">		
-					
-					<?php
-						$row = $conn->query("select * from r_image order by id_image")or die(mysqli_error());
-						while ($result = $row->fetch_assoc()) {
-						?> 
-						<div class="col-md">
-							<div class="gallery-img">
-								<img class="img-responsive" class="fancybox" src="../images/gallery/<?= $result['image'] ?>" alt="<?= $result['image'] ?>" />
-								<span class="zoom-icon"> </span> 
-							</div>
-							<a href="gallery-controller.php?id=<?= $result["id_image"] ?>&action=delete"><span class="label label-info">Delete</span></a>
-							
-							<div class="text-gallery">
-								<h6><?= $result['image_name'] ?></h6>
-							</div>
+			<?php if(!isset($_GET['action'])){?>
+			<div class="grid-system">
+					<div class="horz-grid">
+				<div class="gallery">
+				<?php
+					$row = $conn->query("select * from r_image order by id_image")or die(mysqli_error());
+					while ($result = $row->fetch_assoc()) {
+					?> 
+					<div class="col-md">
+						<div class="gallery-img">
+							<img class="img-responsive fancybox" src="../images/gallery/<?= $result['image'] ?>" alt="<?= $result['image'] ?>" />
+							<!--<span class="zoom-icon"> </span> -->
 						</div>
-				</div>			
-					<?php } }//if is notset  ends here ?>
-		
-			
-			
-			<?php if (isset($_GET['action'])) {//if isset starts here ?>
-				
-				<?php        if($_GET['action'] == "add") { ?>
-					
-					
-					<div class="grid-system">
-						<div class="horz-grid">
-							<form action="gallery-controller.php?action=add" method="post" enctype="multipart/form-data">
-								<div class="form-group">
-									<label for="exampleInputFile">Image Name</label>
-									<input type="text" id="image_name" class="form-control" name="image_name">
-								</div>
-								
-								<div class="form-group">
-									<label for="exampleInputFile">Select Image</label>
-									<input type="file" id="photo" name="photo">
-								</div>
-								
-								<button type="submit" class="btn btn-default" id="submit">Upload Image</button>
-							</form>
-							
+						<a href="gallery-controller.php?id=<?= $result["id_image"] ?>&action=delete"><span class="label label-info">Delete</span></a>
+						
+						<div class="text-gallery">
+							<h6><?= $result['image_name'] ?></h6>
 						</div>
 					</div>
-				<?php }} ?>
+					<?php  }//if is notset  ends here ?>
+				</div>			
+				</div>			
+				</div>			
+				<?php }//if is notset  ends here ?>
+
+
+				
+			<?php if (isset($_GET['action'])) {//if isset starts here ?>
+			<?php        if($_GET['action'] == "add") { ?>
+				<div class="grid-system">
+					<div class="horz-grid">
+						<form action="gallery-controller.php?action=add" method="post" enctype="multipart/form-data">
+							<div class="form-group">
+								<label for="exampleInputFile">Image Name</label>
+								<input type="text" id="image_name" class="form-control" name="image_name">
+							</div>
+							
+							<div class="form-group">
+								<label for="exampleInputFile">Select Image</label>
+								<input type="file" id="photo" name="photo">
+							</div>
+							
+							<button type="submit" class="btn btn-default" id="submit">Upload Image</button>
+						</form>
+						
+					</div>
+				</div>
+			<?php }} ?>
 		</div> 
 	</div>
+	
+	<?php include 'includes/footer.php'; ?>
 	<script>document.getElementById('closeButton').addEventListener('click', function(e) {
 		e.preventDefault();
 		this.parentNode.style.display = 'none';
@@ -97,4 +100,4 @@
 		$.noConflict();
 	</script>
 	
-	<?php include 'includes/footer.php'; ?>																													
+																																	

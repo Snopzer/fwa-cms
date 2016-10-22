@@ -1,5 +1,4 @@
 <?php
-	error_reporting(1);
 	if($_POST['action']=='test'){
 		
 		parse_str($_POST['installData'], $insdata);
@@ -44,29 +43,29 @@
 			//$response['success'] = true;
 			$SITEURL = 'http://'.$_SERVER['SERVER_NAME'] . dirname($_SERVER['REQUEST_URI']).'/';
 			
-$DdatabaseContent = '<?php
-	/* MySQL Server Host address */
-	$host 		=	"'.$db_host.'";
-
-	/* MySQL User Name */
-	$user		=	"'.$db_user.'";
-
-	/* MySQL User Password*/
-	$password	=	"'.$db_password.'";
-
-	/* MySQL Database*/
-	$database	=	"'.$db_name.'";	
-	
-	/*Connect to Database start*/
-	$conn = new mysqli($host, $user, $password, $database);
-	if ($conn->connect_error) {
-		die("Connection failed: " . $conn->connect_error);
-	} 
-	/*Connect to Database End*/
-    define ( SITE_ADMIN_URL , "http://'.$_SERVER['SERVER_NAME'] . dirname($_SERVER['REQUEST_URI']).'/admin/");
-	define ( SITEURL , "http://'.$_SERVER['SERVER_NAME'] . dirname($_SERVER['REQUEST_URI']).'/");
-	
-?>';
+			$DdatabaseContent = '<?php
+			/* MySQL Server Host address */
+			$host 		=	"'.$db_host.'";
+			
+			/* MySQL User Name */
+			$user		=	"'.$db_user.'";
+			
+			/* MySQL User Password*/
+			$password	=	"'.$db_password.'";
+			
+			/* MySQL Database*/
+			$database	=	"'.$db_name.'";	
+			
+			/*Connect to Database start*/
+			$conn = new mysqli($host, $user, $password, $database);
+			if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+			} 
+			/*Connect to Database End*/
+			define ( SITE_ADMIN_URL , "http://'.$_SERVER['SERVER_NAME'] . dirname($_SERVER['REQUEST_URI']).'/admin/");
+			define ( SITEURL , "http://'.$_SERVER['SERVER_NAME'] . dirname($_SERVER['REQUEST_URI']).'/");
+			
+			?>';
 			
 			$fp = fopen(dirname(__FILE__) . "/config.php","wb");
 			fwrite($fp,$DdatabaseContent);
@@ -91,7 +90,7 @@ $DdatabaseContent = '<?php
 			`meta_description` varchar(255) COLLATE latin1_general_ci NOT NULL,
 			KEY `meta_title` (`meta_title`)
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci ;")or die(mysql_error());
-				
+			
 			$conn->query("INSERT INTO `r_user` (`id_user`, `id_user_role`, `name`, `phone`, `department`, `email`, `password`, `status`, `activate_link`, `skills`, `id_country`, `image`, `meta_title`, `meta_keywords`, `meta_description`) VALUES
 			(1, 1, '".$insdata['fwa_username']."', '123456789', '".$insdata['fwa_username']."', '".$insdata['fwa_email']."', '".md5($insdata['fwa_password'])."', 1, '', '".$insdata['fwa_username']."', 1, '', '', '', '')")or die(mysql_error());
 			
@@ -199,32 +198,33 @@ $DdatabaseContent = '<?php
 			
 			
 			$conn->query("CREATE TABLE `r_site_details` (`id` int(11) NOT NULL,
-			  `site_url` varchar(100) NOT NULL,
-			  `site_name` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
-			  `site_keywords` varchar(200) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
-			  `site_description` varchar(200) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
-			  `owner_name` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
-			  `owner_email` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
-			  `admin_page_limit` tinyint(3) DEFAULT NULL,
-			  `post_description_length` tinyint(3) DEFAULT NULL,
-			  `admin_mail` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
-			  `from_mail` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
-			  `reply_to_mail` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
-			  `site_copy_rights` varchar(150) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
-			  `phone` varchar(12) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
-			  `social_facebook_url` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
-			  `social_twitter_url` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
-			  `social_googleplus_url` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
-			  `social_linkedin_url` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
-			  `social_behance_url` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
-			  `social_vimio_url` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
-			  `social_youtube_url` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
-			  `contact_mail` varchar(100) NOT NULL,
-			  `contact_phone` varchar(12) NOT NULL,
-			  `contact_address` text NOT NULL)")or die(mysql_error());
-
-
-			$conn->query("INSERT INTO `r_site_details` (`id`, `site_url`, `site_name`, `site_keywords`, `site_description`, `owner_name`, `owner_email`, `admin_page_limit`, `post_description_length`, `admin_mail`, `from_mail`, `reply_to_mail`, `site_copy_rights`, `phone`, `social_facebook_url`, `social_twitter_url`, `social_googleplus_url`, `social_linkedin_url`, `social_behance_url`, `social_vimio_url`, `social_youtube_url`, `contact_mail`, `contact_phone`, `contact_address`) VALUES (1, '".$SITEURL."', 'Your Site', 'Keywords', 'Description', 'owner', 'owner mail', 10, 300, 'admin@mail.com', 'info@mail.com', 'replyTo@mail.com', '2016', '123456789', 'facebook', 'twittter', 'g+', 'linkedin', 'behance', 'vimio', 'youtube', 'inf@mail.com', '123456789', 'Address')")or die(mysql_error());
+			`site_url` varchar(100) NOT NULL,
+			`site_name` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+			`site_title` varchar(150) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+			`site_keywords` varchar(200) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+			`site_description` varchar(200) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+			`owner_name` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+			`owner_email` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+			`admin_page_limit` tinyint(3) DEFAULT NULL,
+			`post_description_length` tinyint(3) DEFAULT NULL,
+			`admin_mail` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+			`from_mail` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+			`reply_to_mail` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+			`site_copy_rights` varchar(150) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+			`phone` varchar(12) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+			`social_facebook_url` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+			`social_twitter_url` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+			`social_googleplus_url` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+			`social_linkedin_url` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+			`social_behance_url` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+			`social_vimio_url` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+			`social_youtube_url` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
+			`contact_mail` varchar(100) NOT NULL,
+			`contact_phone` varchar(12) NOT NULL,
+			`contact_address` text NOT NULL)")or die(mysql_error());
+			
+			
+			$conn->query("INSERT INTO `r_site_details` (`id`, `site_url`, `site_name`,`site_title`, `site_keywords`, `site_description`, `owner_name`, `owner_email`, `admin_page_limit`, `post_description_length`, `admin_mail`, `from_mail`, `reply_to_mail`, `site_copy_rights`, `phone`, `social_facebook_url`, `social_twitter_url`, `social_googleplus_url`, `social_linkedin_url`, `social_behance_url`, `social_vimio_url`, `social_youtube_url`, `contact_mail`, `contact_phone`, `contact_address`) VALUES (1, '".$SITEURL."', 'Your Site','Your Site', 'Keywords', 'Description', 'owner', 'owner mail', 10, 300, 'admin@mail.com', 'info@mail.com', 'replyTo@mail.com', '2016', '123456789', 'facebook', 'twittter', 'g+', 'linkedin', 'behance', 'vimio', 'youtube', 'inf@mail.com', '123456789', 'Address')")or die(mysql_error());
 			
 			
 			

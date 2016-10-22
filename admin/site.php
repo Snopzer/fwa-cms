@@ -160,6 +160,13 @@
 							</div>
 							
 							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label ">Site Title</label>
+								<div class="col-sm-8">
+									<textarea  name="site_title" id="site_title" class="form-control"><?php echo  $result["site_title"] ?></textarea> 
+								</div>
+							</div>
+							
+							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label ">Site Keywords</label>
 								<div class="col-sm-8">
 									<textarea  name="site_keywords" id="site_keywords" class="form-control"><?php echo  $result["site_keywords"] ?></textarea> 
@@ -321,6 +328,13 @@
 								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Site Name</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" name="site_name" placeholder="Enter Site Name">
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label ">Site Title</label>
+								<div class="col-sm-8">
+									<textarea  name="site_title" id="site_title" class="form-control"><?php echo  $result["site_title"] ?></textarea> 
 								</div>
 							</div>
 							

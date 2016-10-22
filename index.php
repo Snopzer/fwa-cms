@@ -7,7 +7,7 @@
 	include_once('parameter.php');
 	
 	$metaArray = array(
-    "title"  => SITE_NAME,
+    "title"  => SITE_TITLE,
     "meta-keywords" => SITE_KEYWORDS,
     "meta-description" => SITE_DESCRIPTION,
 	);

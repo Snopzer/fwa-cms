@@ -2,7 +2,9 @@
 	include_once('config.php');
 	$siteQuery = $conn->query("SELECT * FROM r_site_details WHERE id=1");
 	$siteData = $siteQuery->fetch_assoc();
+	
 	define ( SITE_NAME , $siteData['site_name']);
+	define ( SITE_TITLE , $siteData['site_title']);
 	define ( SITE_KEYWORDS , $siteData['site_keywords']);
 	define ( SITE_DESCRIPTION , $siteData['site_description']);
 	define ( OWNER_NAME , $siteData['owner_name']);
@@ -41,10 +43,4 @@
 	define ( SOCIAL_YOUTUBE_URL , $siteData['social_youtube_url']);
 	/*Social Network Pages*/	
 	
-	/*Connect to Database start*/
-	$conn = new mysqli($host, $user, $password, $database);
-	if ($conn->connect_error) {
-		die("Connection failed: " . $conn->connect_error);
-	} 
-	/*Connect to Database End*/
-?>
+	?>

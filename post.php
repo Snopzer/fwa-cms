@@ -1,10 +1,7 @@
 <?php
-	// ini_set('display_errors', 1);
-	// ini_set('display_startup_errors', 1);
-	// error_reporting(E_ALL);
-	
 	include_once('config.php');
 	include_once('parameter.php');
+	
 	
 	$seo_url = $_GET['seo_url'];
 	
@@ -148,69 +145,77 @@
 							<?php }?>
 							
 							<?php if($result['image_source']!=''){ ?>
-								<h6>Image Source :</h6> <a href="<?php echo $result['image_source'];?>"><?php echo $result['image_source'];?></a></p>
-							<?php }?>
-						</div>
+							<h6>Image Source :</h6> <a href="<?php echo $result['image_source'];?>"><?php echo $result['image_source'];?></a></p>
+						<?php }?>
+						
 					</div>
-				<?php } ?>
-				<?php if($showProductDiv == true) {?>
-					
-					<div class="comment">
-						<h3>Leave a Comment</h3>
-						<span id="showMessage"></span>
-						<div class=" comment-bottom">
-							<form id="commentForm"> 
-								<input type="text" id="name" name="name" placeholder="Name">
-								<input type="hidden" name="id" value="<?php echo $result['id_post']?>" >
-								<input type="text" id="Commentemail" name="email" placeholder="Email">
-								<input type="text" id="subject" name="subject" placeholder="Subject">
-								<textarea placeholder="Message" id="message" name="message" required=""></textarea>
-								<button id="SubmitComment">Submit</button>
-							</form>
-						</div>
+					<div class="blog-text">
+						<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+						<!-- Post Page Ad -->
+						<ins class="adsbygoogle"
+						style="display:block"
+						data-ad-client="ca-pub-9505794457801858"
+						data-ad-slot="8875939523"
+						data-ad-format="auto"></ins>
+						<script>
+							(adsbygoogle = window.adsbygoogle || []).push({});
+						</script>
 					</div>
-					
-					<div class="comment-top">
-						<h2>Comment</h2>
-						<div id="commentsdiv">
-							<?php
-								$commentQuery = $conn->query("select * from r_comment where id_post=$id order by id_comment desc");
-								while ($comment = $commentQuery->fetch_assoc()) {
-									if ($comment['name'] != '' & $comment['message'] != '') {
-									?>
-									
-									<div class="media-left">
-										<a href="#">
-											<img src="images/si.png" alt="">
-										</a>
-									</div>
-									<div class="media-body">
-										<h4 class="media-heading"><?php echo $comment['name'] ?></h4>
-										<p><?php echo $comment['message'] ?></p>
-									</div><br />
-									
-									<?php
-									}
-								}
-							?>
-						</div>
-					</div>
-					
-				<?php } ?>
-			</div>
-		</div>
-		
-        <div class="col-md-3 technology-right-1">
-            <div class="blo-top">
-                <div class="tech-btm">
-                    <img src="images/banner1.jpg" class="img-responsive" alt=""/>
 				</div>
-			</div>
-            <?php include_once('includes/subscribe.php'); ?>
-            <?php include_once('includes/users.php'); ?>
+			<?php } ?>
+			<?php if($showProductDiv == true) {?>
+				
+				<div class="comment">
+					<h3>Leave a Comment</h3>
+					<span id="showMessage"></span>
+					<div class=" comment-bottom">
+						<form id="commentForm"> 
+							<input type="text" id="name" name="name" placeholder="Name">
+							<input type="hidden" name="id" value="<?php echo $result['id_post']?>" >
+							<input type="text" id="Commentemail" name="email" placeholder="Email">
+							<!--<input type="text" id="subject" name="subject" placeholder="Subject">-->
+							<textarea placeholder="Message" id="message" name="message" required=""></textarea>
+							<button id="SubmitComment">Submit</button>
+						</form>
+					</div>
+				</div>
+				
+				<div class="comment-top">
+					<h2>Comment</h2>
+					<div id="commentsdiv">
+						<?php
+							$commentQuery = $conn->query("select * from r_comment where id_post=$id order by id_comment desc");
+							while ($comment = $commentQuery->fetch_assoc()) {
+								if ($comment['name'] != '' & $comment['message'] != '') {
+								?>
+								
+								<div class="media-left">
+									<a href="#">
+										<img src="images/si.png" alt="">
+									</a>
+								</div>
+								<div class="media-body">
+									<h4 class="media-heading"><?php echo $comment['name'] ?></h4>
+									<p><?php echo $comment['message'] ?></p>
+								</div><br />
+								
+								<?php
+								}
+							}
+						?>
+					</div>
+				</div>
+				
+			<?php } ?>
 		</div>
-        <div class="clearfix"></div>
 	</div>
+	
+	<div class="col-md-3 technology-right-1">
+		<?php include_once('includes/subscribe.php'); ?>
+		<?php include_once('includes/users.php'); ?>
+	</div>
+	<div class="clearfix"></div>
+</div>
 </div>
 
 <script type="text/javascript" language="JavaScript">
@@ -222,7 +227,7 @@
 			$("#showMessage").html('Please Enter Your Name');
 			$("#name").css({"border-style": "solid", "border-color": "red"}).focus();
 			return false;
-			}
+		}
 		else
 		{
 			$("#name").css({"border-style": "solid","border-color": "#E9E9E9"});

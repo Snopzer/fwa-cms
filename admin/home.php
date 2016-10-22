@@ -83,7 +83,8 @@
 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 		<?php	$getPostsbyDate = $conn->query("SELECT COUNT( id_post ) as posts , DATE( date_added ) as date_added FROM r_post GROUP BY DATE( date_added ) ASC")or die(mysqli_error()); ?>
 		
-		<?php	$getPostListQuery = $conn->query("SELECT title, views FROM  `r_post` order by views DESC")or die(mysqli_error()); ?>
+		<?php	$getPostListQuery = $conn->query("SELECT p.views, seo.seo_url FROM  `r_post` p,r_seo_url seo WHERE p.id_post=seo.id_post order by p.views DESC")or die(mysqli_error()); ?>
+		<?php	//$getPostListQuery = $conn->query("SELECT title, views FROM  `r_post` order by views DESC")or die(mysqli_error()); ?>
 		
 		<script type="text/javascript">
 			// pie chart
@@ -94,12 +95,12 @@
 				var data = google.visualization.arrayToDataTable([
 				['Post', 'Views'],
 				<?php	while ($getPost = $getPostListQuery->fetch_assoc()) {	?>
-					['<?php echo $getPost['title'] ?>',<?php echo $getPost['views'] ?>],
+					['<?php echo $getPost['seo_url'] ?>',<?php echo $getPost['views'] ?>],
 				<?php } ?>
 				
 				]);
 				
-				var options = {'title':'Post Views'/*,'width':1100,'height':480*/};
+				var options = {'legend': 'none','title':'Popular Articles',/*'width':1100,*/'height':480};
 				
 				
 				var chart = new google.visualization.PieChart(document.getElementById('postviews_chart'));
