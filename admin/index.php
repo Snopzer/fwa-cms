@@ -5,6 +5,7 @@
 	if (isset($_SESSION['id'])) {
 		header('location:home.php');
 	}
+	
 ?>
 <!DOCTYPE HTML>
 <html>

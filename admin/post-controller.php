@@ -10,8 +10,8 @@
 	
 	if ($_POST['action'] == 'add') {
 		$title 				= $conn->real_escape_string($_POST['title']);		
-		//$description 		= $conn->real_escape_string($_POST['description']);		
-		$description 		= addslashes($_POST['description']);		
+		$description 		= $conn->real_escape_string($_POST['description']);		
+		//$description 		= addslashes($_POST['description']);		
 		$short_description 	= $conn->real_escape_string($_POST['short_description']);		
 		$category 			= $conn->real_escape_string($_POST['category']);		
 		$status 			= $conn->real_escape_string($_POST['status']);		
@@ -60,8 +60,8 @@
 		}
 		
 		$title 				= $conn->real_escape_string($_POST['title']);		
-		//$description 		= $conn->real_escape_string($_POST['description']);
-		$description 		= addslashes($_POST['description']);
+		$description 		= $conn->real_escape_string($_POST['description']);
+		//$description 		= addslashes($_POST['description']);
 		$short_description 	= $conn->real_escape_string($_POST['short_description']);
 		$category 			= $conn->real_escape_string($_POST['category']);		
 		$status 			= $conn->real_escape_string($_POST['status']);		

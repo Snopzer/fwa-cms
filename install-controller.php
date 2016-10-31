@@ -116,10 +116,12 @@
 			`id_comment` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 			`name` varchar(255) COLLATE latin1_general_ci DEFAULT NULL,
 			`email` varchar(99) COLLATE latin1_general_ci DEFAULT NULL,
+			`website` varchar(100) COLLATE latin1_general_ci NOT NULL,
 			`subject` varchar(255) COLLATE latin1_general_ci DEFAULT NULL,
 			`message` text COLLATE latin1_general_ci,
 			`id_post` int(10) NOT NULL,
-			`status` tinyint(1) NOT NULL
+			`status` tinyint(1) NOT NULL,
+			`date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 			) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci ;")or die(mysql_error());
 			
 			

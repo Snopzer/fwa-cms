@@ -7,7 +7,7 @@
 	parse_str($_POST['subscribeData'], $Subscribe);
 		$email=$Subscribe['email'];
 		
-		$checkemail=$conn->query("SELECT * FROM r_subscriber where email='".$email."' ")or die(mysql_error());;
+		$checkemail=$conn->query("SELECT * FROM r_subscriber where email='".$email."' ")or die(mysql_error());
 		$emailCount=mysqli_num_rows($checkemail);
 		if($emailCount >=1){
 			$response['message'] = "Yoy Are Already Subscribed to our channel.";
@@ -65,10 +65,11 @@
 		$id=(int)$CommentData['id'];
 		$name=$CommentData['name'];
         $email=$CommentData['email'];
-        $subject=$CommentData['subject'];
+        $website=$CommentData['website'];
+       
         $message=$CommentData['message'];
 		
-        $row="insert into r_comment (name,email,subject,message,id_post) VALUES ('".$name."','".$email."','".$subject."','".$message."',".$id.")";
+        $row="insert into r_comment (name,email,message,website,id_post) VALUES ('".$name."','".$email."','".$message."','".$website."',".$id.")";
 		
         $result=$conn->query($row)or die(mysql_error());
 		if($result){

@@ -69,7 +69,7 @@
 					<!--category details start -->
 					<div class=" blog-grid2">
 						<?if(!empty($result['image'])) { ?>
-							<img src="images/category/<?= $result['image'] ?>" class="img-responsive" alt="<?= $result['image'] ?>">
+							<img src="images/category/<?= $result['image'] ?>" class="img-responsive" alt="<?= $result['name'] ?>" title="<?= $result['name'] ?>">
 						<? }?>
 						<div class="blog-text">
 							<h5><?php echo $result['name'] ?></h5>
@@ -83,7 +83,7 @@
 						<h2><?php echo $result['name'] ?> Topic's</h2><?php
 							/*echo "SELECT * FROM  `r_post` rp LEFT JOIN r_seo_url seo ON rp.id_post = seo.id_post WHERE rp.id_category =".$result['id_category']." ORDER BY rp.id_post";
 							exit;*/
-							$postQuery = $conn->query("SELECT rp.*,seo.seo_url as seourl FROM  `r_post` rp LEFT JOIN r_seo_url seo ON rp.id_post = seo.id_post WHERE rp.id_category =".$result['id_category']." ORDER BY rp.id_post")or die(mysql_error()); 		
+							$postQuery = $conn->query("SELECT rp.*,seo.seo_url as seourl FROM  `r_post` rp LEFT JOIN r_seo_url seo ON rp.id_post = seo.id_post WHERE rp.id_category =".$result['id_category']." and rp.status=1 ORDER BY rp.id_post")or die(mysql_error()); 		
 							while ($post = $postQuery->fetch_assoc()) {
 							?>
 							<?php if($post['image']!=''){ ?>
@@ -109,8 +109,23 @@
 							<h5><?php echo $result['page_heading'] ?></h5>
 						</div>
 						<?if(!empty($result['image'])) { ?>
-							<img src="admin/images/<?= $result['image'] ?>" class="img-responsive" alt="<?= $result['image'] ?>">
+							<img src="admin/images/<?= $result['image'] ?>" class="img-responsive" alt="<?= $result['page_heading'] ?>" title="<?= $result['page_heading'] ?>">
 						<? }?>
+						
+						<div class="blog-text">
+							<p>
+								<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+								<!-- Static Text use in Editor -->
+								<ins class="adsbygoogle"
+								style="display:block"
+								data-ad-client="ca-pub-9505794457801858"
+								data-ad-slot="5043535524"
+								data-ad-format="auto"></ins>
+								<script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+								</script>
+							</p>					
+						</div>
 						<div class="blog-text">
 							<p><?php echo stripslashes($result['page_description']); ?> </p>					
 						</div>
@@ -126,14 +141,14 @@
 							<h5><?php echo $result['title'] ?></h5>
 						</div>
 						<?if(!empty($result['image'])) { ?>
-							<img src="images/post/<?= $result['image'] ?>" class="img-responsive" alt="<?= $result['image'] ?>">
+							<img src="images/post/<?= $result['image'] ?>" class="img-responsive" alt="<?= $result['title'] ?>" title="<?= $result['title'] ?>">
 						<? }?>
 						<div class="blog-poast-info">
 							<ul>
 								<li><i class="glyphicon glyphicon-user"> </i><a class="admin"><?php echo $result['username'] ?> </a></li>
 								<li><i class="glyphicon glyphicon-calendar"> </i><?php echo $result['date_updated'] ?></li>
 								<li><i class="glyphicon glyphicon-comment"> </i><a class="p-blog"><?php echo $result['name'] ?></a></li>
-								<li><i class="glyphicon glyphicon-heart"> </i><a class="admin"><?php echo$result['favourites'] ?> favourites </a></li>
+								<!--<li><i class="glyphicon glyphicon-heart"> </i><a class="admin"><?php echo$result['favourites'] ?> favourites </a></li>-->
 								<li><i class="glyphicon glyphicon-eye-open"> </i><?php echo $result['views'] ?> views</li>
 							</ul>
 						</div>
@@ -173,9 +188,10 @@
 							<input type="text" id="name" name="name" placeholder="Name">
 							<input type="hidden" name="id" value="<?php echo $result['id_post']?>" >
 							<input type="text" id="Commentemail" name="email" placeholder="Email">
+							<input type="text" id="Commentwebsite" name="website" placeholder="Website">
 							<!--<input type="text" id="subject" name="subject" placeholder="Subject">-->
 							<textarea placeholder="Message" id="message" name="message" required=""></textarea>
-							<button id="SubmitComment">Submit</button>
+							<button id="SubmitComment" class="btn btn-info">Submit</button>
 						</form>
 					</div>
 				</div>
@@ -195,7 +211,13 @@
 									</a>
 								</div>
 								<div class="media-body">
-									<h4 class="media-heading"><?php echo $comment['name'] ?></h4>
+									<h4 class="media-heading">
+										<?php if(!empty($comment['website'])){?>
+											<a href="<?php echo $comment['website'] ?>"><?php echo $comment['name'] ?> Says :</a>
+											<?php }else{ ?>
+											<a><?php echo $comment['name'] ?></a>
+										<?php } ?>
+									</h4>
 									<p><?php echo $comment['message'] ?></p>
 								</div><br />
 								
@@ -242,6 +264,16 @@
 			}else{
 			$("#Commentemail").css({"border-style": "solid","border-color": "#E9E9E9"});
 		}
+		
+		
+		/*if($("#Commentwebsite").val()=='')
+			{
+			$("#Commentwebsite").css({"border-style": "solid", "border-color": "red"}).focus();
+			$("#showMessage").html('Please Enter subject');
+			return false;
+			}else{
+			$("#Commentwebsite").css({"border-style": "solid","border-color": "#E9E9E9"});
+		}*/
 		if($("#subject").val()=='')
 		{
 			$("#subject").css({"border-style": "solid", "border-color": "red"}).focus();
@@ -267,7 +299,7 @@
 			success: function (response) {
 				if(response["success"]==true)
 				{
-					$("#commentsdiv").prepend('<div class="media-left"><img src="images/si.png" alt=""></div><div class="media-body"><h4 class="media-heading">'+$("#name").val()+'</h4><p>'+$("#message").val()+'</p></div><br />');
+					$("#commentsdiv").prepend('<div class="media-left"><img src="images/si.png" alt=""></div><div class="media-body"><a href="'+$("#Commentwebsite").val()+'"><h4 class="media-heading">'+$("#name").val()+'  Says :</h4></a><p>'+$("#message").val()+'</p></div><br />');
 					$('#commentForm').find("input[type=text], textarea").val("");
 					$("#showMessage").html('<div class="alert alert-success"><strong>Success!</strong> '+response['message']+'</div>');
 					

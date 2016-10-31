@@ -28,7 +28,6 @@
 ?>  
 <?php include_once('includes/header.php'); ?>
 <?php include_once('includes/menu.php'); ?>
-<script src="js/ckeditor/ckeditor.js"></script>
 <?php if (!isset($_GET['action']) & !isset($_GET['type'])) { ?>
 	<div id="page-wrapper" class="gray-bg dashbard-1">
 		<div class="content-main">	
@@ -72,7 +71,8 @@
 										</td>
 										<td class="table-text"><h6>Name</h6></td>
 										<td class="table-text desktop"><h6>Email</h6></td>
-										<td class="table-text desktop"><h6>Subject</h6></td>
+										<td class="table-text desktop"><h6>Website</h6></td>
+										<!--<td class="table-text desktop"><h6>Subject</h6></td>-->
 										<td class="march"> Action </td>
 									</tr>
 									<?php
@@ -83,7 +83,8 @@
 											<td class="table-img"><input type="checkbox" name="selectcheck" value="<?php echo $row["id_comment"] ?>"></td>
 											<td class="march"><h6><?php echo $row["name"] ?></h6></td>
 											<td class="march desktop"><h6><?php echo $row["email"] ?></h6></td>
-											<td class="march desktop"><h6><?php echo $row["subject"] ?></h6></td>
+											<td class="march desktop"><h6><?php echo $row["website"] ?></h6></td>
+											<!--<td class="march desktop"><h6><?php echo $row["subject"] ?></h6></td>-->
 											<td><a href="comments.php?id=<?php echo $row["id_comment"] ?>&action=edit&page=<?php echo "$page"?>"><span class="label label-primary"><i class="fa fa-pencil white" aria-hidden="true"></i></span><a/>
 											<a href="comments-controller.php?chkdelids=<?php echo $row["id_comment"] ?>&action=delete&page=<?php echo "$page"?>""><span class="label label-info"><i class="fa fa-remove white" aria-hidden="true"></i></span></a>
 											</td>
@@ -169,6 +170,12 @@
 									</div>
 								</div>
 								<div class="form-group">
+									<label class="col-sm-2 control-label hor-form" for="inputEmail3">Website</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" name="website" id="website" value="<?php echo $result["website"] ?>">
+									</div>
+								</div>
+								<div class="form-group">
 									<label class="col-sm-2 control-label hor-form" for="inputEmail3">Subject</label>
 									<div class="col-sm-8">
 										<input type="text" class="form-control" name="subject" id="subject" value="<?php echo $result["subject"] ?>">
@@ -183,7 +190,7 @@
 								
 								<div class="row">
 									<div class="col-sm-8 col-sm-offset-2">
-										<input type="submit" value="ADD" class="btn-primary btn">
+										<input type="submit" value="<?php echo EDIT_BUTTON;?>" class="btn-primary btn">
 										<!--<button class="btn btn-default" type="reset">Reset</button>-->
 									</div>
 								</div>	
@@ -206,6 +213,12 @@
 									</div>
 								</div>
 								<div class="form-group">
+									<label class="col-sm-2 control-label hor-form" for="inputEmail3">Website</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" name="website" id="website">
+									</div>
+								</div>
+								<div class="form-group">
 									<label class="col-sm-2 control-label hor-form" for="inputEmail3">Subject</label>
 									<div class="col-sm-8">
 										<input type="text" class="form-control" name="subject" id="subject" value="">
@@ -219,7 +232,7 @@
 								</div>	
 								<div class="row">
 									<div class="col-sm-8 col-sm-offset-2"><br>
-										<input type="submit" value="Insert" class="btn-primary btn">
+										<input type="submit" value="<?php echo ADD_BUTTON;?>" class="btn-primary btn">
 										<!--<button class="btn btn-default" type="reset">Reset</button>-->
 									</div>
 								</div>
@@ -363,9 +376,6 @@
 				
 				<?php include_once('includes/footer.php'); ?>	
 				<script language="JavaScript">
-					/* editor script */
-					var editor=CKEDITOR.replace('message');
-					/* editor script */
 					function fnDetails()
 					{
 						var obj = document.frmMain.elements;
@@ -465,6 +475,3 @@
 						}
 					}
 				</script>	
-				
-				
-						

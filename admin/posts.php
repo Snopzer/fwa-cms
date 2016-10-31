@@ -69,6 +69,7 @@
 												<a href="posts.php?action=add"><span class="btn btn-success"><i class="fa fa-plus-square white" aria-hidden="true"></i> <span class="desktop"> <?php echo ADD_BUTTON;?></span></span></a> 
 												<a  href="javascript:fnDetails();"><span class="btn btn-primary"><i class="fa fa-pencil white" aria-hidden="true"></i> <span class="desktop"> <?php echo EDIT_BUTTON;?></span></span></a>
 												<a href="javascript:fnDelete();"><span class="btn btn-danger"><i class="fa fa-remove white" aria-hidden="true"></i> <span class="desktop"><?php echo DELETE_BUTTON;?></span></span></a>
+												<!--<a><span class="btn btn-warning ">Enable</span></a>-->
 											</td>
 										</tr>
 									</tbody>
@@ -262,7 +263,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Image Source</label>
+								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Image Surce</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" name="image_source" value="<?php echo  $result["image_source"] ?>">
 								</div>
@@ -377,7 +378,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Image Source</label>
+								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Image Surce</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" name="image_source" placeholder="Image Source Link">
 								</div>
@@ -505,4 +506,4 @@
                 }
             }
         }
-    </script>	
+    </script>
