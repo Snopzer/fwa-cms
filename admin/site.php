@@ -160,9 +160,9 @@
 							</div>
 							
 							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label ">Site Title</label>
+								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Site Title</label>
 								<div class="col-sm-8">
-									<textarea  name="site_title" id="site_title" class="form-control"><?php echo  $result["site_title"] ?></textarea> 
+									<input type="text" class="form-control" value="<?php echo  $result["site_title"] ?>" name="site_title" placeholder="Enter Site Title">
 								</div>
 							</div>
 							
@@ -332,9 +332,9 @@
 							</div>
 							
 							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label ">Site Title</label>
+								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Site Title</label>
 								<div class="col-sm-8">
-									<textarea  name="site_title" id="site_title" class="form-control"><?php echo  $result["site_title"] ?></textarea> 
+									<input type="text" class="form-control" name="site_title" placeholder="Enter Site Title">
 								</div>
 							</div>
 							

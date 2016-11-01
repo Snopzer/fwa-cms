@@ -1,8 +1,4 @@
 <?php
-	ini_set('display_errors', 1);
-	ini_set('display_startup_errors', 1);
-	error_reporting(E_ALL);
-
 	ob_start();
 	session_start();
 	include_once('../config.php');
@@ -11,7 +7,7 @@
 		header('location:index.php');
 	}
 	if($_POST['action']=='add'){	
-	
+
 		$site_name = $conn->real_escape_string($_POST['site_name']);	
 		$site_title = $conn->real_escape_string($_POST['site_title']);	
 		$site_keywords = $conn->real_escape_string($_POST['site_keywords']);	
@@ -36,11 +32,9 @@
 		$contact_phone = $conn->real_escape_string($_POST['contact_phone']); 
 		$contact_address = $conn->real_escape_string($_POST['contact_address']); 
 		
-	
+		/*$addSiteData = $conn->query("INSERT INTO r_site_details (site_name,owner_email,email_from,phone,replay_email,title,meta_description,meta_keywords,google_analytics_code,copyrights) VALUES ('" . $site_name . "','" . $owner_email . "','" . $email_from . "','" . $phone . "','" . $replay_email . "','" . $title . "','" . $meta_description . "','" . $meta_keywords . "','" . $google_analytics_code . "','" . $copyrights . "')") or die(mysqli_error());	*/	
 		
-		$addSiteData = $conn->query("INSERT INTO `r_site_details` (`site_name`,`site_title`, `site_keywords`, `site_description`, `owner_name`, `owner_email`, `admin_page_limit`, `post_description_length`, `admin_mail`, `from_mail`, `reply_to_mail`, `site_copy_rights`, `phone`, `social_facebook_url`, `social_twitter_url`, `social_googleplus_url`, `social_linkedin_url`, `social_behance_url`, `social_vimio_url`, `social_youtube_url`,contact_mail,contact_phone,contact_address) VALUES ('".$site_name."', '".$site_title."','".$site_keywords."', '".$site_description."', '".$owner_name."', '".$owner_email."', '".$admin_page_limit."', '".$post_description_length."', '".$admin_mail."', '".$from_mail."', '".$reply_to_mail."', '".$site_copy_rights."', '".$phone."', '".$social_facebook_url ."', '".$social_twitter_url ."', '".$social_googleplus_url."', '".$social_linkedin_url."', '".$social_behance_url."', '".$social_vimio_url."', '".$social_youtube_url."','".$contact_mail."','".$contact_phone."','".$contact_address."')") or die(mysqli_error());		
-		exit("control here12");
-
+		$addSiteData = $conn->query("INSERT INTO `r_site_details` (`site_name`,site_title, `site_keywords`, `site_description`, `owner_name`, `owner_email`, `admin_page_limit`, `post_description_length`, `admin_mail`, `from_mail`, `reply_to_mail`, `site_copy_rights`, `phone`, `social_facebook_url`, `social_twitter_url`, `social_googleplus_url`, `social_linkedin_url`, `social_behance_url`, `social_vimio_url`, `social_youtube_url`,contact_mail,contact_phone,contact_address) VALUES ('".$site_name."','".$site_title."', '".$site_keywords."', '".$site_description."', '".$owner_name."', '".$owner_email."', '".$admin_page_limit."', '".$post_description_length."', '".$admin_mail."', '".$from_mail."', '".$reply_to_mail."', '".$site_copy_rights."', '".$phone."', '".$social_facebook_url ."', '".$social_twitter_url ."', '".$social_googleplus_url."', '".$social_linkedin_url."', '".$social_behance_url."', '".$social_vimio_url."', '".$social_youtube_url."','".$contact_mail."','".$contact_phone."','".$contact_address."')") or die(mysqli_error());		
 		if ($addSiteData) {
 			$message = "<strong>Success!</strong> Site Added Successfully.";
 			header('location:'.SITE_ADMIN_URL.'site.php?response=success&message='.$message);
