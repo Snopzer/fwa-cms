@@ -71,7 +71,22 @@
 			fwrite($fp,$DdatabaseContent);
 			fclose($fp);
 			
+			/* create user roles table */
+			$conn->query("CREATE TABLE IF NOT EXISTS `r_user_role` (
+			`id_user_role` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+			`role` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
+			`status` int(11) DEFAULT NULL,
+			`date_created` datetime NOT NULL,
+			`date_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+			) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci ;")or die(mysql_error());
 			
+			$conn->query("INSERT INTO `r_user_role` (`id_user_role`, `role`, `status`, `date_created`, `date_updated`) VALUES
+			(1, 'Super Admin', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');")or die(mysql_error());
+			$conn->query("INSERT INTO `r_user_role` (`id_user_role`, `role`, `status`, `date_created`, `date_updated`) VALUES
+			(2, 'Editor', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');")or die(mysql_error());
+			/* create user roles table */
+			
+			/* create user table */
 			$conn->query("CREATE TABLE IF NOT EXISTS `r_user` (
 			`id_user` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 			`id_user_role` int(11) NOT NULL,
@@ -93,6 +108,7 @@
 			
 			$conn->query("INSERT INTO `r_user` (`id_user`, `id_user_role`, `name`, `phone`, `department`, `email`, `password`, `status`, `activate_link`, `skills`, `id_country`, `image`, `meta_title`, `meta_keywords`, `meta_description`) VALUES
 			(1, 1, '".$insdata['fwa_username']."', '123456789', '".$insdata['fwa_username']."', '".$insdata['fwa_email']."', '".md5($insdata['fwa_password'])."', 1, '', '".$insdata['fwa_username']."', 1, '', '', '', '')")or die(mysql_error());
+			/* create user table */
 			
 			
 			$conn->query("CREATE TABLE IF NOT EXISTS `r_category` (
@@ -176,7 +192,7 @@
 			`meta_keywords` varchar(155) COLLATE latin1_general_ci NOT NULL,
 			`meta_description` varchar(255) COLLATE latin1_general_ci NOT NULL,
 			`title` varchar(255) COLLATE latin1_general_ci DEFAULT NULL,
-			`short_description` varchar(255) COLLATE latin1_general_ci NOT NULL,
+			`short_description` text COLLATE latin1_general_ci NOT NULL,
 			`description` text COLLATE latin1_general_ci,
 			`image` varchar(255) COLLATE latin1_general_ci DEFAULT NULL,
 			`date_added` datetime DEFAULT NULL,
@@ -208,7 +224,7 @@
 			`owner_name` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
 			`owner_email` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
 			`admin_page_limit` tinyint(3) DEFAULT NULL,
-			`post_description_length` tinyint(3) DEFAULT NULL,
+			`post_description_length` int(3) DEFAULT NULL,
 			`admin_mail` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
 			`from_mail` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
 			`reply_to_mail` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
@@ -235,19 +251,6 @@
 			`email` varchar(255) COLLATE latin1_general_ci DEFAULT NULL UNIQUE KEY
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;")or die(mysql_error());
 			
-			
-			
-			$conn->query("CREATE TABLE IF NOT EXISTS `r_user_role` (
-			`id_user_role` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-			`role` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
-			`status` int(11) DEFAULT NULL,
-			`date_created` datetime NOT NULL,
-			`date_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-			) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci ;")or die(mysql_error());
-			
-			
-			$conn->query("INSERT INTO `r_user_role` (`id_user_role`, `role`, `status`, `date_created`, `date_updated`) VALUES
-			(1, 'Super Admin', 1, '0000-00-00 00:00:00', '2016-09-25 01:25:35');")or die(mysql_error());
 			
 			
 			$response['message'] = "Installation Completed";

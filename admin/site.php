@@ -135,10 +135,6 @@
 				</div>
 				<div class="grid-system">
 					<div class="horz-grid">
-						<div class="grid-hor">
-							<h4 id="grid-example-basic">User Details:</h4>
-							
-						</div>
 						<?php if($_GET['action'] == "edit"){
 							$id = $_GET['id'];
 							$page=$_GET['page'];
@@ -146,173 +142,188 @@
 							$result = $query->fetch_assoc();
 						?>
 						
-						
-						
 						<form class="form-horizontal" action="site-controller.php" method="post" enctype="multipart/form-data" >
+							
+							<div class="grid_3 grid_5">
+							<h4 id="grid-example-basic">Site Details:</h4>
+								<div class="but_list">
+									<div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+										<ul id="myTab" class="nav nav-tabs" role="tablist">
+											<li role="presentation" class="active"><a href="#general" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="false">General Details</a></li>
+											<li role="presentation" class=""><a href="#socialmedia" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="true">Social Media</a></li>
+											<li role="presentation" class=""><a href="#seo" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="true">SEO</a></li>
+										</ul>
+										<div id="myTabContent" class="tab-content">
+											<div role="tabpanel" class="tab-pane fade active in" id="general" aria-labelledby="general-tab">
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Site Name</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["site_name"] ?>" name="site_name" placeholder="Enter Site Name">
+													</div>
+												</div>
+												
+												
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">owner Name</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["owner_name"] ?>" name="owner_name" placeholder="Enter owner Name">
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Owner Email</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["owner_email"] ?>" name="owner_email" placeholder="Enter Owner Email">
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Admin page Limit</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["admin_page_limit"] ?>" name="admin_page_limit" placeholder="Admin page Limit">
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">POST Description Length</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["post_description_length"] ?>" name="post_description_length" placeholder="POST Description Length">
+													</div>
+												</div>
+												
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Admin Mail</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["admin_mail"] ?>" name="admin_mail" placeholder="Enter Admin Mail">
+													</div>
+												</div>
+												
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">From Mail</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["from_mail"] ?>" name="from_mail" placeholder="Enter FROM Mail">
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Reply To Mail</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["reply_to_mail"] ?>" name="reply_to_mail" placeholder="Enter Reply To Mail">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Site Copy Rights</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["site_copy_rights"] ?>" name="site_copy_rights" placeholder="Enter Site Copy Rights">
+													</div>
+												</div>
+												
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Phone</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["phone"] ?>" name="phone" placeholder="Enter Phone Number">
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Contact Mail</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["contact_mail"] ?>" name="contact_mail" placeholder="Enter YOUTUBE URL">
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Contact Phone</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["contact_phone"] ?>" name="contact_phone" placeholder="Contact Phone">
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Contact Address</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["contact_address"] ?>" name="contact_address" placeholder="Contact Address">
+													</div>
+												</div>
+											</div>
+											<div role="tabpanel" class="tab-pane fade" id="socialmedia" aria-labelledby="socialmedia-tab">
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL TWITTER URL</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["social_twitter_url"] ?>" name="social_twitter_url" placeholder="Enter TWITTER URL">
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL GOOGLE+ URL</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["social_googleplus_url"] ?>" name="social_googleplus_url" placeholder="Enter GOOGLE+ URL">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL LINKEDIN URL</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["social_linkedin_url"] ?>" name="social_linkedin_url" placeholder="Enter LINKEDIN URL">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL BEHANCE URL</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["social_behance_url"] ?>" name="social_behance_url" placeholder="Enter BEHANCE URL">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL VIMIO URL</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["social_vimio_url"] ?>" name="social_vimio_url" placeholder="Enter VIMIO URL">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL FACEBOOK URL</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["social_facebook_url"] ?>" name="social_facebook_url" placeholder="Enter FACEBOOK URL">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL YOUTUBE URL</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["social_youtube_url"] ?>" name="social_youtube_url" placeholder="Enter YOUTUBE URL">
+													</div>
+												</div>
+											</div>
+											<div role="tabpanel" class="tab-pane fade" id="seo" aria-labelledby="seo-tab">
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Site Title</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" value="<?php echo  $result["site_title"] ?>" name="site_title" placeholder="Enter Site Title">
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label ">Site Keywords</label>
+													<div class="col-sm-8">
+														<textarea  name="site_keywords" id="site_keywords" class="form-control"><?php echo  $result["site_keywords"] ?></textarea> 
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label ">Site Description</label>
+													<div class="col-sm-8">
+														<textarea  name="site_description" id="site_description" class="form-control"><?php echo  $result["site_description"] ?></textarea> 
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 							<input type="hidden" name="action" value="edit"/>
 							<input type="hidden" name="id" value="<?php echo $result["id"] ?>">
 							<input type="hidden" name="page" value='<?php echo "$page"?>'>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Site Name</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["site_name"] ?>" name="site_name" placeholder="Enter Site Name">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Site Title</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["site_title"] ?>" name="site_title" placeholder="Enter Site Title">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label ">Site Keywords</label>
-								<div class="col-sm-8">
-									<textarea  name="site_keywords" id="site_keywords" class="form-control"><?php echo  $result["site_keywords"] ?></textarea> 
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label ">Site Description</label>
-								<div class="col-sm-8">
-									<textarea  name="site_description" id="site_description" class="form-control"><?php echo  $result["site_description"] ?></textarea> 
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">owner Name</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["owner_name"] ?>" name="owner_name" placeholder="Enter owner Name">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Owner Email</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["owner_email"] ?>" name="owner_email" placeholder="Enter Owner Email">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Admin page Limit</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["admin_page_limit"] ?>" name="admin_page_limit" placeholder="Admin page Limit">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">POST Description Length</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["post_description_length"] ?>" name="post_description_length" placeholder="POST Description Length">
-								</div>
-							</div>
-							
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Admin Mail</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["admin_mail"] ?>" name="admin_mail" placeholder="Enter Admin Mail">
-								</div>
-							</div>
-							
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">From Mail</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["from_mail"] ?>" name="from_mail" placeholder="Enter FROM Mail">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Reply To Mail</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["reply_to_mail"] ?>" name="reply_to_mail" placeholder="Enter Reply To Mail">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Site Copy Rights</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["site_copy_rights"] ?>" name="site_copy_rights" placeholder="Enter Site Copy Rights">
-								</div>
-							</div>
-							
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Phone</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["phone"] ?>" name="phone" placeholder="Enter Phone Number">
-								</div>
-							</div>
-							
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL TWITTER URL</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["social_twitter_url"] ?>" name="social_twitter_url" placeholder="Enter TWITTER URL">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL GOOGLE+ URL</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["social_googleplus_url"] ?>" name="social_googleplus_url" placeholder="Enter GOOGLE+ URL">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL LINKEDIN URL</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["social_linkedin_url"] ?>" name="social_linkedin_url" placeholder="Enter LINKEDIN URL">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL BEHANCE URL</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["social_behance_url"] ?>" name="social_behance_url" placeholder="Enter BEHANCE URL">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL VIMIO URL</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["social_vimio_url"] ?>" name="social_vimio_url" placeholder="Enter VIMIO URL">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL FACEBOOK URL</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["social_facebook_url"] ?>" name="social_facebook_url" placeholder="Enter FACEBOOK URL">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL YOUTUBE URL</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["social_youtube_url"] ?>" name="social_youtube_url" placeholder="Enter YOUTUBE URL">
-								</div>
-							</div>
-							
-							
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Contact Mail</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["contact_mail"] ?>" name="contact_mail" placeholder="Enter YOUTUBE URL">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Contact Phone</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["contact_phone"] ?>" name="contact_phone" placeholder="Contact Phone">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Contact Address</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["contact_address"] ?>" name="contact_address" placeholder="Contact Address">
-								</div>
-							</div>
-							
 							<div class="row">
 								<div class="col-sm-8 col-sm-offset-2">
 									<input type="submit" value="<?php echo UPDATE_BUTTON;?>" class="btn-primary btn">
@@ -323,166 +334,189 @@
 							} elseif($_GET['action'] == "add") {
 						?>
 						<form class="form-horizontal" action="site-controller.php" method="post" enctype="multipart/form-data">
+							
+							
+							<div class="grid_3 grid_5">
+								<h3 class="head-top">Site Details</h3>
+								<div class="but_list">
+									<div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+										<ul id="myTab" class="nav nav-tabs" role="tablist">
+											<li role="presentation" class="active"><a href="#general" id="general-tab" role="tab" data-toggle="tab" aria-controls="general" aria-expanded="false">General Details</a></li>
+											<li role="presentation" class=""><a href="#socialmedia" role="tab" id="socialmedia-tab" data-toggle="tab" aria-controls="socialmedia" aria-expanded="true">Social Media</a></li>
+											<li role="presentation" class=""><a href="#seo" role="tab" id="seo-tab" data-toggle="tab" aria-controls="seo" aria-expanded="true">SEO</a></li>
+										</ul>
+										<div id="myTabContent" class="tab-content">
+											<div role="tabpanel" class="tab-pane fade" id="general" aria-labelledby="general-tab">
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Site Name</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="site_name" placeholder="Enter Site Name">
+													</div>
+													</div>
+												
+												
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">owner Name</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="owner_name" placeholder="Enter owner Name">
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Owner Email</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="owner_email" placeholder="Enter Owner Email">
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Admin page Limit</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="admin_page_limit" placeholder="Admin page Limit">
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">POST Description Length</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="post_description_length" placeholder="POST Description Length">
+													</div>
+												</div>
+												
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Admin Mail</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="admin_mail" placeholder="Enter Admin Mail">
+													</div>
+												</div>
+												
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">From Mail</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control"  name="from_mail" placeholder="Enter FROM Mail">
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Reply To Mail</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="reply_to_mail" placeholder="Enter Reply To Mail">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Site Copy Rights</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control"  name="site_copy_rights" placeholder="Enter Site Copy Rights">
+													</div>
+												</div>
+												
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Phone</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control"  name="phone" placeholder="Enter Phone Number">
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Contact Mail</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="contact_mail" placeholder="Enter YOUTUBE URL">
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Contact Phone</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="contact_phone" placeholder="Contact Phone">
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Contact Address</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="contact_address" placeholder="Contact Address">
+													</div>
+												</div>
+												
+											</div>
+											<div role="tabpanel" class="tab-pane fade active in" id="socialmedia" aria-labelledby="socialmedia-tab">
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL TWITTER URL</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="social_twitter_url" placeholder="Enter TWITTER URL">
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL GOOGLE+ URL</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="social_googleplus_url" placeholder="Enter GOOGLE+ URL">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL LINKEDIN URL</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="social_linkedin_url" placeholder="Enter LINKEDIN URL">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL BEHANCE URL</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="social_behance_url" placeholder="Enter BEHANCE URL">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL VIMIO URL</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="social_vimio_url" placeholder="Enter VIMIO URL">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL FACEBOOK URL</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="social_facebook_url" placeholder="Enter FACEBOOK URL">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL YOUTUBE URL</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="social_youtube_url" placeholder="Enter YOUTUBE URL">
+													</div>
+												</div>
+											</div>
+											<div role="tabpanel" class="tab-pane fade active in" id="seo" aria-labelledby="seo-tab">
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Site Title</label>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="site_title" placeholder="Enter Site Title">
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label ">Site Keywords</label>
+													<div class="col-sm-8">
+														<textarea  name="site_keywords" id="site_keywords" class="form-control"></textarea> 
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label ">Site Description</label>
+													<div class="col-sm-8">
+														<textarea  name="site_description" id="site_description" class="form-control"></textarea> 
+													</div>
+												</div>
+											</div>
+											
+											
+										</div>
+									</div>
+								</div>
+							</div>
 							<input type="hidden" name="action" value="add"/>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Site Name</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" name="site_name" placeholder="Enter Site Name">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Site Title</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" name="site_title" placeholder="Enter Site Title">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label ">Site Keywords</label>
-								<div class="col-sm-8">
-									<textarea  name="site_keywords" id="site_keywords" class="form-control"></textarea> 
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label ">Site Description</label>
-								<div class="col-sm-8">
-									<textarea  name="site_description" id="site_description" class="form-control"></textarea> 
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">owner Name</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" name="owner_name" placeholder="Enter owner Name">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Owner Email</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" name="owner_email" placeholder="Enter Owner Email">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Admin page Limit</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" name="admin_page_limit" placeholder="Admin page Limit">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">POST Description Length</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" name="post_description_length" placeholder="POST Description Length">
-								</div>
-							</div>
-							
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Admin Mail</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" name="admin_mail" placeholder="Enter Admin Mail">
-								</div>
-							</div>
-							
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">From Mail</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control"  name="from_mail" placeholder="Enter FROM Mail">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Reply To Mail</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" name="reply_to_mail" placeholder="Enter Reply To Mail">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Site Copy Rights</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control"  name="site_copy_rights" placeholder="Enter Site Copy Rights">
-								</div>
-							</div>
-							
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Phone</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control"  name="phone" placeholder="Enter Phone Number">
-								</div>
-							</div>
-							
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL TWITTER URL</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" name="social_twitter_url" placeholder="Enter TWITTER URL">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL GOOGLE+ URL</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" name="social_googleplus_url" placeholder="Enter GOOGLE+ URL">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL LINKEDIN URL</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" name="social_linkedin_url" placeholder="Enter LINKEDIN URL">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL BEHANCE URL</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" name="social_behance_url" placeholder="Enter BEHANCE URL">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL VIMIO URL</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" name="social_vimio_url" placeholder="Enter VIMIO URL">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL FACEBOOK URL</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" name="social_facebook_url" placeholder="Enter FACEBOOK URL">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">SOCIAL YOUTUBE URL</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" name="social_youtube_url" placeholder="Enter YOUTUBE URL">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Contact Mail</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" name="contact_mail" placeholder="Enter YOUTUBE URL">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Contact Phone</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" name="contact_phone" placeholder="Contact Phone">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Contact Address</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" name="contact_address" placeholder="Contact Address">
-								</div>
-							</div>
-							
 							<div class="row">
 								<div class="col-sm-8 col-sm-offset-2">
 									<input type="submit" value="<?php echo SAVE_BUTTON;?>" class="btn-primary btn">
@@ -604,4 +638,4 @@
 				}
 			}
 		}
-	</script>					
+	</script>												

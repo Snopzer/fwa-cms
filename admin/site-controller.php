@@ -73,9 +73,9 @@
 		
 		$row = "UPDATE `r_site_details` SET `site_name` = '".$site_name."',`site_title` = '".$site_title."', `site_keywords` = '".$site_keywords."', `site_description` = '".$site_description."', `owner_name` = '".$owner_name."', `owner_email` = '".$owner_email."', `admin_page_limit` = '".$admin_page_limit."', `post_description_length` = '".$post_description_length."', `admin_mail` = '".$admin_mail."', `from_mail` = '".$from_mail."', `reply_to_mail` = '".$reply_to_mail."', `site_copy_rights` = '".$site_copy_rights."', `phone` = '".$phone ."', `social_facebook_url` = '".$social_facebook_url."', `social_twitter_url` = '".$social_twitter_url."', `social_googleplus_url` = '".$social_googleplus_url."', `social_linkedin_url` = '".$social_linkedin_url."', `social_behance_url` = '".$social_behance_url."', `social_vimio_url` = '".$social_vimio_url."', `social_youtube_url` = '".$social_youtube_url."',`contact_mail` = '".$contact_mail."',`contact_phone` = '".$contact_phone."',`contact_address` = '".$contact_address."' WHERE `id` = ".$id;
 		
+		/*echo  $row ;
+		exit;*/
 		
-		
-		/*$row = "update r_site_details SET site_name='".$site_name."',owner_email='".$owner_email."',email_from='".$email_from."',phone='".$phone."',replay_email='".$replay_email."',title='".$title."',meta_description='".$meta_description."',meta_keywords='".$meta_keywords."',google_analytics_code='".$google_analytics_code."',copyrights='".$copyrights."' where id='$id' ";*/
 		$updateSiteData = $conn->query($row);
 		
 		if ($updateSiteData) {
