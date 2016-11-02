@@ -9,7 +9,7 @@
 	$checkSEO = $checkSEORequest->fetch_assoc () or die(mysql_error());	
 	
 	if($checkSEO['id_post'] >=1 )	{
-		$showProductDiv = true;		
+		$showPostDiv = true;		
 		$select = $conn->query("SELECT ru.name as username,rc.name,rp.id_post,rp.source,rp.image_source,rp.meta_title,rp.meta_keywords,rp.meta_description,rp.id_category,rp.title,rp.description,rp.short_description,rp.image,rp.date_updated,rp.favourites,rp.views FROM r_post rp,r_category rc,r_user ru WHERE rp.id_category=rc.id_category and rp.id_user=ru.id_user and rp.id_post='".$checkSEO['id_post']."' order by id_post desc")or die(mysql_error()); 		
 		$result = $select->fetch_assoc();	
 		
@@ -72,17 +72,14 @@
 							<img src="images/category/<?= $result['image'] ?>" class="img-responsive" alt="<?= $result['name'] ?>" title="<?= $result['name'] ?>">
 						<? }?>
 						<div class="blog-text">
-							<h5><?php echo $result['name'] ?></h5>
-							<p><?php echo $result['description'] ?> </p>	
-							<p></p>				
+							<h5><?php echo str_replace('\"', '"',str_replace("\'", "'", $result["name"])); ?></h5>
+							<p><?php echo str_replace('\"', '"',str_replace("\'", "'", $result["description"])); ?></p>	
 						</div>
 					</div>
 					<!--category details end -->
 					
 					<div class="comment-top">
 						<h2><?php echo $result['name'] ?> Topic's</h2><?php
-							/*echo "SELECT * FROM  `r_post` rp LEFT JOIN r_seo_url seo ON rp.id_post = seo.id_post WHERE rp.id_category =".$result['id_category']." ORDER BY rp.id_post";
-							exit;*/
 							$postQuery = $conn->query("SELECT rp.*,seo.seo_url as seourl FROM  `r_post` rp LEFT JOIN r_seo_url seo ON rp.id_post = seo.id_post WHERE rp.id_category =".$result['id_category']." and rp.status=1 ORDER BY rp.id_post")or die(mysql_error()); 		
 							while ($post = $postQuery->fetch_assoc()) {
 							?>
@@ -95,7 +92,7 @@
 							<?php } ?>
                             <div class="media-body">
                                 <a href="<?php echo SITEURL?><?php echo $post['seourl']?>"><h4 class="media-heading"><?php echo $post['title'] ?></h4></a>
-								<p><?php echo substr($post['short_description'],0,POST_DESCRIPTION_LENGTH); ?>....<a href="<?php echo SITEURL?><?php echo $post['seourl']?>">Read More.</a></p>
+								<p><?php echo substr(str_replace('\"', '"',str_replace("\'", "'", $post["short_description"])),0,POST_DESCRIPTION_LENGTH); ?>....<a href="<?php echo SITEURL?><?php echo $post['seourl']?>">Read More.</a></p>
 							</div><br /> 
                             <?php
 							}
@@ -127,7 +124,7 @@
 							</p>					
 						</div>
 						<div class="blog-text">
-							<p><?php echo stripslashes($result['page_description']); ?> </p>					
+							<p><?php echo str_replace('\"', '"',str_replace("\'", "'", $result["page_description"])); ?></p>
 						</div>
 					</div>
 				<? } ?>
@@ -135,7 +132,7 @@
 				<?php if($showUserDiv == true) {?>
 					
 				<?php  } ?>
-				<?php if($showProductDiv == true) {?>
+				<?php if($showPostDiv == true) {?>
 					<div class=" blog-grid2">
 						<div class="blog-text">
 							<h5><?php echo $result['title'] ?></h5>
@@ -153,8 +150,8 @@
 							</ul>
 						</div>
 						<div class="blog-text">
-							<h5><?php echo $result['title'] ?></h5>
-							<p><?php echo $result['description'] ?> </p>	
+							<h5><?php echo str_replace('\"', '"',str_replace("\'", "'", $result["title"])); ?></h5>
+							<p><?php echo str_replace('\"', '"',str_replace("\'", "'", $result["description"])); ?></p>	
 							<?php if($result['source']!=''){ ?>
 								<h6>Source :</h6> <p><a href="<?php echo $result['source'];?>"><?php echo $result['source'];?></a></p>		
 							<?php }?>
@@ -178,7 +175,7 @@
 					</div>
 				</div>
 			<?php } ?>
-			<?php if($showProductDiv == true) {?>
+			<?php if($showPostDiv == true) {?>
 				
 				<div class="comment">
 					<h3>Leave a Comment</h3>
@@ -218,7 +215,7 @@
 											<a><?php echo $comment['name'] ?></a>
 										<?php } ?>
 									</h4>
-									<p><?php echo $comment['message'] ?></p>
+									<p><?php echo str_replace('\"', '"',str_replace("\'", "'", $comment["message"])); ?></p>
 								</div><br />
 								
 								<?php
