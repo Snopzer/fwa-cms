@@ -169,13 +169,14 @@
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Short Description</label>
 								<div class="col-sm-8">
-									<textarea  name="short_description" class="form-control" rows="6"><?php echo  $result["short_description"] ?></textarea> 
+									<textarea  name="short_description" class="form-control" rows="6"><?php echo str_replace("\'", "'", $result["short_description"]); ?></textarea>  
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label hor-form ">Description</label>
 								<div class="col-sm-8">
-									<textarea name="description" id="description" class="form-control" rows="6"><?php echo stripslashes($result["description"]); ?></textarea> 
+									<textarea name="description" id="description" class="form-control" rows="6">
+									<?php echo str_replace("\'", "'", $result["description"]); ?></textarea> 
 								</div>
 							</div>
 							<div class="form-group">
