@@ -21,7 +21,7 @@
 				Visit Admin Panel : <a href="" id="adminURL">Manage Site</a><br />
 				Your Blog : <a href="" id="siteURL">Visit Site</a>
 				</div>
-				<form id="installForm">
+				<form id="installForm" class="setup-div">
 				<h2>Please Fill the Fields</h2>
 				
 				<div class="">
@@ -60,12 +60,11 @@
 						</div>
 					</div>
 					
-					<div class="text-center">
+				</form>
+					<div class="text-center setup-div">
 						<button id="install" class="btn btn-warning submit-button" >Install</button>
 						<span id="Reset" class="btn btn-warning submit-button" >Reset</span>
 					</div>
-				</form>
-					
 				
 				<div class="clearfix"> </div>
 				
@@ -89,7 +88,7 @@
 				{	
 					
 					$("#showMessage").html(response["message"]);
-					$("#installForm").hide();
+					$(".setup-div").hide();
 					$("#setupdone").show();
 					$("#adminURL").attr("href",response["adminURL"]);
 					$("#siteURL").attr("href",response["siteURL"]);
