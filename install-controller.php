@@ -44,6 +44,8 @@
 			$SITEURL = 'http://'.$_SERVER['SERVER_NAME'] . dirname($_SERVER['REQUEST_URI']).'/';
 			
 			$DdatabaseContent = '<?php
+			/* Disable Errors */
+			error_reporting(0);
 			/* MySQL Server Host address */
 			$host 		=	"'.$db_host.'";
 			
