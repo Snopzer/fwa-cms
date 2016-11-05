@@ -10,7 +10,11 @@
 	
 	if($checkSEO['id_post'] >=1 )	{
 		$showPostDiv = true;		
-		$select = $conn->query("SELECT ru.name as username,rc.name,rp.id_post,rp.source,rp.image_source,rp.meta_title,rp.meta_keywords,rp.meta_description,rp.id_category,rp.title,rp.description,rp.short_description,rp.image,rp.date_updated,rp.favourites,rp.views FROM r_post rp,r_category rc,r_user ru WHERE rp.id_category=rc.id_category and rp.id_user=ru.id_user and rp.id_post='".$checkSEO['id_post']."' order by id_post desc")or die(mysql_error()); 		
+		$select = $conn->query("SELECT ru.name as username,rc.name,rp.id_post,rp.source,rp.image_source,rp.meta_title,rp.meta_keywords,rp.meta_description,rp.id_category,rp.title,rp.description,rp.short_description,rp.image,rp.date_updated,rp.favourites,rp.views
+		FROM r_post rp 
+		LEFT JOIN r_category rc ON rp.id_category = rc.id_category
+		LEFT JOIN r_user ru ON rp.id_user=ru.id_user
+		WHERE rp.id_post='".$checkSEO['id_post']."' order by id_post DESC")or die(mysql_error()); 		
 		$result = $select->fetch_assoc();	
 		
 		$id=$result['id_post'];		
