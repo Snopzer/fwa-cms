@@ -78,6 +78,93 @@
 
 <script type="text/javascript" language="JavaScript">
 	$("#install").click(function(){
+	
+			var db_host = $("#db_host").val();
+			if(db_host=='')
+			{
+			$("#database_host").css({"border-style": "solid", "border-color": "red" });
+			$("#showMessageDiv").show();
+			$("#showMessage").html('<strong>Warning! </strong> Please enter database host.');
+			$("#db_host").focus();
+			return false;
+			}
+			else{
+			$("#database_host").css({"border-style": "solid","border-color": "#E9E9E9"});
+			}	
+			
+			var db_user = $("#db_user").val();
+			if(db_user=='')
+			{
+			$("#database_user").css({"border-style": "solid", "border-color": "red" });
+			$("#showMessageDiv").show();
+			$("#showMessage").html('<strong>Warning! </strong> Please enter yourdatabase username.');
+			$("#db_user").focus();
+			return false;
+			}
+			else{
+			$("#database_user").css({"border-style": "solid","border-color": "#E9E9E9"});
+			}	
+			// var db_password = $("#db_password").val();
+			// if(db_password=='')
+			// {
+			// $("#database_password").css({"border-style": "solid", "border-color": "red" });
+			// $("#showMessageDiv").show();
+			// $("#showMessage").html('<strong>Warning! </strong> Please enter your database password.');
+			// $("#db_password").focus();
+			// return false;
+			// }
+			// else{
+			// $("#database_password").css({"border-style": "solid","border-color": "#E9E9E9"});
+			// }	
+			var db_name = $("#db_name").val();
+			if(db_name=='')
+			{
+			$("#database_name").css({"border-style": "solid", "border-color": "red" });
+			$("#showMessageDiv").show();
+			$("#showMessage").html('<strong>Warning! </strong> Please enter database name.');
+			$("#db_name").focus();
+			return false;
+			}
+			else{
+			$("#database_name").css({"border-style": "solid","border-color": "#E9E9E9"});
+		}
+		var td_username = $("#td_username").val();
+			if(td_username=='')
+			{
+			$("#username_field").css({"border-style": "solid", "border-color": "red" });
+			$("#showMessageDiv").show();
+			$("#showMessage").html('<strong>Warning! </strong> Please enter username.');
+			$("#td_username").focus();
+			return false;
+			}
+			else{
+			$("#username_field").css({"border-style": "solid","border-color": "#E9E9E9"});
+			}	
+			
+			var td_password = $("#td_password").val();
+			if(td_password=='')
+			{
+			$("#password_field").css({"border-style": "solid", "border-color": "red" });
+			$("#showMessageDiv").show();
+			$("#showMessage").html('<strong>Warning! </strong> Please enter yourdatabase username.');
+			$("#td_password").focus();
+			return false;
+			}
+			else{
+			$("#password_field").css({"border-style": "solid","border-color": "#E9E9E9"});
+			}	
+			var td_email = $("#td_email").val();
+			if(td_email=='')
+			{
+			$("#email_field").css({"border-style": "solid", "border-color": "red" });
+			$("#showMessageDiv").show();
+			$("#showMessage").html('<strong>Warning! </strong> Please enter database name.');
+			$("#td_email").focus();
+			return false;
+			}
+			else{
+			$("#email_field").css({"border-style": "solid","border-color": "#E9E9E9"});
+		}
 	$.ajax({
 			url: "install-controller.php",
 			method: "POST",
@@ -103,6 +190,57 @@
 		});
 	});
 	$("#TestConnection").click(function(){
+		
+		
+			var db_host = $("#db_host").val();
+			if(db_host=='')
+			{
+			$("#database_host").css({"border-style": "solid", "border-color": "red" });
+			$("#showMessageDiv").show();
+			$("#showMessage").html('<strong>Warning! </strong> Please enter database host.');
+			$("#db_host").focus();
+			return false;
+			}
+			else{
+			$("#database_host").css({"border-style": "solid","border-color": "#E9E9E9"});
+			}	
+			
+			var db_user = $("#db_user").val();
+			if(db_user=='')
+			{
+			$("#database_user").css({"border-style": "solid", "border-color": "red" });
+			$("#showMessageDiv").show();
+			$("#showMessage").html('<strong>Warning! </strong> Please enter yourdatabase username.');
+			$("#db_user").focus();
+			return false;
+			}
+			else{
+			$("#database_user").css({"border-style": "solid","border-color": "#E9E9E9"});
+			}	
+			// var db_password = $("#db_password").val();
+			// if(db_password=='')
+			// {
+			// $("#database_password").css({"border-style": "solid", "border-color": "red" });
+			// $("#showMessageDiv").show();
+			// $("#showMessage").html('<strong>Warning! </strong> Please enter your database password.');
+			// $("#db_password").focus();
+			// return false;
+			// }
+			// else{
+			// $("#database_password").css({"border-style": "solid","border-color": "#E9E9E9"});
+			// }	
+			var db_name = $("#db_name").val();
+			if(db_name=='')
+			{
+			$("#database_name").css({"border-style": "solid", "border-color": "red" });
+			$("#showMessageDiv").show();
+			$("#showMessage").html('<strong>Warning! </strong> Please enter database name.');
+			$("#db_name").focus();
+			return false;
+			}
+			else{
+			$("#database_name").css({"border-style": "solid","border-color": "#E9E9E9"});
+		}
 		$.ajax({
 			url: "install-controller.php",
 			method: "POST",
