@@ -34,14 +34,13 @@
 		$fwa_password	=	$insdata['fwa_password'];	
 		$fwa_email		=	$insdata['fwa_email'];	
 		
-		
 		$conn = mysqli_connect($db_host, $db_user, $db_password,$db_name);
 		if($conn)
 		{
-			
+						
 			//$response['message'] = "Connected to Database successfully";
 			//$response['success'] = true;
-			$SITEURL = 'http://'.$_SERVER['SERVER_NAME'] . dirname($_SERVER['REQUEST_URI']).'/';
+			$SITEURL = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].dirname($_SERVER['REQUEST_URI']).'/';
 			
 			$DdatabaseContent = '<?php
 			/* Disable Errors */
@@ -64,8 +63,10 @@
 			die("Connection failed: " . $conn->connect_error);
 			} 
 			/*Connect to Database End*/
-			define ( SITE_ADMIN_URL , "http://'.$_SERVER['SERVER_NAME'] . dirname($_SERVER['REQUEST_URI']).'/admin/");
-			define ( SITEURL , "http://'.$_SERVER['SERVER_NAME'] . dirname($_SERVER['REQUEST_URI']).'/");
+			
+			
+			define ( SITE_ADMIN_URL , "http://'.$_SERVER['SERVER_NAME'] .':'.$_SERVER['SERVER_PORT']. dirname($_SERVER['REQUEST_URI']).'/admin/");
+			define ( SITEURL , "http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']. dirname($_SERVER['REQUEST_URI']).'/");
 			
 			?>';
 			
@@ -256,10 +257,9 @@
 			
 			
 			$response['message'] = "Installation Completed";
-			$response['adminURL'] = 'http://'.$_SERVER['SERVER_NAME'] . dirname($_SERVER['REQUEST_URI']).'/admin';
-			$response['siteURL'] = 'http://'.$_SERVER['SERVER_NAME'] . dirname($_SERVER['REQUEST_URI']);
+			$response['adminURL'] = 'http://'.$_SERVER['SERVER_NAME'] .':'.$_SERVER['SERVER_PORT'].dirname($_SERVER['REQUEST_URI']).'/admin';
+			$response['siteURL'] = 'http://'.$_SERVER['SERVER_NAME'] .':'.$_SERVER['SERVER_PORT'].dirname($_SERVER['REQUEST_URI']);
 			$response['success'] = true;
-			
 			}else{
 			$response['message'] = "Failed to connect Database";
 			$response['success'] = false;

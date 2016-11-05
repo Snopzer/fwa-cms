@@ -18,8 +18,8 @@
 				<span id="showMessage"> </span>
                 <span id="installSuccess"></span>
 				<div id="setupdone" style="display:none;">
-				Visit Admin Panel : <a href="" id="adminURL">Manage Site</a><br />
-				Your Blog : <a href="" id="siteURL">Visit Site</a>
+				Visit Admin Panel : <a href="#" id="adminURL">Manage Site</a><br />
+				Your Blog : <a href="#" id="siteURL">Visit Site</a>
 				</div>
 				<form id="installForm" class="setup-div">
 				<h2>Please Fill the Fields</h2>
