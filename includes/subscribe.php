@@ -1,12 +1,5 @@
 <div class="blo-top">
-    <div class="tech-btm">
-        <h5>Report us Tech defeat</h5>
-        <p>write issues and Enhancement</p>
-		<div class="button">
-			<i class="fa fa-bus" aria-hidden="true"></i><a target="_blank" href="https://github.com/Snopzer/techdefeat/issues"><input type="submit" value="Write to Us"></a>
-		</div>
-        <div class="clearfix"> </div>
-	</div>
+    
 </div>
 <!-- display alexa rank-->
 <div class="blo-top">

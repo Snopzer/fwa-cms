@@ -54,7 +54,7 @@
 										$commentCountQuery = $conn->query("SELECT count(id_post) as count from r_comment where id_post=".$postData['id_post']);
 										$commentCount = $commentCountQuery->fetch_assoc();
 										
-										echo $commentCount['count']; ?></a></li>
+										echo $commentCount['count']; ?> comments</a></li>
 								<li><i class="glyphicon glyphicon-heart"> </i><a class="admin"><?php echo $postData['favourites']; ?> favourites </a></li>
 								<li><i class="glyphicon glyphicon-eye-open"> </i><?php echo $postData['views']; ?> views</li>
 							</ul>

@@ -113,20 +113,7 @@
 							<img src="admin/images/<?php echo $result['image'] ?>" class="img-responsive" alt="<?php echo $result['page_heading'] ?>" title="<?php echo $result['page_heading'] ?>">
 						<?php }?>
 						
-						<div class="blog-text">
-							<p>
-								<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-								<!-- Static Text use in Editor -->
-								<ins class="adsbygoogle"
-								style="display:block"
-								data-ad-client="ca-pub-9505794457801858"
-								data-ad-slot="5043535524"
-								data-ad-format="auto"></ins>
-								<script>
-									(adsbygoogle = window.adsbygoogle || []).push({});
-								</script>
-							</p>					
-						</div>
+						
 						<div class="blog-text">
 							<p><?php echo str_replace('\"', '"',str_replace("\'", "'", $result["page_description"])); ?></p>
 						</div>
@@ -148,7 +135,7 @@
 							<ul>
 								<li><i class="glyphicon glyphicon-user"> </i><a class="admin"><?php echo $result['username'] ?> </a></li>
 								<li><i class="glyphicon glyphicon-calendar"> </i><?php echo $result['date_updated'] ?></li>
-								<li><i class="glyphicon glyphicon-comment"> </i><a class="p-blog"><?php echo $result['name'] ?></a></li>
+								<li><i class="glyphicon glyphicon-comment"> </i><a class="p-blog"><?php echo $result['name'] ?></a>comments</li>
 								<!--<li><i class="glyphicon glyphicon-heart"> </i><a class="admin"><?php echo$result['favourites'] ?> favourites </a></li>-->
 								<li><i class="glyphicon glyphicon-eye-open"> </i><?php echo $result['views'] ?> views</li>
 							</ul>
@@ -165,18 +152,7 @@
 						<?php }?>
 						
 					</div>
-					<div class="blog-text">
-						<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-						<!-- Post Page Ad -->
-						<ins class="adsbygoogle"
-						style="display:block"
-						data-ad-client="ca-pub-9505794457801858"
-						data-ad-slot="8875939523"
-						data-ad-format="auto"></ins>
-						<script>
-							(adsbygoogle = window.adsbygoogle || []).push({});
-						</script>
-					</div>
+					
 				</div>
 			<?php } ?>
 			<?php if($showPostDiv == true) {?>
