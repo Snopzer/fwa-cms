@@ -21,7 +21,7 @@
 <!-- footer-bottom -->
 <div class="copyright">
     <div class="container">
-        <p>© <?php echo SITE_COPY_RIGHTS;?> </p>
+        <p>&copy; <?php echo SITE_COPY_RIGHTS;?> </p>
 	</div>
 </div>
 </footer>

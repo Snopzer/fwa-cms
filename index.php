@@ -26,7 +26,6 @@
 		<div class="container">
 			<h2><?php echo SITE_NAME;?></h2> 
 			<p><?php echo SITE_DESCRIPTION;?></p>
-			<a href="contact.php">Contact us for Support</a>
 		</div>
 	</div>
 	

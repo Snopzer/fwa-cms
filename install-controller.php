@@ -246,7 +246,7 @@
 			`google_analytics` text NOT NULL)")or die(mysql_error());
 			
 			
-			$conn->query("INSERT INTO `r_site_details` (`id`, `site_url`, `site_name`,`site_title`, `site_keywords`, `site_description`, `owner_name`, `owner_email`, `admin_page_limit`, `post_description_length`, `admin_mail`, `from_mail`, `reply_to_mail`, `site_copy_rights`, `phone`, `social_facebook_url`, `social_twitter_url`, `social_googleplus_url`, `social_linkedin_url`, `social_behance_url`, `social_vimio_url`, `social_youtube_url`, `contact_mail`, `contact_phone`, `contact_address`) VALUES (1, '".$SITEURL."', 'Your Site','Your Site', 'Keywords', 'Description', 'owner', 'owner mail', 10, 300, 'admin@mail.com', 'info@mail.com', 'replyTo@mail.com', '2016', '123456789', 'facebook', 'twittter', 'g+', 'linkedin', 'behance', 'vimio', 'youtube', 'inf@mail.com', '123456789', 'Address','google_analytics')")or die(mysql_error());
+			$conn->query("INSERT INTO `r_site_details` (`id`, `site_url`, `site_name`,`site_title`, `site_keywords`, `site_description`, `owner_name`, `owner_email`, `admin_page_limit`, `post_description_length`, `admin_mail`, `from_mail`, `reply_to_mail`, `site_copy_rights`, `phone`, `social_facebook_url`, `social_twitter_url`, `social_googleplus_url`, `social_linkedin_url`, `social_behance_url`, `social_vimio_url`, `social_youtube_url`, `contact_mail`, `contact_phone`, `contact_address`,`google_analytics`) VALUES (1, '".$SITEURL."', 'Your Site','Your Site', 'Keywords', 'Description', 'owner', 'owner mail', 10, 300, 'admin@mail.com', 'info@mail.com', 'replyTo@mail.com', '2016', '123456789', 'facebook', 'twittter', 'g+', 'linkedin', 'behance', 'vimio', 'youtube', 'inf@mail.com', '123456789', 'Address','')")or die(mysql_error());
 			
 			
 			
