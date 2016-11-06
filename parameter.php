@@ -8,6 +8,7 @@
 	define ( SITE_KEYWORDS , $siteData['site_keywords']);
 	define ( SITE_DESCRIPTION , $siteData['site_description']);
 	define ( OWNER_NAME , $siteData['owner_name']);
+	define ( GOOGLE_ANALYTICS , $siteData['google_analytics']);
 	
 	/* Admin parameters */
 	define ( ADD_BUTTON , 'Add');

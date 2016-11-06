@@ -152,6 +152,7 @@
 											<li role="presentation" class="active"><a href="#general" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="false">General Details</a></li>
 											<li role="presentation" class=""><a href="#socialmedia" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="true">Social Media</a></li>
 											<li role="presentation" class=""><a href="#seo" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="true">SEO</a></li>
+											<li role="presentation" class=""><a href="#googledetails" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="true">Google Details</a></li>
 										</ul>
 										<div id="myTabContent" class="tab-content">
 											<div role="tabpanel" class="tab-pane fade active in" id="general" aria-labelledby="general-tab">
@@ -295,6 +296,7 @@
 													</div>
 												</div>
 											</div>
+											
 											<div role="tabpanel" class="tab-pane fade" id="seo" aria-labelledby="seo-tab">
 												<div class="form-group">
 													<label for="inputEmail3" class="col-sm-2 control-label hor-form">Site Title</label>
@@ -314,6 +316,14 @@
 													<label for="inputEmail3" class="col-sm-2 control-label ">Site Description</label>
 													<div class="col-sm-8">
 														<textarea  name="site_description" id="site_description" class="form-control"><?php echo  $result["site_description"] ?></textarea> 
+													</div>
+												</div>
+											</div>
+											<div role="tabpanel" class="tab-pane fade" id="googledetails" aria-labelledby="googledetails-tab">
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label ">Google Analytics</label>
+													<div class="col-sm-8">
+														<textarea  name="google_analytics" id="google_analytics" class="form-control"><?php echo  $result["google_analytics"] ?></textarea> 
 													</div>
 												</div>
 											</div>
@@ -344,6 +354,7 @@
 											<li role="presentation" class="active"><a href="#general" id="general-tab" role="tab" data-toggle="tab" aria-controls="general" aria-expanded="false">General Details</a></li>
 											<li role="presentation" class=""><a href="#socialmedia" role="tab" id="socialmedia-tab" data-toggle="tab" aria-controls="socialmedia" aria-expanded="true">Social Media</a></li>
 											<li role="presentation" class=""><a href="#seo" role="tab" id="seo-tab" data-toggle="tab" aria-controls="seo" aria-expanded="true">SEO</a></li>
+											<li role="presentation" class=""><a href="#googledetails" role="tab" id="googledetails-tab" data-toggle="tab" aria-controls="profile" aria-expanded="true">Google Details</a></li>
 										</ul>
 										<div id="myTabContent" class="tab-content">
 											<div role="tabpanel" class="tab-pane fade" id="general" aria-labelledby="general-tab">
@@ -510,7 +521,14 @@
 													</div>
 												</div>
 											</div>
-											
+											<div role="tabpanel" class="tab-pane fade" id="googledetails" aria-labelledby="googledetails-tab">
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-2 control-label ">Google Analytics</label>
+													<div class="col-sm-8">
+														<textarea  name="google_analytics" id="google_analytics" class="form-control"></textarea> 
+													</div>
+												</div>
+											</div>
 											
 										</div>
 									</div>

@@ -25,7 +25,7 @@
 				<h2>Please Fill the Fields</h2>
 				
 				<div class="">
-						<div class="login-mail" id="database_host">
+					<div class="login-mail" id="database_host">
                             <input type="text" id="db_host" name="db_host" placeholder="DATABASE HOST" >
                             <i class="fa fa-desktop"></i>
 						</div>
@@ -82,14 +82,14 @@
 			var db_host = $("#db_host").val();
 			if(db_host=='')
 			{
-			$("#database_host").css({"border-style": "solid", "border-color": "red" });
-			$("#showMessageDiv").show();
-			$("#showMessage").html('<strong>Warning! </strong> Please enter database host.');
-			$("#db_host").focus();
+				$("#database_host").css({"border-style": "solid", "border-color": "red" });
+				$("#showMessageDiv").show();
+				$("#showMessage").html('<strong>Warning! </strong> Please enter database host.');
+				$("#db_host").focus();
 			return false;
 			}
 			else{
-			$("#database_host").css({"border-style": "solid","border-color": "#E9E9E9"});
+				$("#database_host").css({"border-style": "solid","border-color": "#E9E9E9"});
 			}	
 			
 			var db_user = $("#db_user").val();
@@ -249,13 +249,14 @@
 			success: function (response) {
 				if(response["success"]==true)
 				{	
-					$("#showMessage").html(response["message"]);
+					
+					$("#showMessage").html('<div class="alert alert-success"><strong>Success!</strong> '+response["message"]+'</div>');
 					}else{
-					$("#showMessage").html(response["message"]);
+					$("#showMessage").html('<div class="alert alert-warning"><strong>Success!</strong> '+response["message"]+'</div>');
 				}
 			},
 			error: function (request, status, error) {
-				$("#showMessage").html("OOPS! Something Went Wrong Please Try After Sometime!");
+				$("#showMessage").html('<div class="alert alert-info"><strong>Success!</strong> OOPS! Something Went Wrong Please Try After Sometime!</div>');
 			}
 		});
 		return false;
