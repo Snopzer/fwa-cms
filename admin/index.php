@@ -2,7 +2,7 @@
 	session_start();
 	include_once('../config.php');
 	
-	if (!file_exists('config.php')) {
+	if (!file_exists('../config.php')) {
 		header('Location:../install.php');
 	}
 
