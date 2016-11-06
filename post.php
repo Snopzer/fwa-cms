@@ -72,9 +72,9 @@
 				<?php if($showCategoryDiv==true){ ?>
 					<!--category details start -->
 					<div class=" blog-grid2">
-						<?if(!empty($result['image'])) { ?>
-							<img src="images/category/<?= $result['image'] ?>" class="img-responsive" alt="<?= $result['name'] ?>" title="<?= $result['name'] ?>">
-						<? }?>
+						<?php if(!empty($result['image'])) { ?>
+							<img src="images/category/<?php echo $result['image'] ?>" class="img-responsive" alt="<?php echo $result['name'] ?>" title="<?php echo $result['name'] ?>">
+						<?php }?>
 						<div class="blog-text">
 							<h5><?php echo str_replace('\"', '"',str_replace("\'", "'", $result["name"])); ?></h5>
 							<p><?php echo str_replace('\"', '"',str_replace("\'", "'", $result["description"])); ?></p>	
@@ -109,9 +109,9 @@
 						<div class="blog-text">
 							<h5><?php echo $result['page_heading'] ?></h5>
 						</div>
-						<?if(!empty($result['image'])) { ?>
-							<img src="admin/images/<?= $result['image'] ?>" class="img-responsive" alt="<?= $result['page_heading'] ?>" title="<?= $result['page_heading'] ?>">
-						<? }?>
+						<?php if(!empty($result['image'])) { ?>
+							<img src="admin/images/<?php echo $result['image'] ?>" class="img-responsive" alt="<?php echo $result['page_heading'] ?>" title="<?php echo $result['page_heading'] ?>">
+						<?php }?>
 						
 						<div class="blog-text">
 							<p>
@@ -131,7 +131,7 @@
 							<p><?php echo str_replace('\"', '"',str_replace("\'", "'", $result["page_description"])); ?></p>
 						</div>
 					</div>
-				<? } ?>
+				<?php } ?>
 				
 				<?php if($showUserDiv == true) {?>
 					
@@ -141,9 +141,9 @@
 						<div class="blog-text">
 							<h5><?php echo $result['title'] ?></h5>
 						</div>
-						<?if(!empty($result['image'])) { ?>
-							<img src="images/post/<?= $result['image'] ?>" class="img-responsive" alt="<?= $result['title'] ?>" title="<?= $result['title'] ?>">
-						<? }?>
+						<?php if(!empty($result['image'])) { ?>
+							<img src="images/post/<?php echo $result['image'] ?>" class="img-responsive" alt="<?php echo $result['title'] ?>" title="<?php echo $result['title'] ?>">
+						<?php }?>
 						<div class="blog-poast-info">
 							<ul>
 								<li><i class="glyphicon glyphicon-user"> </i><a class="admin"><?php echo $result['username'] ?> </a></li>
