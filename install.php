@@ -84,7 +84,7 @@
 			{
 				$("#database_host").css({"border-style": "solid", "border-color": "red" });
 				$("#showMessageDiv").show();
-				$("#showMessage").html('<strong>Warning! </strong> Please enter database host.');
+				$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter database host.</div>');
 				$("#db_host").focus();
 			return false;
 			}
@@ -97,31 +97,20 @@
 			{
 			$("#database_user").css({"border-style": "solid", "border-color": "red" });
 			$("#showMessageDiv").show();
-			$("#showMessage").html('<strong>Warning! </strong> Please enter yourdatabase username.');
+			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter yourdatabase username.</div>');
 			$("#db_user").focus();
 			return false;
 			}
 			else{
 			$("#database_user").css({"border-style": "solid","border-color": "#E9E9E9"});
 			}	
-			// var db_password = $("#db_password").val();
-			// if(db_password=='')
-			// {
-			// $("#database_password").css({"border-style": "solid", "border-color": "red" });
-			// $("#showMessageDiv").show();
-			// $("#showMessage").html('<strong>Warning! </strong> Please enter your database password.');
-			// $("#db_password").focus();
-			// return false;
-			// }
-			// else{
-			// $("#database_password").css({"border-style": "solid","border-color": "#E9E9E9"});
-			// }	
+
 			var db_name = $("#db_name").val();
 			if(db_name=='')
 			{
 			$("#database_name").css({"border-style": "solid", "border-color": "red" });
 			$("#showMessageDiv").show();
-			$("#showMessage").html('<strong>Warning! </strong> Please enter database name.');
+			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter database name.</div>');
 			$("#db_name").focus();
 			return false;
 			}
@@ -133,7 +122,7 @@
 			{
 			$("#username_field").css({"border-style": "solid", "border-color": "red" });
 			$("#showMessageDiv").show();
-			$("#showMessage").html('<strong>Warning! </strong> Please enter username.');
+			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter username.</div>');			
 			$("#td_username").focus();
 			return false;
 			}
@@ -146,7 +135,7 @@
 			{
 			$("#password_field").css({"border-style": "solid", "border-color": "red" });
 			$("#showMessageDiv").show();
-			$("#showMessage").html('<strong>Warning! </strong> Please enter yourdatabase username.');
+			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter yourdatabase username.</div>');
 			$("#td_password").focus();
 			return false;
 			}
@@ -158,7 +147,7 @@
 			{
 			$("#email_field").css({"border-style": "solid", "border-color": "red" });
 			$("#showMessageDiv").show();
-			$("#showMessage").html('<strong>Warning! </strong> Please enter database name.');
+			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter database name.</div>');
 			$("#td_email").focus();
 			return false;
 			}
@@ -174,18 +163,18 @@
 				if(response["success"]==true)
 				{	
 					
-					$("#showMessage").html(response["message"]);
+					$("#showMessage").html('<div class="alert alert-success"><strong>Success</strong> '+response["message"]+'</div>');
 					$(".setup-div").hide();
 					$("#setupdone").show();
 					$("#adminURL").attr("href",response["adminURL"]);
 					$("#siteURL").attr("href",response["siteURL"]);
 					$("#installSuccess").show();
 					}else{
-					$("#showMessage").html(response["message"]);
+					$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> '+response["message"]+'</div>');
 				}
 			},
 			error: function (request, status, error) {
-				$("#showMessage").html("OOPS! Something Went Wrong Please Try After Sometime!");
+				$("#showMessage").html('<div class="alert alert-info"><strong>OOPS!</strong> Something Went Wrong Please Try After Sometime</div>');
 			}
 		});
 	});
@@ -197,7 +186,7 @@
 			{
 			$("#database_host").css({"border-style": "solid", "border-color": "red" });
 			$("#showMessageDiv").show();
-			$("#showMessage").html('<strong>Warning! </strong> Please enter database host.');
+			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter database host</div>');
 			$("#db_host").focus();
 			return false;
 			}
@@ -210,31 +199,20 @@
 			{
 			$("#database_user").css({"border-style": "solid", "border-color": "red" });
 			$("#showMessageDiv").show();
-			$("#showMessage").html('<strong>Warning! </strong> Please enter yourdatabase username.');
+			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter yourdatabase username</div>');
 			$("#db_user").focus();
 			return false;
 			}
 			else{
 			$("#database_user").css({"border-style": "solid","border-color": "#E9E9E9"});
 			}	
-			// var db_password = $("#db_password").val();
-			// if(db_password=='')
-			// {
-			// $("#database_password").css({"border-style": "solid", "border-color": "red" });
-			// $("#showMessageDiv").show();
-			// $("#showMessage").html('<strong>Warning! </strong> Please enter your database password.');
-			// $("#db_password").focus();
-			// return false;
-			// }
-			// else{
-			// $("#database_password").css({"border-style": "solid","border-color": "#E9E9E9"});
-			// }	
+
 			var db_name = $("#db_name").val();
 			if(db_name=='')
 			{
 			$("#database_name").css({"border-style": "solid", "border-color": "red" });
 			$("#showMessageDiv").show();
-			$("#showMessage").html('<strong>Warning! </strong> Please enter database name.');
+			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter database name</div>');
 			$("#db_name").focus();
 			return false;
 			}
@@ -256,7 +234,7 @@
 				}
 			},
 			error: function (request, status, error) {
-				$("#showMessage").html('<div class="alert alert-info"><strong>Success!</strong> OOPS! Something Went Wrong Please Try After Sometime!</div>');
+				$("#showMessage").html('<div class="alert alert-info"><strong>OOPS!</strong> Error in Connecting Database!</div>');
 			}
 		});
 		return false;

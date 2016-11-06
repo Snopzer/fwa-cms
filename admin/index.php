@@ -1,6 +1,12 @@
 <?php
 	session_start();
 	include_once('../config.php');
+	
+	if (!file_exists('config.php')) {
+		header('Location:../install.php');
+	}
+
+	
 	include_once('../parameter.php');
 	if (isset($_SESSION['id'])) {
 		header('location:home.php');
