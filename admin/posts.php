@@ -89,7 +89,7 @@
 								<?php	while ($post = $selectPostList->fetch_assoc()) {	?>
 									<tr class="table-row <?php echo ($post["status"]==1)?'warning':'danger'; ?>">
 										<td class="table-img"><input type="checkbox" name="selectcheck" value="<?= $post["id_post"] ?>"></td>
-										<td class="march"><h6><?php echo  $post["title"] ?></h6></td>
+										<td class="march"><h6><?php echo  str_replace('\"', '"',str_replace("\'", "'", $post["title"])) ?></h6></td>
 										<td class="march desktop"><h6><?php echo  $post["date_added"] ?></h6></td>
 										<td class="march desktop"><h6><?php echo ($post["status"]==1)?'Enable':'Disable'; ?></h6></td>
 										<td><a href="posts.php?id=<?php echo  $post["id_post"] ?>&action=edit&page=<?php echo  "$page"?>"><span class="label label-primary"><i class="fa fa-pencil white" aria-hidden="true"></i></span><a/>
@@ -163,20 +163,23 @@
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Title</label>
 								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["title"] ?>" id="title" name="title" placeholder="title">
+									<input type="text" class="form-control" value="<?php echo  str_replace('\"', '"',str_replace("\'", "'", $result["title"])) ?>" id="title" name="title" placeholder="title">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Short Description</label>
 								<div class="col-sm-8">
-									<textarea  name="short_description" class="form-control" rows="6"><?php echo str_replace("\'", "'", $result["short_description"]); ?></textarea>  
+									<textarea  name="short_description" class="form-control" rows="6">
+										<?php echo  str_replace('\"', '"',str_replace("\'", "'", $result["short_description"])) ?>
+									</textarea>  
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label hor-form ">Description</label>
 								<div class="col-sm-8">
 									<textarea name="description" id="description" class="form-control" rows="6">
-									<?php echo str_replace("\'", "'", $result["description"]); ?></textarea> 
+									<?php echo  str_replace('\"', '"',str_replace("\'", "'", $result["description"])) ?>
+									</textarea> 
 								</div>
 							</div>
 							<div class="form-group">
@@ -203,21 +206,21 @@
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Meta Title</label>
 								<div class="col-sm-8">
-									<input type="text" class="form-control" value="<?php echo  $result["meta_title"] ?>" id="meta_title" name="meta_title" placeholder="meta_title">
+									<input type="text" class="form-control" value="<?php echo  str_replace('\"', '"',str_replace("\'", "'", $result["meta_title"])) ?>" id="meta_title" name="meta_title" placeholder="meta_title">
 								</div>
 							</div>
 							
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Meta Keywords</label>
 								<div class="col-sm-8">
-									<textarea  name="meta_keywords" class="form-control" rows="6"><?php echo  $result["meta_keywords"] ?></textarea> 
+									<textarea  name="meta_keywords" class="form-control" rows="6"><?php echo  str_replace('\"', '"',str_replace("\'", "'", $result["meta_keywords"])) ?></textarea> 
 								</div>
 							</div>
 							
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Meta Description</label>
 								<div class="col-sm-8">
-									<textarea  name="meta_description" class="form-control" rows="6"><?php echo  $result["meta_description"] ?></textarea> 
+									<textarea  name="meta_description" class="form-control" rows="6"><?php echo  str_replace('\"', '"',str_replace("\'", "'", $result["meta_description"])) ?></textarea> 
 								</div>
 							</div>
 							<div class="grid-hor">
@@ -260,13 +263,13 @@
 					 		<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Source</label>
 								<div class="col-sm-8">
-									<input type="text" class="form-control" name="source" value="<?php echo  $result["source"] ?>">
+									<input type="text" class="form-control" name="source" value="<?php echo  str_replace('\"', '"',str_replace("\'", "'", $result["source"])) ?>">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-2 control-label hor-form">Image Surce</label>
 								<div class="col-sm-8">
-									<input type="text" class="form-control" name="image_source" value="<?php echo  $result["image_source"] ?>">
+									<input type="text" class="form-control" name="image_source" value="<?php echo  str_replace('\"', '"',str_replace("\'", "'", $result["image_source"])) ?>">
 								</div>
 							</div>
 							

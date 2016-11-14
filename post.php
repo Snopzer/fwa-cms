@@ -93,9 +93,9 @@
 										<img class="article-short-image" width="100" height="100" src="images/post/<?php echo $post['image']?>">
 									</a>
 								</div>
-							<?php } ?>
+								<?php } ?>
                             <div class="media-body">
-                                <a href="<?php echo SITEURL?><?php echo $post['seourl']?>"><h4 class="media-heading"><?php echo $post['title'] ?></h4></a>
+                                <a href="<?php echo SITEURL?><?php echo $post['seourl']?>"><h4 class="media-heading"><?php echo str_replace('\"', '"',str_replace("\'", "'",  $post['title'])); ?></h4></a>
 								<p><?php echo substr(str_replace('\"', '"',str_replace("\'", "'", $post["short_description"])),0,POST_DESCRIPTION_LENGTH); ?>....<a href="<?php echo SITEURL?><?php echo $post['seourl']?>">Read More.</a></p>
 							</div><br /> 
                             <?php
@@ -126,7 +126,7 @@
 				<?php if($showPostDiv == true) {?>
 					<div class=" blog-grid2">
 						<div class="blog-text">
-							<h5><?php echo $result['title'] ?></h5>
+							<h5><?php echo str_replace('\"', '"',str_replace("\'", "'", $result["title"])); ?></h5>
 						</div>
 						<?php if(!empty($result['image'])) { ?>
 							<img src="images/post/<?php echo $result['image'] ?>" class="img-responsive" alt="<?php echo $result['title'] ?>" title="<?php echo $result['title'] ?>">
@@ -135,7 +135,7 @@
 							<ul>
 								<li><i class="glyphicon glyphicon-user"> </i><a class="admin"><?php echo $result['username'] ?> </a></li>
 								<li><i class="glyphicon glyphicon-calendar"> </i><?php echo $result['date_updated'] ?></li>
-								<li><i class="glyphicon glyphicon-comment"> </i><a class="p-blog"><?php echo $result['name'] ?></a>comments</li>
+								<li><i class="glyphicon glyphicon-comment"> </i><a class="p-blog"><?php echo $result['name'] ?></a></li>
 								<!--<li><i class="glyphicon glyphicon-heart"> </i><a class="admin"><?php echo$result['favourites'] ?> favourites </a></li>-->
 								<li><i class="glyphicon glyphicon-eye-open"> </i><?php echo $result['views'] ?> views</li>
 							</ul>

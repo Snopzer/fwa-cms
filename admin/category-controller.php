@@ -31,6 +31,7 @@
 			if($categoryid)
 			{
 				/*seo url start*/
+				$seo_url  = strtolower(preg_replace('/\s+/', '-', $seo_url));
 				$conn->query("INSERT INTO  `r_seo_url` (seo_url ,`id_category`) VALUES (  '".$seo_url."',  '".$categoryid."')");
 				/*seo url end*/
 				
@@ -80,8 +81,7 @@
 		$editCategory = $conn->query("update r_category SET name='".$name."',description='".$description."',meta_title='".$meta_title."',meta_keywords='".$meta_keywords."',meta_description='".$meta_description."',status='".$status."',image='".$pic."',sort_order='".$sort_order."'where id_category='".$id."' ");
 		if ($editCategory) {
 			/*seo url start*/
-			$seo_url  			= preg_replace('/\s+/', '-', $seo_url);
-			$seo_url 			= strtolower($seo_url);
+			$seo_url  = strtolower(preg_replace('/\s+/', '-', $seo_url));
 			$seoCheck = $conn->query("UPDATE  `r_seo_url` SET `seo_url`='".$seo_url."' where id_category=".$id);
 			if($conn->affected_rows!=1)
 			{

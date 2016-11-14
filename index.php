@@ -41,8 +41,8 @@
 							</div>
 							<a class="blog blue"><?php echo $postData['name']; ?></a>
 						<?php } ?>
-						<h3> <a href="<?php echo SITEURL?><?php echo $postData['seo_url']?>"><?php echo $postData['title'] ?></a></h3>
-						<p><?php echo substr($postData['short_description'],0,POST_DESCRIPTION_LENGTH); ?>....<a href="<?php echo SITEURL?><?php echo $postData['seo_url']?>">Read More.</a></p>
+						<h3> <a href="<?php echo SITEURL?><?php echo $postData['seo_url']?>"><?php echo  str_replace('\"', '"',str_replace("\'", "'", $postData["title"])) ?></a></h3>
+						<p><?php echo substr(str_replace('\"', '"',str_replace("\'", "'", $postData['short_description'])),0,POST_DESCRIPTION_LENGTH); ?>....<a href="<?php echo SITEURL?><?php echo $postData['seo_url']?>">Read More.</a></p>
 						<div class="blog-poast-info">
 							<ul>
 								<li><i class="glyphicon glyphicon-user"> </i><a class="admin" href="#"><?php echo $postData['user']; ?> </a></li>
@@ -52,8 +52,12 @@
 										
 										$commentCountQuery = $conn->query("SELECT count(id_post) as count from r_comment where id_post=".$postData['id_post']);
 										$commentCount = $commentCountQuery->fetch_assoc();
-										
-										echo $commentCount['count']; ?> comments</a></li>
+										if($commentCount > 0){
+											echo $commentCount['count'];
+										}else{
+											echo '0';
+										}
+										 ?> comments</a></li>
 								<li><i class="glyphicon glyphicon-heart"> </i><a class="admin"><?php echo $postData['favourites']; ?> favourites </a></li>
 								<li><i class="glyphicon glyphicon-eye-open"> </i><?php echo $postData['views']; ?> views</li>
 							</ul>
