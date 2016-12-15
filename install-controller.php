@@ -37,7 +37,7 @@
 		$conn = mysqli_connect($db_host, $db_user, $db_password,$db_name);
 		if($conn)
 		{
-						
+			
 			//$response['message'] = "Connected to Database successfully";
 			//$response['success'] = true;
 			$SITEURL = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].dirname($_SERVER['REQUEST_URI']).'/';
@@ -109,9 +109,26 @@
 			KEY `meta_title` (`meta_title`)
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci ;")or die(mysql_error());
 			
+			
+			
+			
 			$conn->query("INSERT INTO `r_user` (`id_user`, `id_user_role`, `name`, `phone`, `department`, `email`, `password`, `status`, `activate_link`, `skills`, `id_country`, `image`, `meta_title`, `meta_keywords`, `meta_description`) VALUES
 			(1, 1, '".$insdata['fwa_username']."', '123456789', '".$insdata['fwa_username']."', '".$insdata['fwa_email']."', '".md5($insdata['fwa_password'])."', 1, '', '".$insdata['fwa_username']."', 1, '', '', '', '')")or die(mysql_error());
 			/* create user table */
+			
+			$userid=$conn->insert_id;
+			$seo_url  = strtolower(preg_replace('/\s+/', '-', $insdata['fwa_username']));
+			
+			$conn->query("CREATE TABLE IF NOT EXISTS `r_seo_url` (
+			`id_seo_url` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+			`seo_url` varchar(150) COLLATE latin1_general_ci NOT NULL UNIQUE KEY,
+			`id_category` int(11) DEFAULT '0',
+			`id_post` int(11) DEFAULT '0',
+			`id_page` int(11) DEFAULT '0',
+			`id_user` int(11) DEFAULT '0'
+			) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;")or die(mysql_error());
+			
+			$conn->query("INSERT INTO `r_seo_url` (`seo_url` , `id_user` ) VALUES ('".$seo_url."', '".$userid."')")or die(mysql_error());
 			
 			
 			$conn->query("CREATE TABLE IF NOT EXISTS `r_category` (
@@ -205,17 +222,6 @@
 			`source` varchar(255) COLLATE latin1_general_ci NOT NULL,
 			`image_source` varchar(255) COLLATE latin1_general_ci NOT NULL
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;")or die(mysql_error());
-			
-			
-			$conn->query("CREATE TABLE IF NOT EXISTS `r_seo_url` (
-			`id_seo_url` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-			`seo_url` varchar(150) COLLATE latin1_general_ci NOT NULL UNIQUE KEY,
-			`id_category` int(11) DEFAULT '0',
-			`id_post` int(11) DEFAULT '0',
-			`id_page` int(11) DEFAULT '0',
-			`id_user` int(11) DEFAULT '0'
-			) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;")or die(mysql_error());
-			
 			
 			
 			$conn->query("CREATE TABLE `r_site_details` (`id` int(11) NOT NULL,

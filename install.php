@@ -17,15 +17,26 @@
 				
 				<span id="showMessage"> </span>
                 <span id="installSuccess"></span>
-				<div id="setupdone" style="display:none;">
-				Visit Admin Panel : <a href="#" id="adminURL">Manage Site</a><br />
-				Your Blog : <a href="#" id="siteURL">Visit Site</a>
-				</div>
-				<form id="installForm" class="setup-div">
-				<h2>Please Fill the Fields</h2>
 				
-				<div class="">
-					<div class="login-mail" id="database_host">
+				<div id="setupdone" style="display:none;">
+					<div>
+						<a href="#" id="adminURL">
+							<img src="install/image/admin.png" style="float:left" width="300" height="200" alt="Admin Panel">
+						</a>
+					</div>
+					
+					<div>
+						<a href="#" id="siteURL">
+							<img src="install/image/front-end.png" style="float:right" width="300" height="200" alt="Blog">
+						</a>
+					</div>
+				</div>
+				
+				<form id="installForm" class="setup-div">
+					<h2>Please Fill the Fields</h2>
+					
+					<div class="">
+						<div class="login-mail" id="database_host">
                             <input type="text" id="db_host" name="db_host" placeholder="DATABASE HOST" >
                             <i class="fa fa-desktop"></i>
 						</div>
@@ -47,114 +58,114 @@
 					<h2>Please Fill User Details</h2>
                     <div class="">
 						<div class="login-mail" id="username_field">
-                            <input type="text" id="td_username" name="fwa_username" placeholder="USERNAME" >
-                            <i class="fa fa-user"></i>
+							<input type="text" id="td_username" name="fwa_username" placeholder="USERNAME" >
+							<i class="fa fa-user"></i>
 						</div>
 						<div class="login-mail" id="password_field">
-                            <input type="text" id="td_password" name="fwa_password" placeholder="PASSWORD" >
-                            <i class="fa fa-lock"></i>
+							<input type="text" id="td_password" name="fwa_password" placeholder="PASSWORD" >
+							<i class="fa fa-lock"></i>
 						</div>
 						<div class="login-mail" id="email_field">
-                            <input type="text" id="td_email" name="fwa_email" placeholder="EMAIL" >
-                            <i class="fa fa-lock"></i>
+							<input type="text" id="td_email" name="fwa_email" placeholder="EMAIL" >
+							<i class="fa fa-lock"></i>
 						</div>
 					</div>
 					
 				</form>
-					<div class="text-center setup-div">
-						<button id="install" class="btn btn-warning submit-button" >Install</button>
-						<span id="Reset" class="btn btn-warning submit-button" >Reset</span>
-					</div>
+				<div class="text-center setup-div">
+					<button id="install" class="btn btn-warning submit-button" >Install</button>
+					<span id="Reset" class="btn btn-warning submit-button" >Reset</span>
+				</div>
 				
 				<div class="clearfix"> </div>
 				
 			</div>
 		</div>
-        <div class="copy-right"><p> &copy; 2016 FWACMS All Rights Reserved </p></div>  
-        <script src="js/jquery.nicescroll.js"></script>
-        <script src="js/scripts.js"></script>
+		<div class="copy-right"><p> &copy; 2016 FWACMS All Rights Reserved </p></div>  
+		<script src="js/jquery.nicescroll.js"></script>
+		<script src="js/scripts.js"></script>
 	</body>
 </html>
 
 <script type="text/javascript" language="JavaScript">
 	$("#install").click(function(){
-	
-			var db_host = $("#db_host").val();
-			if(db_host=='')
-			{
-				$("#database_host").css({"border-style": "solid", "border-color": "red" });
-				$("#showMessageDiv").show();
-				$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter database host.</div>');
-				$("#db_host").focus();
+		
+		var db_host = $("#db_host").val();
+		if(db_host=='')
+		{
+			$("#database_host").css({"border-style": "solid", "border-color": "red" });
+			$("#showMessageDiv").show();
+			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter database host.</div>');
+			$("#db_host").focus();
 			return false;
-			}
-			else{
-				$("#database_host").css({"border-style": "solid","border-color": "#E9E9E9"});
-			}	
-			
-			var db_user = $("#db_user").val();
-			if(db_user=='')
-			{
+		}
+		else{
+			$("#database_host").css({"border-style": "solid","border-color": "#E9E9E9"});
+		}	
+		
+		var db_user = $("#db_user").val();
+		if(db_user=='')
+		{
 			$("#database_user").css({"border-style": "solid", "border-color": "red" });
 			$("#showMessageDiv").show();
 			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter yourdatabase username.</div>');
 			$("#db_user").focus();
 			return false;
-			}
-			else{
+		}
+		else{
 			$("#database_user").css({"border-style": "solid","border-color": "#E9E9E9"});
-			}	
-
-			var db_name = $("#db_name").val();
-			if(db_name=='')
-			{
+		}	
+		
+		var db_name = $("#db_name").val();
+		if(db_name=='')
+		{
 			$("#database_name").css({"border-style": "solid", "border-color": "red" });
 			$("#showMessageDiv").show();
 			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter database name.</div>');
 			$("#db_name").focus();
 			return false;
-			}
-			else{
+		}
+		else{
 			$("#database_name").css({"border-style": "solid","border-color": "#E9E9E9"});
 		}
 		var td_username = $("#td_username").val();
-			if(td_username=='')
-			{
+		if(td_username=='')
+		{
 			$("#username_field").css({"border-style": "solid", "border-color": "red" });
 			$("#showMessageDiv").show();
 			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter username.</div>');			
 			$("#td_username").focus();
 			return false;
-			}
-			else{
+		}
+		else{
 			$("#username_field").css({"border-style": "solid","border-color": "#E9E9E9"});
-			}	
-			
-			var td_password = $("#td_password").val();
-			if(td_password=='')
-			{
+		}	
+		
+		var td_password = $("#td_password").val();
+		if(td_password=='')
+		{
 			$("#password_field").css({"border-style": "solid", "border-color": "red" });
 			$("#showMessageDiv").show();
 			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter yourdatabase username.</div>');
 			$("#td_password").focus();
 			return false;
-			}
-			else{
+		}
+		else{
 			$("#password_field").css({"border-style": "solid","border-color": "#E9E9E9"});
-			}	
-			var td_email = $("#td_email").val();
-			if(td_email=='')
-			{
+		}	
+		var td_email = $("#td_email").val();
+		if(td_email=='')
+		{
 			$("#email_field").css({"border-style": "solid", "border-color": "red" });
 			$("#showMessageDiv").show();
 			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter database name.</div>');
 			$("#td_email").focus();
 			return false;
-			}
-			else{
+		}
+		else{
 			$("#email_field").css({"border-style": "solid","border-color": "#E9E9E9"});
 		}
-	$.ajax({
+		$.ajax({
 			url: "install-controller.php",
 			method: "POST",
 			data: { installData : $("#installForm").serialize(), 'action':'install'},
@@ -181,42 +192,42 @@
 	$("#TestConnection").click(function(){
 		
 		
-			var db_host = $("#db_host").val();
-			if(db_host=='')
-			{
+		var db_host = $("#db_host").val();
+		if(db_host=='')
+		{
 			$("#database_host").css({"border-style": "solid", "border-color": "red" });
 			$("#showMessageDiv").show();
 			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter database host</div>');
 			$("#db_host").focus();
 			return false;
-			}
-			else{
+		}
+		else{
 			$("#database_host").css({"border-style": "solid","border-color": "#E9E9E9"});
-			}	
-			
-			var db_user = $("#db_user").val();
-			if(db_user=='')
-			{
+		}	
+		
+		var db_user = $("#db_user").val();
+		if(db_user=='')
+		{
 			$("#database_user").css({"border-style": "solid", "border-color": "red" });
 			$("#showMessageDiv").show();
 			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter yourdatabase username</div>');
 			$("#db_user").focus();
 			return false;
-			}
-			else{
+		}
+		else{
 			$("#database_user").css({"border-style": "solid","border-color": "#E9E9E9"});
-			}	
-
-			var db_name = $("#db_name").val();
-			if(db_name=='')
-			{
+		}	
+		
+		var db_name = $("#db_name").val();
+		if(db_name=='')
+		{
 			$("#database_name").css({"border-style": "solid", "border-color": "red" });
 			$("#showMessageDiv").show();
 			$("#showMessage").html('<div class="alert alert-warning"><strong>Warning!</strong> Please enter database name</div>');
 			$("#db_name").focus();
 			return false;
-			}
-			else{
+		}
+		else{
 			$("#database_name").css({"border-style": "solid","border-color": "#E9E9E9"});
 		}
 		$.ajax({

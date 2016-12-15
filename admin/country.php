@@ -47,17 +47,8 @@
 									</tbody>
 								</table>
 							</div>
-                            <form name="frmMain" action="country.php?type=search" method="post">
+                            <form name="frmMain" method="post">
                                 <table class="table"> 
-									
-                                    <tr class="table-row">
-                                        <td class="table-img">&nbsp;</td>
-                                        <td class="march"><h6><input class="form-control" type="text" name="search"></h6></td>
-                                        <td class="march"><h6><input class="btn btn-default" type="submit"  ></h6></td>                                
-                                        <!--<td class="table-text"><h6>Password</h6></td>
-											<td class="table-text"><h6>Skills</h6></td>
-										<td class="table-text"><h6>Country</h6></td>-->
-									</tr>
 									
                                     <tr class="table-row">
                                         <td class="table-img">
