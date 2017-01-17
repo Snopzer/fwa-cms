@@ -12,7 +12,7 @@ Run Install.php File
 Fill the Requreired Database configuration Files. and login Details
 That`t it.
 
-If you have any Queries or Issues or Complement write us : http://snopzer.com/contact.html
+If you have any Queries or Issues or Complement write us : info@snopzer.com
 
 Cheers. 
 Snopzer.com
