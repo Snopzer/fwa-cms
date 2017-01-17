@@ -8,14 +8,25 @@
 		$db_name		=	$insdata['db_name'];	
 		
 		//Check databse exist or not.
-		$conn = mysqli_connect($db_host, $db_user, $db_password,$db_name);
+		$conn = mysqli_connect($db_host, $db_user, $db_password);
 		if($conn)
 		{
-			$response['message'] = "Connected to Database successfully";
-			$response['success'] = true;
-			
-			}else{
-			$response['message'] = "Failed to connect Database";
+				$sql = "CREATE DATABASE ".$db_name;
+				if ($conn->query($sql) === TRUE) {
+					$response['message'] = "New Database Created successfully";
+					$response['success'] = true;
+				} else {
+					$response['message'] = "wrong Database Connection Details";
+					$response['success'] = false;
+				}
+				
+			$connDB = mysqli_connect($db_host, $db_user, $db_password,$db_name);
+			if($connDB){
+				$response['message'] = "Connected to Database successfully";
+				$response['success'] = true;
+			}	
+		}else{
+			$response['message'] = "wrong Database Connection Details";
 			$response['success'] = false;
 		}
 		echo json_encode($response);

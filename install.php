@@ -20,13 +20,13 @@
 				
 				<div id="setupdone" style="display:none;">
 					<div>
-						<a href="#" id="adminURL">
+						<a target="_blank" href="#" id="adminURL">
 							<img src="install/image/admin.png" style="float:left" width="300" height="200" alt="Admin Panel">
 						</a>
 					</div>
 					
 					<div>
-						<a href="#" id="siteURL">
+						<a target="_blank" href="#" id="siteURL">
 							<img src="install/image/front-end.png" style="float:right" width="300" height="200" alt="Blog">
 						</a>
 					</div>
