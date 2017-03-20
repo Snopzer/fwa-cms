@@ -1,18 +1,26 @@
-FWA CMS Demo Application
+FWA CMS Application
+	Create your own Blog, Corporate Website in Minutes, Try FWACMS Now.
 
-Software's are required to Run FWA CMS Application 
+How to install FWACMS
+  Download FWACMS
+    The latest version of FWACMS can be downloaded from the SNOPZER website (recommended)
 
-1. Technology : PHP 5+ 
-2. Database : mySQL 
-3. Server : Apache 
-4. Browser : IE,Firefox,Chrome
+  Upload files to your server
+    Upload to your web server established and the FWACMS archive extracted. We will now use File Transfer Protocol (FTP) client to upload   these uncompressed files to a web server.
 
-Instuction to Use FWA CMS Application
-Run Install.php File 
-Fill the Requreired Database configuration Files. and login Details
-That`t it.
+  Run automatic installer
+   Goto the FWACMS location and it will install automatically.
 
-If you have any Queries or Issues or Complement write us : info@snopzer.com
+	
+	
+Requirements
+These are minimum requirements needed so that FWACMS can be installed and work properly.
+
+	Web Server (Apache suggested)
+	PHP (at least 5.4)
+	Database (MySQLi suggested)
+
+	If you have any Queries or Issues or Complement write us : info@snopzer.com
 
 Cheers. 
 Snopzer.com
