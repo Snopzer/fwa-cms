@@ -1356,7 +1356,7 @@ label.control-label {
 }
 /*--signin--*/
 .login {
-	padding: 8em 0 0;
+	padding: 2em 0 0;
 }
 .login-bottom{
 	width: 40%;
@@ -2086,7 +2086,7 @@ tr.table-row {
 }
 /*--footer--*/
 .copy-right {
-    padding-top: 5em;
+    /*padding-top: 5em;*/
     text-align: center;
 }
 .copy{
