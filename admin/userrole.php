@@ -6,7 +6,7 @@
 		
 		header('location:index.php');
 	}
-	$userQuery = $conn->query("SELECT * FROM r_user_role order by id_user_role desc")or die(mysqli_error());
+	$userQuery = $conn->query("SELECT * FROM r_user_role order by id_user_role desc");
 	$userCount = mysqli_num_rows($userQuery);
 	$pages = $userCount / ADMIN_PAGE_LIMIT;
 	$pages = ceil($pages);
@@ -21,7 +21,7 @@
 		$page1 = ($page * ADMIN_PAGE_LIMIT) - ADMIN_PAGE_LIMIT;
 	}
 	
-	$userList = $conn->query("SELECT * FROM r_user_role order by id_user_role desc limit $page1,".ADMIN_PAGE_LIMIT)or die(mysqli_error());
+	$userList = $conn->query("SELECT * FROM r_user_role order by id_user_role desc limit $page1,".ADMIN_PAGE_LIMIT);
 ?>  
 <?php include_once('includes/header.php'); ?>
 <?php include_once('includes/menu.php'); ?>
@@ -149,7 +149,7 @@
 									$id = $_GET['id'];
 								}
 								$page = $_GET['page'];
-								$query = $conn->query("select * from r_user_role  where id_user_role=$id")or die(mysql_error());
+								$query = $conn->query("select * from r_user_role  where id_user_role=$id");
 								$result = $query->fetch_assoc();
 							?>
                             <form class="form-horizontal" action="userrole-controller.php" method="post">
@@ -252,7 +252,7 @@
                     alert("Select Only One checkbox to edit");
 				} else
                 {
-                    window.location.href = "userrole.php?action=edit&page=<? echo "$page"?>&id=" + arrval[0];
+                    window.location.href = "userrole.php?action=edit&page=<?php echo "$page"?>&id=" + arrval[0];
 				}
 			}
 		}

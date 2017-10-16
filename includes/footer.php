@@ -4,7 +4,7 @@
         <ul>
             <li><a href="index.php">Home</a></li>
 			<?php							
-				$PagesQuery = $conn->query("SELECT seo.seo_url as seo_url, pg.* FROM r_page pg,r_seo_url seo where pg.id_page=seo.id_page order by pg.id_page desc")or die(mysql_error());							
+				$PagesQuery = $conn->query("SELECT seo.seo_url as seo_url, pg.* FROM r_page pg,r_seo_url seo where pg.id_page=seo.id_page order by pg.id_page desc");							
 				if(mysqli_num_rows($PagesQuery)>0){
 				?>
 				<?php

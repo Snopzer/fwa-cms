@@ -30,9 +30,9 @@
 	}
 	
 	if($_SESSION['id_user_role']==1){
-		$selectPostList = $conn->query("SELECT * FROM r_post order by id_post desc limit ".$page1.",".ADMIN_PAGE_LIMIT)or die(mysqli_error());
+		$selectPostList = $conn->query("SELECT * FROM r_post order by id_post desc limit ".$page1.",".ADMIN_PAGE_LIMIT);
 	}else{
-		$selectPostList = $conn->query("SELECT * FROM r_post where id_user=".$_SESSION['id']." order by id_post desc limit ".$page1.",".ADMIN_PAGE_LIMIT)or die(mysqli_error());
+		$selectPostList = $conn->query("SELECT * FROM r_post where id_user=".$_SESSION['id']." order by id_post desc limit ".$page1.",".ADMIN_PAGE_LIMIT);
 	}
 ?>  
 <?php include_once('includes/header.php'); ?>
@@ -144,9 +144,9 @@
 							$page=$_GET['page'];
 							if($_SESSION['id_user_role']==1){
 								$query = $conn->query("select p.id_user as userId,p.id_category as category , p.*,su.* from r_post p
-								LEFT JOIN r_seo_url su ON su.id_post = p.id_post WHERE p.id_post=$id")or die(mysqli_error());
+								LEFT JOIN r_seo_url su ON su.id_post = p.id_post WHERE p.id_post=$id");
 							}else{
-								$query = $conn->query("select p.id_user as userId,p.id_category as category , p.*,su.* from r_post p LEFT JOIN r_seo_url su ON su.id_post = p.id_post WHERE p.id_post=$id and p.id_user=".$_SESSION['id']."")or die(mysqli_error());	
+								$query = $conn->query("select p.id_user as userId,p.id_category as category , p.*,su.* from r_post p LEFT JOIN r_seo_url su ON su.id_post = p.id_post WHERE p.id_post=$id and p.id_user=".$_SESSION['id']."");	
 							}
 							$result = $query->fetch_assoc();
 							
@@ -233,7 +233,7 @@
 									<select name="category" id="selector1" class="form-control selectpicker" >
 										<option value="">select category</option>
 										<?php
-											$row = $conn->query("select * from r_category")or die(mysqli_error());						
+											$row = $conn->query("select * from r_category");						
 											while ($run = $row->fetch_assoc()) {
 												if($run['id_category']==$result['category']){?> 
 												<option value="<?php echo $run['id_category']?>" selected><?php echo $run['name']?></option>
@@ -356,7 +356,7 @@
 									<select name="category" id="selector1" class="form-control" >
 										<option value="0">Select Category</option>
 										<?php  
-											$row = $conn->query("select * from r_category ")or die(mysqli_error());
+											$row = $conn->query("select * from r_category ");
 											while ($run = $row->fetch_assoc()) {	?>
 											<option value="<?php echo $run['id_category'] ?>"><?php echo $run['name'] ?></option>
 										<?php }?>
@@ -442,7 +442,7 @@
                     alert("Select Only One checkbox to edit");
                 } else
                 {
-                    window.location.href = "posts.php?action=edit&page=<? echo "$page"?>&id=" + arrval[0];
+                    window.location.href = "posts.php?action=edit&page=<?php echo "$page"?>&id=" + arrval[0];
                 }
             }
         }

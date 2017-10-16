@@ -9,7 +9,7 @@
 	
 	if($_POST['action']=='add'){
 		$country = $conn->real_escape_string($_POST['country']);	
-		$insert=  $conn->query("INSERT INTO r_country (name) VALUES ('".$country."')") or die(mysql_error());
+		$insert=  $conn->query("INSERT INTO r_country (name) VALUES ('".$country."')");
 		
         if($insert){
 			$message = "<strong>Success!</strong> Country Added Successfully.";

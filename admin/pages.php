@@ -6,7 +6,7 @@
 		
 		header('location:index.php');
 	}
-	$select = $conn->query("SELECT * FROM r_page order by id_page desc")or die(mysqli_error());
+	$select = $conn->query("SELECT * FROM r_page order by id_page desc");
 	$count = $select->num_rows;
 ?>  
 <?php include_once('includes/header.php'); ?>
@@ -67,13 +67,12 @@
 									if (array_key_exists('page', $_GET)) {
 										$page = $_GET['page'];
 									}
-									// $page = $_GET["page"];
 									if ($page == "" || $page == 1) {
 										$page1 = 0;
 										} else {
 										$page1 = ($page * ADMIN_PAGE_LIMIT) - ADMIN_PAGE_LIMIT;
 									}
-									$select = $conn->query("SELECT * FROM r_page order by id_page desc limit $page1,".ADMIN_PAGE_LIMIT)or die(mysqli_error());
+									$select = $conn->query("SELECT * FROM r_page order by id_page desc limit $page1,".ADMIN_PAGE_LIMIT);
 									if ($select) {
 										while ($row = $select->fetch_assoc()) {
 											?>
@@ -101,7 +100,6 @@
 								<?php
 									$res1 = $conn->query("SELECT * FROM r_page");
 									$count = $res1->num_rows;
-									//echo "$count";
 									$a = $count / ADMIN_PAGE_LIMIT;
 									$a = ceil($a);
 									 if ($count > ADMIN_PAGE_LIMIT) {
@@ -152,13 +150,13 @@
 								$id = $_GET['id'];
 								$page=$_GET['page'];
 								$query = $conn->query("select * from r_page pg
-								LEFT JOIN r_seo_url seo ON seo.id_page=pg.id_page where pg.id_page=$id")or die(mysqli_error());
+								LEFT JOIN r_seo_url seo ON seo.id_page=pg.id_page where pg.id_page=$id");
 								$result = $query->fetch_assoc();
 							?>
 							<form class="form-horizontal" action="pages-controller.php?id=<?php echo $id; ?>&action=update" method="post">
 								<input type="hidden" name="action" value="edit"/>
 								<input type="hidden" name="id" value="<?php echo $id; ?>">
-								<input type="hidden" name="page" value='<? echo "$page"?>'>
+								<input type="hidden" name="page" value='<?php echo "$page"?>'>
 								<div class="form-group">
 									<label class="col-sm-2 control-label hor-form" for="inputEmail3">Title</label>
 									<div class="col-sm-8">
@@ -308,7 +306,7 @@
                     alert("Select Only One checkbox to edit");
                 } else
                 {
-                    window.location.href = "pages.php?action=edit&page=<? echo "$page"?>&id=" + arrval[0];
+                    window.location.href = "pages.php?action=edit&page=<?php echo "$page"?>&id=" + arrval[0];
                 }
             }
         }

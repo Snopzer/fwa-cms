@@ -9,7 +9,7 @@
 	
 	if($_POST['action']=='add'){
 		$email = $conn->real_escape_string($_POST['email']);	
-		$insert=  $conn->query("INSERT INTO r_subscriber (email) VALUES ('".$email."')") or die(mysql_error());
+		$insert=  $conn->query("INSERT INTO r_subscriber (email) VALUES ('".$email."')");
 		
 		if($insert){
 			$message = "<strong>Success!</strong> Subscriber Added Successfully.";

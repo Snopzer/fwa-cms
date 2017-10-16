@@ -25,7 +25,7 @@
 	$id_country = $conn->real_escape_string($_POST['country']);
 	
 	$row = "update r_user SET  name='$name',image='$pic',department='$department',email='$email',phone='$phone',skills='$skills',id_country='$id_country' where id_user=" . $_SESSION['id'];
-	$result = $conn->query($row) or die(mysqli_error());
+	$result = $conn->query($row) ;
 	
 	if ($result) {
 		$_SESSION['name'] = $name;

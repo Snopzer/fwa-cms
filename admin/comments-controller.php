@@ -13,7 +13,7 @@
 		$website = $conn->real_escape_string($_POST['website']);
 		$message = $conn->real_escape_string($_POST['message']);
 		
-		$addCommentQuery =  $conn->query("INSERT INTO r_comment (name,email,subject,message,website) VALUES ('".$name."','".$email."','".$subject."','".$message."','".$website."')") or die(mysqli_error());
+		$addCommentQuery =  $conn->query("INSERT INTO r_comment (name,email,subject,message,website) VALUES ('".$name."','".$email."','".$subject."','".$message."','".$website."')") ;
 		
         if($addCommentQuery){
 			$message = "<strong>Success!</strong> Comment Added Successfully.";
@@ -32,7 +32,7 @@
 		$subject = $conn->real_escape_string($_POST['subject']);
 		$message = $conn->real_escape_string($_POST['message']);
 		
-		$editComment=  $conn->query("update r_comment SET name='".$name."',email='".$email."',website='".$website."',subject='".$subject."',message='".$message."' where id_comment=".$id ) or die(mysqli_error());
+		$editComment=  $conn->query("update r_comment SET name='".$name."',email='".$email."',website='".$website."',subject='".$subject."',message='".$message."' where id_comment=".$id ) ;
 		if($editComment)
 		{
 			$message = "<strong>Success!</strong> Comment Modified Successfully.";

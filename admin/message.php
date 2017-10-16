@@ -6,7 +6,7 @@
 		
 		header('location:index.php');
 	}
-	$select = $conn->query("SELECT * FROM r_message order by id_message desc")or die(mysqli_error());
+	$select = $conn->query("SELECT * FROM r_message order by id_message desc");
 	$messageCount = $select->num_rows;
 	
 	$page = false;
@@ -18,7 +18,7 @@
 		} else {
 		$page1 = ($page * ADMIN_PAGE_LIMIT) - ADMIN_PAGE_LIMIT;
 	}
-	$select = $conn->query("SELECT * FROM r_message order by id_message desc limit $page1,".ADMIN_PAGE_LIMIT)or die(mysqli_error());
+	$select = $conn->query("SELECT * FROM r_message order by id_message desc limit $page1,".ADMIN_PAGE_LIMIT);
 ?>   
 <?php include_once('includes/header.php'); ?>
 <?php include_once('includes/menu.php'); ?>
@@ -150,7 +150,7 @@
 							if ($_GET['action'] == "edit") {
 								$id = $_GET['id'];
 								$page = $_GET['page'];
-								$query = $conn->query("select * from r_message where id_message=$id")or die(mysqli_error());
+								$query = $conn->query("select * from r_message where id_message=$id");
 								$result = $query->fetch_assoc();
 							?>
                             <form class="form-horizontal" action="message-controller.php" method="post">
@@ -281,7 +281,7 @@
                     alert("Select Only One checkbox to edit");
 				} else
                 {
-                    window.location.href = "message.php?action=edit&page=<? echo "$page"?>&id=" + arrval[0];
+                    window.location.href = "message.php?action=edit&page=<?php echo "$page"?>&id=" + arrval[0];
 				}
 			}
 		}

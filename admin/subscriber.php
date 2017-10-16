@@ -7,7 +7,7 @@
 		header('location:index.php');
 	}
 	
-	$subscriberQuery = $conn->query("SELECT * FROM r_subscriber order by id_subscriber desc")or die(mysql_error());
+	$subscriberQuery = $conn->query("SELECT * FROM r_subscriber order by id_subscriber desc");
 	$subscriberCount = mysqli_num_rows($subscriberQuery);
 	$a = $subscriberCount / ADMIN_PAGE_LIMIT;
 	$a = ceil($a);
@@ -68,7 +68,7 @@
                                         <td class="march"> Action </td>
 									</tr>
                                     <?php
-										$select = $conn->query("SELECT * FROM r_subscriber order by id_subscriber desc limit $page1,".ADMIN_PAGE_LIMIT)or die(mysql_error());
+										$select = $conn->query("SELECT * FROM r_subscriber order by id_subscriber desc limit $page1,".ADMIN_PAGE_LIMIT);
 										if ($select) {
 											while ($row = $select->fetch_assoc()) {
 											?>
@@ -141,13 +141,13 @@
 							if ($_GET['action'] == "edit") {
 								$id = $_GET['id'];
 								$page = $_GET['page'];
-								$query = $conn->query("select * from r_subscriber where id_subscriber=$id")or die(mysql_error());
+								$query = $conn->query("select * from r_subscriber where id_subscriber=$id");
 								$result = $query->fetch_assoc();
 							?>
                             <form class="form-horizontal" action="subscriber-controller.php" method="post">
                                 <input type="hidden" name="action" value="edit"/>
                                 <input type="hidden" name="id" value="<?php echo $result["id_subscriber"] ?>">
-                                <input type="hidden" name="page" value='<? echo "$page"?>'>
+                                <input type="hidden" name="page" value='<?php echo "$page"?>'>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label hor-form" for="inputEmail3">Email</label>
                                     <div class="col-sm-8">

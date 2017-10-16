@@ -93,9 +93,7 @@ if (isset($_SESSION['id'])) {
         } else {
             $("#mail_field").css({"border-style": "solid", "border-color": "#E9E9E9"});
         }
-        //var regex = /(?=^.{5,}$)/;
         var password = $("#password").val();
-        //if((password=='') || (!regex.test(password)))
         if (password == '')
         {
             $("#password_field").css({"border-style": "solid", "border-color": "red"});

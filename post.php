@@ -6,7 +6,7 @@
 	$seo_url = $_GET['seo_url'];
 	
 	$checkSEORequest = $conn->query("select * from r_seo_url where seo_url='".$seo_url."'");	
-	$checkSEO = $checkSEORequest->fetch_assoc () or die(mysql_error());	
+	$checkSEO = $checkSEORequest->fetch_assoc ();	
 	
 	if($checkSEO['id_post'] >=1 )	{
 		$showPostDiv = true;		
@@ -14,7 +14,7 @@
 		FROM r_post rp 
 		LEFT JOIN r_category rc ON rp.id_category = rc.id_category
 		LEFT JOIN r_user ru ON rp.id_user=ru.id_user
-		WHERE rp.id_post='".$checkSEO['id_post']."' order by id_post DESC")or die(mysql_error()); 		
+		WHERE rp.id_post='".$checkSEO['id_post']."' order by id_post DESC");		
 		$result = $select->fetch_assoc();	
 		
 		$id=$result['id_post'];		
@@ -29,7 +29,7 @@
 		$showpageDiv = true;	
 		
 		
-		$pageQuery = $conn->query("select * from r_page page,r_seo_url seo where page.id_page=seo.id_page and page.id_page=".$checkSEO['id_page'])or die(mysql_error());
+		$pageQuery = $conn->query("select * from r_page page,r_seo_url seo where page.id_page=seo.id_page and page.id_page=".$checkSEO['id_page']);
 		$result = $pageQuery->fetch_assoc();
 		
 		$metaArray = array(		
@@ -42,7 +42,7 @@
 		$showUserDiv = true;	
 		
 		
-		$pageQuery = $conn->query("select * from r_page page,r_seo_url seo where page.id_page=seo.id_page and page.id_page=".$checkSEO['id_user'])or die(mysql_error());
+		$pageQuery = $conn->query("select * from r_page page,r_seo_url seo where page.id_page=seo.id_page and page.id_page=".$checkSEO['id_user']);
 		$result = $pageQuery->fetch_assoc();
 		
 		$metaArray = array(		
@@ -53,7 +53,7 @@
 	
 	if($checkSEO['id_category'] >=1 )	{		
 		$showCategoryDiv = true;
-		$categoryQuery = $conn->query("SELECT * FROM r_category cat, r_seo_url seo WHERE cat.id_category = seo.id_category AND cat.id_category =".$checkSEO['id_category'])or die(mysql_error());
+		$categoryQuery = $conn->query("SELECT * FROM r_category cat, r_seo_url seo WHERE cat.id_category = seo.id_category AND cat.id_category =".$checkSEO['id_category']);
 		$result = $categoryQuery->fetch_assoc();
 		
 		$metaArray = array(		
@@ -69,7 +69,7 @@
     <div class="container">
         <div class="col-md-9 technology-left">
             <div class="business">
-				<?php if($showCategoryDiv==true){ ?>
+				<?php if($showCategoryDiv===true){ ?>
 					<!--category details start -->
 					<div class=" blog-grid2">
 						<?php if(!empty($result['image'])) { ?>
@@ -84,7 +84,7 @@
 					
 					<div class="comment-top">
 						<h2><?php echo $result['name'] ?> Topic's</h2><?php
-							$postQuery = $conn->query("SELECT rp.*,seo.seo_url as seourl FROM  `r_post` rp LEFT JOIN r_seo_url seo ON rp.id_post = seo.id_post WHERE rp.id_category =".$result['id_category']." and rp.status=1 ORDER BY rp.id_post")or die(mysql_error()); 		
+							$postQuery = $conn->query("SELECT rp.*,seo.seo_url as seourl FROM  `r_post` rp LEFT JOIN r_seo_url seo ON rp.id_post = seo.id_post WHERE rp.id_category =".$result['id_category']." and rp.status=1 ORDER BY rp.id_post"); 		
 							while ($post = $postQuery->fetch_assoc()) {
 							?>
 							<?php if($post['image']!=''){ ?>
@@ -104,7 +104,7 @@
 					</div>
 					
 				<?php } ?>
-				<?php if($showpageDiv==true){ ?>
+				<?php if($showpageDiv===true){ ?>
 					<div class=" blog-grid2">
 						<div class="blog-text">
 							<h5><?php echo $result['page_heading'] ?></h5>
@@ -120,10 +120,10 @@
 					</div>
 				<?php } ?>
 				
-				<?php if($showUserDiv == true) {?>
+				<?php if($showUserDiv === true) {?>
 					
 				<?php  } ?>
-				<?php if($showPostDiv == true) {?>
+				<?php if($showPostDiv === true) {?>
 					<div class=" blog-grid2">
 						<div class="blog-text">
 							<h5><?php echo str_replace('\"', '"',str_replace("\'", "'", $result["title"])); ?></h5>
@@ -155,7 +155,7 @@
 					
 				</div>
 			<?php } ?>
-			<?php if($showPostDiv == true) {?>
+			<?php if($showPostDiv === true) {?>
 				
 				<div class="comment">
 					<h3>Leave a Comment</h3>

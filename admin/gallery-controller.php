@@ -10,7 +10,7 @@
 	if (isset($_GET['action']) & $_GET['action'] == 'add') {
 		$name = mysqli_real_escape_string($_POST['image_name']);
 		$pic = ($_FILES['photo']['name']);
-		$addPic = $conn->query("insert into r_image (image,image_name) VALUES ('".$pic."','".$name."') ")or die(mysql_error());
+		$addPic = $conn->query("insert into r_image (image,image_name) VALUES ('".$pic."','".$name."') ");
 		$path = "../images/gallery/" . $_FILES['photo']['name'];
 		if (copy($_FILES['photo']['tmp_name'], $path)) {
 			header('location:'.SITE_ADMIN_URL.'gallery.php');

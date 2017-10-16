@@ -25,7 +25,7 @@
 					<div class="horz-grid">
 				<div class="gallery">
 				<?php
-					$row = $conn->query("select * from r_image order by id_image")or die(mysqli_error());
+					$row = $conn->query("select * from r_image order by id_image");
 					while ($result = $row->fetch_assoc()) {
 					?> 
 					<div class="col-md">

@@ -25,7 +25,7 @@
 		} else {
 		$page1 = ($page * ADMIN_PAGE_LIMIT) - ADMIN_PAGE_LIMIT;
 	}
-	$selectSiteList = $conn->query("SELECT * FROM r_site_details order by id desc limit ".$page1.",".ADMIN_PAGE_LIMIT)or die(mysqli_error());					
+	$selectSiteList = $conn->query("SELECT * FROM r_site_details order by id desc limit ".$page1.",".ADMIN_PAGE_LIMIT);					
 	
 ?>  
 
@@ -138,7 +138,7 @@
 						<?php if($_GET['action'] == "edit"){
 							$id = $_GET['id'];
 							$page=$_GET['page'];
-							$query = $conn->query("select * from r_site_details where id=$id")or die(mysqli_error());
+							$query = $conn->query("select * from r_site_details where id=$id");
 							$result = $query->fetch_assoc();
 						?>
 						
@@ -588,7 +588,7 @@
 					alert("Select Only One checkbox to edit");
 				} else
 				{
-					window.location.href = "site.php?action=edit&page=<? echo "$page"?>&id=" + arrval[0];
+					window.location.href = "site.php?action=edit&page=<?php echo "$page"?>&id=" + arrval[0];
 				}
 			}
 		}
@@ -641,7 +641,6 @@
 					if (document.frmMain.elements[i].name == "selectcheck")
 					{
 						if (document.frmMain.elements[i].checked == true) {
-							//alert(document.frmFinal.elements[i].value)
 							chkdelids = chkdelids + sep + document.frmMain.elements[i].value;
 							sep = ",";
 						}

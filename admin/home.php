@@ -12,8 +12,6 @@
 <?php
 	$selectData = $conn->query("SELECT (SELECT COUNT(*) FROM r_user) as usercount ,(SELECT COUNT(*) FROM r_category) as categorycount, (SELECT COUNT(*) FROM r_post) as postcount, (SELECT COUNT(*) FROM r_post where status=1) as activeposts,(SELECT SUM(views) FROM r_post) as totalviews");
 	$count = $selectData->fetch_assoc();
-	/*print_r($count);
-	exit;*/
 ?>
 <div id="page-wrapper" class="gray-bg dashbard-1">
 	<div class="content-main">
@@ -81,10 +79,8 @@
 		</div>
 		
 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-		<?php	$getPostsbyDate = $conn->query("SELECT COUNT( id_post ) as posts , DATE( date_added ) as date_added FROM r_post GROUP BY DATE( date_added ) ASC")or die(mysqli_error()); ?>
-		
-		<?php	$getPostListQuery = $conn->query("SELECT p.views, seo.seo_url FROM  `r_post` p,r_seo_url seo WHERE p.id_post=seo.id_post order by p.views DESC")or die(mysqli_error()); ?>
-		<?php	//$getPostListQuery = $conn->query("SELECT title, views FROM  `r_post` order by views DESC")or die(mysqli_error()); ?>
+		<?php	$getPostsbyDate = $conn->query("SELECT COUNT( id_post ) as posts , DATE( date_added ) as date_added FROM r_post GROUP BY DATE( date_added ) ASC"); ?>
+		<?php	$getPostListQuery = $conn->query("SELECT p.views, seo.seo_url FROM  `r_post` p,r_seo_url seo WHERE p.id_post=seo.id_post order by p.views DESC"); ?>
 		
 		<script type="text/javascript">
 			// pie chart
@@ -123,20 +119,10 @@
 					title: 'Posts Time Line',
 					curveType: 'function',
 					legend: { position: 'bottom' },
-					/*'width':1400,'height':280*/
 				};
-				
 				var chart1 = new google.visualization.LineChart(document.getElementById('posthistory_chart'));
-				
 				chart1.draw(data1, options1);
 			}
-			
-			
-			
-			
-			
+
 		</script>
-		
-		
-		
 	<?php include_once('includes/footer.php');?>					

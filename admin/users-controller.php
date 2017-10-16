@@ -19,7 +19,7 @@
 		$status = $conn->real_escape_string($_POST['status']);	
 		$seo_url = $conn->real_escape_string($_POST['seo_url']);
 		
-		$checkEmail=  $conn->query("SELECT * FROM r_user where email='".$email."' ") or die(mysqli_error());
+		$checkEmail=  $conn->query("SELECT * FROM r_user where email='".$email."' ") ;
 		$count=mysqli_num_rows($checkEmail);
 		if($count==1)
 		{
@@ -28,7 +28,7 @@
 		}
 		else
 		{                   
-			$insert = $conn->query("INSERT INTO r_user (name,email,phone,department,password,skills,id_country,id_user_role,status) VALUES ('" . $name . "','" . $email . "','" . $phone . "','" . $department . "','" . md5($password) . "','" . $skills . "','" . $country . "','" . $userrole . "','" . $status . "')") or die(mysqli_error());	
+			$insert = $conn->query("INSERT INTO r_user (name,email,phone,department,password,skills,id_country,id_user_role,status) VALUES ('" . $name . "','" . $email . "','" . $phone . "','" . $department . "','" . md5($password) . "','" . $skills . "','" . $country . "','" . $userrole . "','" . $status . "')") ;	
 			$userid=$conn->insert_id;
 			if ($insert) {
 				$seo_url  = strtolower(preg_replace('/\s+/', '-', $seo_url));
@@ -57,7 +57,7 @@
 		$email = $conn->real_escape_string($_POST['email']);	
 		
 		
-		$result2 = $conn->query( " update r_user SET email='".$email."',name='".$name."',phone='".$phone."',department='".$department."',skills = '".$skills."',	id_country = '".$country."',	id_user_role = '".$userrole."', 	status ='" . $status . "'	where id_user='".$id."' ") or die(mysqli_error());
+		$result2 = $conn->query( " update r_user SET email='".$email."',name='".$name."',phone='".$phone."',department='".$department."',skills = '".$skills."',	id_country = '".$country."',	id_user_role = '".$userrole."', 	status ='" . $status . "'	where id_user='".$id."' ") ;
 		
 		if(isset($_POST['password']) && $_POST['password'])
 		{

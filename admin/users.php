@@ -6,7 +6,7 @@
 		
 		header('location:index.php');
 	}
-	$userQuery = $conn->query("SELECT * FROM r_user")or die(mysqli_error());
+	$userQuery = $conn->query("SELECT * FROM r_user");
 	$userCount = mysqli_num_rows($userQuery);
 	$pages = $userCount / ADMIN_PAGE_LIMIT;
 	$pages = ceil($pages);
@@ -156,7 +156,7 @@
 								$page = $_GET['page'];
 								$query = $conn->query("select seo.seo_url as seoUrl,ru.* from r_user ru 
 								LEFT JOIN r_seo_url seo ON ru.id_user=seo.id_user 
-								where ru.id_user=$id")or die(mysql_error());
+								where ru.id_user=$id");
 								$result =$query->fetch_assoc();
 							?>
                             <form class="form-horizontal" action="users-controller.php" method="post">
@@ -213,7 +213,7 @@
                                         <select name="country" class="form-control" >
 											<option>Select Country</option>
                                             <?php
-												$row = $conn->query("select * from r_country order by name asc")or die(mysql_error());
+												$row = $conn->query("select * from r_country order by name asc");
 												while ($run = $row->fetch_assoc()) {
 													if ($run['id_country'] == $result['id_country']) {
 													?>
@@ -231,7 +231,7 @@
                                         <select name="userrole" class="form-control" >
 											<option>Select User Role</option>
                                             <?php
-												$userRoleData = $conn->query("select * from r_user_role order by role asc")or die(mysql_error());
+												$userRoleData = $conn->query("select * from r_user_role order by role asc");
 												while ($userRole = $userRoleData->fetch_assoc()) {
 													if ($userRole['id_user_role'] == $result['id_user_role']) {
 													?>
@@ -327,7 +327,7 @@
 									<select name="country" class="form-control" >
 										<option>Select Country</option>
 										<?php
-											$row = $conn->query("select * from r_country order by name asc")or die(mysql_error());
+											$row = $conn->query("select * from r_country order by name asc");
 											while ($run = $row->fetch_assoc()) {
 											?>
 											<option value='<?php echo $run['id_country'] ?>'><?php echo $run['name'] ?></option>';
@@ -341,7 +341,7 @@
 									<select name="userrole" class="form-control" >
 										<option>Select User Role</option>
 										<?php
-											$userRoleData = $conn->query("select * from r_user_role order by role asc")or die(mysql_error());
+											$userRoleData = $conn->query("select * from r_user_role order by role asc");
 											while ($userRole = $userRoleData->fetch_assoc()) {
 											?>
 											<option value='<?php echo $userRole['id_user_role'] ?>' selected><?php echo $userRole['role'] ?></option>'';
@@ -405,7 +405,7 @@
                     alert("Select Only One checkbox to edit");
 				} else
                 {
-                    window.location.href = "users.php?action=edit&page=<? echo "$page"?>&uid=" + arrval[0];
+                    window.location.href = "users.php?action=edit&page=<?php echo "$page"?>&uid=" + arrval[0];
 				}
 			}
 		}

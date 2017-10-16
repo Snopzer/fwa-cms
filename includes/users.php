@@ -1,5 +1,5 @@
 <?php
-	$UserQuery = $conn->query("SELECT * FROM r_user order by name")or die(mysql_error());
+	$UserQuery = $conn->query("SELECT * FROM r_user order by name");
 	if(mysqli_num_rows($UserQuery) > 1 ){
 	?>
 	

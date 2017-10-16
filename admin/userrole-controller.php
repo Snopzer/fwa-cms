@@ -10,7 +10,7 @@
 		$role = ($_POST['role']);	
 		$status = ($_POST['status']);	
 		
-		$insert = $conn->query("INSERT INTO r_user_role (role,status) VALUES ('" . $role . "','" . $status . "')") or die(mysqli_error());		
+		$insert = $conn->query("INSERT INTO r_user_role (role,status) VALUES ('" . $role . "','" . $status . "')") ;		
 		if ($insert) {
 			$message = "<strong>Success!</strong> User role Added Successfully.";
 			header('location:'.SITE_ADMIN_URL.'userrole.php?response=success&message='.$message);

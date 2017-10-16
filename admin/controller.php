@@ -5,9 +5,6 @@ session_start();
 include_once('../config.php');
 include_once('../parameter.php');
 
-/* if($_GET['action']=='checklogin'){ 
-  header('Location:'.SITE_ADMIN_URL.'home.php');
-  } */
 if ($_GET['action'] == 'signup') {
     parse_str($_GET['singupData'], $singupData);
     $email = $singupData['email'];
@@ -56,7 +53,6 @@ if ($_GET['action'] == 'signup') {
         }
     }
     echo json_encode($response);
-    exit;
 } elseif ($_GET['action'] == 'checkLogin') {
     $loginId = $_GET['loginid'];
     $LoginQuery = $conn->query("SELECT * FROM r_user where id_user='" . $loginId . "'");
@@ -93,16 +89,15 @@ if ($_GET['action'] == 'signup') {
         $response['success'] = false;
     }
     echo json_encode($response);
-    exit;
 } elseif (isset($_GET['type']) && $_GET['type'] == "forgetpassword") {
     $email = $_POST['email'];
-    $forgotQuery = $conn->query("SELECT * FROM r_user where email='$email'") or die(mysql_error());
+    $forgotQuery = $conn->query("SELECT * FROM r_user where email='$email'");
     $user = $forgotQuery->fetch_assoc();
     $count = mysqli_num_rows($forgotQuery);
 
     if ($count == 1) {
         $password = rand(0, 100000);
-        $sql = $conn->query("UPDATE r_user set password= '" . md5($password) . "' where email='$email'") or die(mysql_error());
+        $sql = $conn->query("UPDATE r_user set password= '" . md5($password) . "' where email='$email'");
 
         $subject = 'Techdefeat Password Updated'; // Give the email a subject 
 
@@ -152,11 +147,10 @@ if ($_GET['action'] == 'signup') {
         } else {
             $_SESSION['message'] = "Your account is already active, no need to activate again";
             header('location:' . SITE_ADMIN_URL . 'index.php');
-            exit;
         }
     } else {
         $_SESSION['message'] = "Wrong activation code.";
         header('location:' . SITE_ADMIN_URL . 'index.php');
     }
 }
-?>
+/* end of file */ ?>

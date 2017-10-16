@@ -6,8 +6,8 @@
 	if (!isset($_SESSION['id'])) {
 		header('location:index.php');
 	}
-	$row = $conn->query("select * from r_user where id_user=" . $_SESSION['id'])or die(mysqli_error());
-	$result = $row->fetch_assoc()or die(mysqli_error());
+	$row = $conn->query("select * from r_user where id_user=" . $_SESSION['id']);
+	$result = $row->fetch_assoc();
 ?>
 <?php include_once('includes/header.php'); ?>
 <?php include_once('includes/menu.php'); ?>
@@ -59,7 +59,7 @@
 											<div class="col-sm-14">
 												<select name="country" id="selector1" class="form-control" >
 													<option>select country</option>
-													<?php $row = $conn->query("select * from r_country order by name asc")or die(mysqli_error());
+													<?php $row = $conn->query("select * from r_country order by name asc");
 														while ($run = $row->fetch_assoc()) {
 															if($run['id_country']==$result['id_country']){ ?>
 															<option value="<?php echo $run['id_country'] ?>" selected><?php echo $run['name'] ?></option>

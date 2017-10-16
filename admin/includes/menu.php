@@ -40,8 +40,6 @@
 					<li class="active"> 
 						<a class="hvr-bounce-to-right" href="home.php"><i class="fa fa-dashboard nav_icon"></i> <span class="nav-label">Dashboard</span></a>
 					</li>
-					<?php //echo  "Role".$_SESSION['id_user_role'];
-					//exit;?>
 					<?php if($_SESSION['id_user_role']==1){?>
 						<li class="">
 							<a class=" hvr-bounce-to-right" href="#"><i class="fa fa-users nav_icon"></i> <span class="nav-label">User</span><span class="fa arrow"></span></a>
@@ -79,19 +77,6 @@
 							</ul>
 						</li>
 					<?php } ?>
-					
-					
-					<?php /*?>
-						<li>
-						<a href="question.php" 	class="hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> 		<span class="nav-label">Questions</span> </a>
-						</li><li>
-						<a href="course.php" 	class=" hvr-bounce-to-right"><i class="fa fa-file-text-o nav_icon"></i> 	<span class="nav-label">Course</span> </a>
-						</li>
-						<li>
-						<a href="testimonial.php" 	class=" hvr-bounce-to-right"><i class="fa fa-picture-o nav_icon"></i> 	<span class="nav-label">Testimonial</span> </a>
-					</li><?php */?>
-					
-					
 				</ul>
 			</div>
 		</div>

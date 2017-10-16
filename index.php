@@ -19,7 +19,7 @@
 	LEFT JOIN r_category rc ON rp.id_category=rc.id_category
 	LEFT JOIN r_user ru ON rp.id_user=ru.id_user
 	LEFT JOIN r_seo_url seo ON rp.id_post=seo.id_post
-	where rp.status=1 order by id_post desc")or die(mysql_error());
+	where rp.status=1 order by id_post desc");
 ?> 
 <div class="technology">
 	<div class="banner">

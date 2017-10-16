@@ -17,9 +17,9 @@
 		} else {
 		$page1 = ($page * ADMIN_PAGE_LIMIT) - ADMIN_PAGE_LIMIT;
 	}
-	$categoryResult = $conn->query("SELECT * FROM r_category where deleted=0 order by id_category desc limit $page1,".ADMIN_PAGE_LIMIT)or die(mysqli_error());
+	$categoryResult = $conn->query("SELECT * FROM r_category where deleted=0 order by id_category desc limit $page1,".ADMIN_PAGE_LIMIT);
 	
-	$categoryQuery = $conn->query("SELECT * FROM r_category where deleted=0 order by id_category desc") or die(mysqli_error());
+	$categoryQuery = $conn->query("SELECT * FROM r_category where deleted=0 order by id_category desc") ;
 	$categoryCount = mysqli_num_rows($categoryQuery);
 	$a = $categoryCount / ADMIN_PAGE_LIMIT;
 	$a = ceil($a);							
@@ -150,9 +150,8 @@
 								$id = $_GET['id'];
 								$page = $_GET['page'];
 								
-								/*$query = $conn->query("select c.*,su.* from r_category c, r_seo_url su where  c.id_category = su.id_category  and c.id_category=$id")or die(mysql_error());*/
 								$query = $conn->query("select c.*,su.* from r_category c
-								LEFT JOIN r_seo_url su ON c.id_category = su.id_category  where c.id_category=$id")or die(mysql_error());
+								LEFT JOIN r_seo_url su ON c.id_category = su.id_category  where c.id_category=$id");
 								$result = $query->fetch_assoc();
 							?>
 							<form class="form-horizontal" action="category-controller.php" method="post" enctype="multipart/form-data">
@@ -323,7 +322,6 @@
 	<script language="JavaScript">
 		/* editor script */
 		var editor=CKEDITOR.replace('description');
-		//var editor=CKEDITOR.replace('metadescription');
 		/* editor script */
 		function fnDetails()
 		{

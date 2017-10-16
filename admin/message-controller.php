@@ -14,7 +14,7 @@
 		$message 	= $conn->real_escape_string($_POST['message']);	
 		$date_created = date('Y-m-d h:i:s'); 
 		
-		$addMessage = $conn->query("INSERT INTO r_message (name,subject,email,message,date_created) VALUES ('" . $name . "','" . $subject . "','" . $email . "','" . $message . "','" . $date_created . "')") or die(mysqli_error());
+		$addMessage = $conn->query("INSERT INTO r_message (name,subject,email,message,date_created) VALUES ('" . $name . "','" . $subject . "','" . $email . "','" . $message . "','" . $date_created . "')") ;
 		if ($addMessage) {
 			$message = "<strong>Success!</strong> Message Added Successfully.";
 			header('location:'.SITE_ADMIN_URL.'message.php?response=success&message='.$message);

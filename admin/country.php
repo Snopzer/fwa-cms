@@ -34,7 +34,7 @@
                                     <tbody>
                                         <tr>
                                             <td><h3 id="h3.-bootstrap-heading"> COUNTRIES - [<?php
-												$select = $conn->query("SELECT * FROM r_country order by id_country  desc")or die(mysql_error());
+												$select = $conn->query("SELECT * FROM r_country order by id_country  desc");
 												$count = mysqli_num_rows($select);
 												echo "$count";
 											?>]</h3></td>
@@ -62,13 +62,12 @@
 										if (array_key_exists('page', $_GET)) {
 											$page = $_GET['page'];
 										}
-										//  $page = $_GET["page"];
 										if ($page == "" || $page == 1) {
 											$page1 = 0;
 											} else {
 											$page1 = ($page * ADMIN_PAGE_LIMIT) - ADMIN_PAGE_LIMIT;
 										}
-										$select = $conn->query("SELECT * FROM r_country order by id_country desc limit $page1,".ADMIN_PAGE_LIMIT)or die(mysql_error());
+										$select = $conn->query("SELECT * FROM r_country order by id_country desc limit $page1,".ADMIN_PAGE_LIMIT);
 										if ($select) {
 											while ($row = $select->fetch_assoc()) {
 											?>
@@ -94,7 +93,6 @@
                             <?php
 								$res1 = $conn->query("SELECT * FROM r_country");
 								$count = mysqli_num_rows($res1);
-								//echo "$count";
 								$a = $count / ADMIN_PAGE_LIMIT;
 								$a = ceil($a);
 								if ($count > ADMIN_PAGE_LIMIT) {
@@ -145,13 +143,13 @@
 							if ($_GET['action'] == "edit") {
 								$id = $_GET['id'];
 								$page = $_GET['page'];
-								$query = $conn->query("select * from r_country where id_country=$id")or die(mysql_error());
+								$query = $conn->query("select * from r_country where id_country=$id");
 								$result = $query->fetch_assoc();
 							?>
                             <form class="form-horizontal" action="country-controller.php" method="post">
                                 <input type="hidden" name="action" value="edit"/>
                                 <input type="hidden" name="id" value="<?php echo $result["id_country"] ?>">
-                                <input type="hidden" name="page" value='<? echo "$page"?>'>
+                                <input type="hidden" name="page" value='<?php echo "$page"?>'>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label hor-form" for="inputEmail3">Country</label>
                                     <div class="col-sm-8">

@@ -65,13 +65,13 @@
                     <ul class="nav navbar-nav">						
                         <li class="active"><a href="index.php">Home</a></li>		
 						<?php
-						$categoriesQuery = $conn->query("SELECT seo.seo_url as seo_url, cat.* FROM r_category cat,r_seo_url seo where cat.id_category=seo.id_category and cat.status=1 order by cat.sort_order asc")or die(mysql_error());
+						$categoriesQuery = $conn->query("SELECT seo.seo_url as seo_url, cat.* FROM r_category cat,r_seo_url seo where cat.id_category=seo.id_category and cat.status=1 order by cat.sort_order asc");
 							while ($category = $categoriesQuery->fetch_assoc()) {								
 							?>							
                             <li><a href="<?php echo SITEURL;?><?php echo $category['seo_url']; ?>"><?php echo $category['name']; ?></a></li>							
 						<?php } ?>
 						<?php							
-							$PagesQuery = $conn->query("SELECT seo.seo_url as seo_url, pg.* FROM r_page pg,r_seo_url seo where pg.id_page=seo.id_page order by pg.id_page desc")or die(mysql_error());							
+							$PagesQuery = $conn->query("SELECT seo.seo_url as seo_url, pg.* FROM r_page pg,r_seo_url seo where pg.id_page=seo.id_page order by pg.id_page desc");							
 							if(mysqli_num_rows($PagesQuery)>0){
 							?>
 							<li class="dropdown">
